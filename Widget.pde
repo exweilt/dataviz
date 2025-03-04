@@ -6,7 +6,9 @@ public class Widget {
   
   public void draw() {}
   
-  public void onMousePressed(int mouseX, int mouseY) {}
+  public void onMousePressed(int mouseX_in, int mouseY_in) {}
   
-  public void onMouseMoved(int mouseX, int mouseY) {}
+  public void onMouseClicked(int mouseX_in, int mouseY_in) {}
+  
+  public void onMouseMoved(int mouseX_in, int mouseY_in) {}
 }
