@@ -24,3 +24,7 @@ void draw() {
 void mouseClicked() {
   btn.onMouseClicked(mouseX, mouseY);
 }
+
+void mouseMoved() {
+  btn.onMouseMoved(mouseX, mouseY);
+}

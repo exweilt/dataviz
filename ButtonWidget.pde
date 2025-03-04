@@ -12,15 +12,18 @@
   *  (c) Lex created the class at 04/03/2025
   */
 public class ButtonWidget extends Widget {
-  public color background = color(16);
-  public color foreground = color(230);
-
-  private float width;
-  private float height;
+  public color bg = color(16);
+  public color fg = color(230);
+  public color hoveredBg = color(60);
+  public color pressedBg = color(130);
+  
+  private float width = 0;
+  private float height = 0;
   private float padding = 10.0;
   private float fontSize = 16.0;
   private String text = "";
   private Runnable onClick;
+  private boolean isHovered = false;
 
   public ButtonWidget(float x_in, float y_in, String text, Runnable onClickCallback) {
     this.x = x_in;
@@ -31,12 +34,26 @@ public class ButtonWidget extends Widget {
   
   @Override
   public void draw() {
-    fill(this.background);
+    if (this.isHovered && mousePressed) {
+      fill(this.pressedBg);
+      strokeWeight(3);
+      stroke(255);
+      cursor(HAND);
+    } else if (this.isHovered) {
+      fill(this.hoveredBg);
+      cursor(HAND);
+    } else {
+      fill(this.bg);    
+    }
     rect(this.x, this.y, this.width, this.height);
     
-    fill(this.foreground);
+    fill(this.fg);
     textSize(this.fontSize);
     text(this.text, this.x + padding, this.y + this.height - padding);
+    
+    // Revert stroke to default
+    stroke(0);
+    strokeWeight(1);
   }
 
   @Override
@@ -45,6 +62,21 @@ public class ButtonWidget extends Widget {
       if (onClick != null) {
         onClick.run();
       }
+    }
+  }
+  
+  @Override
+  public void onMouseMoved(int mX, int mY) {
+    if (mX > this.x && mX < (this.x + this.width) && mY > this.y && mY < (this.y + this.height)) {
+      if (!isHovered) {
+        cursor(HAND); // cursor just entered
+      }
+      isHovered = true;
+    } else {
+      if (isHovered) {
+        cursor(ARROW); // cursor just left
+      }
+      isHovered = false;
     }
   }
 
