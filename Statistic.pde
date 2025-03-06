@@ -40,7 +40,7 @@ class StatisticFunctions {
   StatisticFunctions RunCalculation;
   
   float mean(float[] data) {
-    float total = 0;
+    float total = 0; //<>//
     for (int current = 0; current < data.length; current++) {
       total = total + data[0];
     }
@@ -135,7 +135,7 @@ class StatisticFunctions {
     int n = data.length;
     if (n == 0) return new float[0];
   
-    float mean = RunCalculation.mean(data);
+    float mean = this.mean(data);
   
     float stdDev = RunCalculation.standardDeviation(data);
   

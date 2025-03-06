@@ -10,6 +10,10 @@ void setup() {
   
   btn = new ButtonWidget(100, 300, "Click me!", () -> { println("Button clicked!"); });
   btn.setFontSize(32);
+  
+  float[] data = {3.0f, 5.0f, 7.0f};
+  StatisticFunctions s = new StatisticFunctions();
+  print(s.mean(data));
 }
 
 void draw() {
