@@ -12,10 +12,12 @@
   *  (c) Lex created the class at 04/03/2025
   */
 public class ButtonWidget extends Widget {
-  public color bg = color(240);
-  public color fg = color(37);
-  public color hoveredBg = color(220);
-  public color pressedBg = color(200);
+  public color bg = color(245);
+  public color fg = color(42);
+  public color hoveredBg = color(230);
+  public color pressedBg = color(220);
+  public color borderColor = color(190);
+  public float borderWidth = 1.5f;
   
   private float width = 0;
   private float height = 0;
@@ -37,13 +39,14 @@ public class ButtonWidget extends Widget {
   public void draw() {
     if (this.isHovered && mousePressed) {
       fill(this.pressedBg);
-      strokeWeight(3);
-      stroke(255);
     } else if (this.isHovered) {
       fill(this.hoveredBg);
     } else {
       fill(this.bg);    
     }
+    stroke(this.borderColor);
+    strokeWeight(this.borderWidth);
+    
     rect(this.x, this.y, this.width, this.height, this.cornerRadius);
     
     fill(this.fg);
