@@ -21,8 +21,8 @@ public class ButtonWidget extends Widget {
   
   private float width = 0;
   private float height = 0;
-  private float padding = 10.0;
-  private float fontSize = 16.0;
+  private float padding = 8.0;
+  private float fontSize = 20.0;
   private String text = "";
   private Runnable onClick;
   private boolean isHovered = false;

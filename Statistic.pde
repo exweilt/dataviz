@@ -39,7 +39,7 @@ public static class StatisticFunctions {
 
   StatisticFunctions RunCalculation;
   
-  float mean(float[] data) {
+  static float mean(float[] data) {
     float total = 0; //<>// //<>//
     for (int current = 0; current < data.length; current++) {
       total = total + data[0];
