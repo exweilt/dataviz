@@ -20,7 +20,7 @@ public class CheckboxWidget extends Widget {
   private boolean isHovered = false;
   private float cornerRadius = 6.0f;
   private boolean isChecked = false;
-  private float padding = 3.0f;
+  private float padding = 6.0f;
 
   public CheckboxWidget(float x_in, float y_in) {
     this.x = x_in;

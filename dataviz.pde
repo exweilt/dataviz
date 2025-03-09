@@ -3,6 +3,7 @@ public static PShape checkmarkShape = null;
 
 ButtonWidget btn;
 CheckboxWidget check;
+ScatterplotWidget scat;
 
 void setup() {
   size(900, 600);
@@ -18,9 +19,11 @@ void setup() {
   check = new CheckboxWidget(300, 300);
   check.setSize(btn.height);
   
-  float[] data = {3.0f, 5.0f, 7.0f};
-  StatisticFunctions s = new StatisticFunctions();
-  print(s.mean(data));
+  scat = new ScatterplotWidget(400, 200);
+  
+  //float[] data = {3.0f, 5.0f, 7.0f};
+  //StatisticFunctions s = new StatisticFunctions();
+  //print(s.mean(data));
 }
 
 void draw() {
@@ -31,6 +34,7 @@ void draw() {
   
   btn.draw();
   check.draw();
+  scat.draw();
 }
 
 void mouseClicked() {
