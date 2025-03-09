@@ -37,6 +37,7 @@ public class ButtonWidget extends Widget {
   
   @Override
   public void draw() {
+    textAlign(LEFT);
     if (this.isHovered && mousePressed) {
       fill(this.pressedBg);
     } else if (this.isHovered) {
