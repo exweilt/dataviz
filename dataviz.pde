@@ -1,9 +1,13 @@
 PFont mainFont;
 
+ScreenManager screenManager;
 ButtonWidget btn;
 
 void setup() {
   size(900, 600);
+  
+  defaultScreen = new ScreenManager(color(0, 0, 0));
+  currentScreen = defaultScreen;
   
   mainFont = loadFont("Inter-Regular-48.vlw");
   textFont(mainFont);
@@ -14,6 +18,8 @@ void setup() {
 
 void draw() {
   background(255);
+  
+  currentScreen.drawScreen();
   
   fill(255, 0, 0);
   rect(100, 100, 100, 100);
