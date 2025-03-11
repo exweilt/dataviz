@@ -5,9 +5,12 @@ ButtonWidget btn;
 CheckboxWidget check;
 ScatterplotWidget scat;
 CalendarWidget cal;
-
+String file = "flights2kCleaned.csv";
 void setup() {
   size(900, 600);
+  //TEMP
+  loadData(file);
+  
   
   mainFont = loadFont("Inter-Regular-48.vlw");
   textFont(mainFont);
