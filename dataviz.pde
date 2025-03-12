@@ -1,9 +1,7 @@
 PFont mainFont;
 public static PShape checkmarkShape = null;
 
-public ArrayList<DataLoading> dataFiles = new ArrayList<>();
-DataLoading flights = new DataLoading();
-
+ScreenManager screenManager;
 ButtonWidget btn;
 CheckboxWidget check;
 ScatterplotWidget scat;
@@ -14,15 +12,9 @@ CalendarWidget cal;
 void setup() {
   size(900, 600);
   
-  // temp demonstration
-  dataFiles.add(flights);
-  println(dataFiles.get(0));
-  flights.loadData("flights2kCleaned.csv");
-  flights.printColumns();
-  println(flights.stringToDate("01/01/2022", "01/04/2022"));
-  print(flights.data.getString(1, "FL_DATE"));
-  // ends
-  
+
+  defaultScreen = new ScreenManager(color(0, 0, 0));
+  currentScreen = defaultScreen;
   
   mainFont = loadFont("Inter-Regular-48.vlw");
   textFont(mainFont);
@@ -46,6 +38,8 @@ void setup() {
 
 void draw() {
   background(240);
+  
+  currentScreen.drawScreen();
   
   fill(255, 0, 0);
   rect(100, 100, 100, 100);
