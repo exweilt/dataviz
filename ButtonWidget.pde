@@ -12,18 +12,21 @@
   *  (c) Lex created the class at 04/03/2025
   */
 public class ButtonWidget extends Widget {
-  public color bg = color(16);
-  public color fg = color(230);
-  public color hoveredBg = color(60);
-  public color pressedBg = color(130);
+  public color bg = color(245);
+  public color fg = color(42);
+  public color hoveredBg = color(230);
+  public color pressedBg = color(220);
+  public color borderColor = color(190);
+  public float borderWidth = 1.5f;
   
   private float width = 0;
   private float height = 0;
-  private float padding = 10.0;
-  private float fontSize = 16.0;
+  private float padding = 8.0;
+  private float fontSize = 20.0;
   private String text = "";
   private Runnable onClick;
   private boolean isHovered = false;
+  private float cornerRadius = 9.0f;
 
   public ButtonWidget(float x_in, float y_in, String text, Runnable onClickCallback) {
     this.x = x_in;
@@ -34,18 +37,18 @@ public class ButtonWidget extends Widget {
   
   @Override
   public void draw() {
+    textAlign(LEFT);
     if (this.isHovered && mousePressed) {
       fill(this.pressedBg);
-      strokeWeight(3);
-      stroke(255);
-      cursor(HAND);
     } else if (this.isHovered) {
       fill(this.hoveredBg);
-      cursor(HAND);
     } else {
       fill(this.bg);    
     }
-    rect(this.x, this.y, this.width, this.height);
+    stroke(this.borderColor);
+    strokeWeight(this.borderWidth);
+    
+    rect(this.x, this.y, this.width, this.height, this.cornerRadius);
     
     fill(this.fg);
     textSize(this.fontSize);
@@ -115,5 +118,13 @@ public class ButtonWidget extends Widget {
   public void setFontSize(float newFontSize) {
     this.fontSize = newFontSize;
     this.recalculateWidth();
+  }
+  
+  public float getCornerRadius() {
+    return this.cornerRadius;
+  }
+  
+  public void setCornerRadius(float newCornerRadius) {
+    this.cornerRadius = newCornerRadius;
   }
 }
