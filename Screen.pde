@@ -25,4 +25,15 @@ public class ScreenManager {
     }
   }
   
+  public void onMouseClicked(int mX, int mY) {
+    for (Widget w : widgets) {
+      w.onMouseClicked(mX, mY);
+    }
+  }
+
+  public void onMouseMoved(int mX, int mY) {
+    for (Widget w : widgets) {
+      w.onMouseMoved(mX, mY);
+    }
+  }
 }

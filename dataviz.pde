@@ -26,13 +26,9 @@ void draw() {
 }
 
 void mouseClicked() {
-  //btn.onMouseClicked(mouseX, mouseY);
-  //check.onMouseClicked(mouseX, mouseY);
-  //cal.onMouseClicked(mouseX, mouseY);
+  currentScreen.onMouseClicked(mouseX, mouseY);
 }
 
 void mouseMoved() {
-  //btn.onMouseMoved(mouseX, mouseY);
-  //check.onMouseMoved(mouseX, mouseY);
-  //cal.onMouseMoved(mouseX, mouseY);
+  currentScreen.onMouseMoved(mouseX, mouseY);
 }
