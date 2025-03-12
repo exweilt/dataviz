@@ -3,7 +3,6 @@ PFont mainFont;
 public static PShape checkmarkShape = null;
 public ArrayList<DataLoading> dataFiles = new ArrayList<>();
 DataLoading flights = new DataLoading();
-ScreenManager screenManager;
 
 /**
   *  Load static resources such as fonts and images at the start of the program.
@@ -31,8 +30,7 @@ void setup() {
   println(flights.stringToDate("01/01/2022", "01/04/2022"));
   print(flights.data.getString(1, "FL_DATE"));
   
-  defaultScreen = new ScreenManager(color(245, 245, 245));
-  currentScreen = defaultScreen;
+  currentScreen = new Screen(color(245, 245, 245));
   
   currentScreen.addWidget(new ButtonWidget(250, 100, "Click me!", () -> { println("Button clicked!"); }));
   currentScreen.addWidget(new CheckboxWidget(450, 100));

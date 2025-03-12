@@ -3,14 +3,13 @@
   Then use currentScreen = obj
 */
 
-ScreenManager defaultScreen;
-ScreenManager currentScreen;
+Screen currentScreen;
 
-public class ScreenManager {
+public class Screen {
   ArrayList<Widget> widgets = new ArrayList<Widget>();
   color bgColor;
   
-  ScreenManager(color bgColor) {
+  Screen(color bgColor) {
     this.bgColor = bgColor;
   }
   
