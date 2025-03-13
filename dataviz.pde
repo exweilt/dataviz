@@ -24,11 +24,12 @@ void setup() {
   
   // tmp
   dataFiles.add(flights);
-  println(dataFiles.get(0));
   flights.loadData("flights2kCleaned.csv");
   flights.printColumns();
   println(flights.stringToDate("01/01/2022", "01/04/2022"));
   print(flights.data.getString(1, "FL_DATE"));
+  println(dataFiles.get(0));
+
   
   currentScreen = new Screen(color(245, 245, 245));
   
@@ -36,6 +37,7 @@ void setup() {
   currentScreen.addWidget(new CheckboxWidget(450, 100));
   currentScreen.addWidget(new ScatterplotWidget(600, 10));
   currentScreen.addWidget(new CalendarWidget(50, 250));
+  currentScreen.addWidget(new LabelWidget(100, 200, "LabelWIdget"));
 }
 
 void draw() {
