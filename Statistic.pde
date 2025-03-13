@@ -59,6 +59,28 @@ public static class StatisticFunctions {
     return modeValue;
   }
   
+  static float max(float[] data){
+    float max = data[0];
+    
+    for(int current = 1; current < data.length; current++){
+      if(max < data[current]){
+        max = data[current];
+      }
+    }
+    return max;
+  }
+  
+  static float min(float[] data){
+    float min = data[0];
+    
+    for(int current = 1; current < data.length; current++){
+      if(min > data[current]){
+        min = data[current];
+      }
+    }
+    return min;
+  }
+  
   static float range(float[] data) {
     float minVal = data[0];
     float maxVal = data[0];
