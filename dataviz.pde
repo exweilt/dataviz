@@ -33,11 +33,12 @@ void setup() {
   
   currentScreen = new Screen(color(245, 245, 245));
   
-  currentScreen.addWidget(new ButtonWidget(250, 100, "Click me!", () -> { println("Button clicked!"); }));
-  currentScreen.addWidget(new CheckboxWidget(450, 100));
-  currentScreen.addWidget(new ScatterplotWidget(600, 10));
-  currentScreen.addWidget(new CalendarWidget(50, 250));
-  currentScreen.addWidget(new LabelWidget(100, 200, "LabelWIdget"));
+  //currentScreen.addWidget(new ButtonWidget(250, 100, "Click me!", () -> { println("Button clicked!"); }));
+  //currentScreen.addWidget(new CheckboxWidget(450, 100));
+  //currentScreen.addWidget(new ScatterplotWidget(600, 10));
+  //currentScreen.addWidget(new CalendarWidget(50, 250));
+  //currentScreen.addWidget(new LabelWidget(100, 200, "LabelWIdget"));
+  currentScreen.addWidget(new TableWidget(30, 100, flights.data));
 }
 
 void draw() {
