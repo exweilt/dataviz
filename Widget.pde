@@ -32,4 +32,6 @@ public class Widget {
     *  The cursor does NOT have to be over the widget for this to be executed!
     */
   public void onMouseMoved(int mouseX_in, int mouseY_in) {}
+  
+  public void onKeyTyped(char key) {}
 }

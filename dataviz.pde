@@ -3,7 +3,8 @@ PFont mainFont;
 public static PShape checkmarkShape = null;
 public ArrayList<DataLoading> dataFiles = new ArrayList<>();
 DataLoading flights = new DataLoading();
-TextFieldWidget searchBox;
+Screen currentScreen;
+TextFieldWidget focusedTextField = null;  // Added on 17/03/2025 by Damon
 
 
 /**
@@ -35,11 +36,8 @@ void setup() {
   
   currentScreen = new Screen(color(245, 245, 245));
   
- //Damon edited on 14/3/2025
-  searchBox = new TextFieldWidget(50, 50, 200, 40, "Enter Airport Code");
-  currentScreen.addWidget(searchBox); 
-  
-  
+
+  currentScreen.addWidget(new TextFieldWidget(50, 50, 200, 40, "Enter Airport Code" ) );
   currentScreen.addWidget(new ButtonWidget(250, 100, "Click me!", () -> { println("Button clicked!"); }));
   currentScreen.addWidget(new CheckboxWidget(450, 100));
   currentScreen.addWidget(new ScatterplotWidget(600, 10));
@@ -52,31 +50,9 @@ void draw() {
 }
 
 void keyTyped() {
-   searchBox.keyTyped(key);
-  
-  if (key == ENTER) {
-    String airportCode = searchBox.getText().trim();
-    println("Filtering flights by: " + airportCode);
-
-    ArrayList<TableRow> filteredFlights = new ArrayList<>();
-
-    for (int i = 0; i < flights.data.getRowCount(); i++) {
-      TableRow row = flights.data.getRow(i);
-      if (row.getString("Origin").equalsIgnoreCase(airportCode)) {
-        filteredFlights.add(row);
-      }
-    }
-
-    println("Filtered flights:");
-    for (TableRow row : filteredFlights) {
-      println(row.getString("FL_DATE") + " | " +
-              row.getString("Origin") + " -> " +
-              row.getString("Dest") + " | " +
-              row.getInt("DepTime") + " -> " +
-              row.getInt("ArrTime"));
-    }
-  }
+  currentScreen.onKeyTyped(key);
 }
+
 
 void mouseClicked() {
   currentScreen.onMouseClicked(mouseX, mouseY);
