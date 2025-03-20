@@ -38,7 +38,8 @@ void setup() {
   //currentScreen.addWidget(new ScatterplotWidget(600, 10));
   //currentScreen.addWidget(new CalendarWidget(50, 250));
   //currentScreen.addWidget(new LabelWidget(100, 200, "LabelWIdget"));
-  currentScreen.addWidget(new TableWidget(30, 100, flights.data));
+  //currentScreen.addWidget(new TableWidget(30, 100, flights.data));
+  currentScreen.addWidget(new ScrollbarWidget(30, 100));
 }
 
 void draw() {
