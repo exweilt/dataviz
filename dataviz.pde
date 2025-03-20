@@ -3,6 +3,9 @@ PFont mainFont;
 public static PShape checkmarkShape = null;
 public ArrayList<DataLoading> dataFiles = new ArrayList<>();
 DataLoading flights = new DataLoading();
+Screen currentScreen;
+TextFieldWidget focusedTextField = null;  // Added on 17/03/2025 by Damon
+
 
 /**
   *  Load static resources such as fonts and images at the start of the program.
@@ -33,17 +36,23 @@ void setup() {
   
   currentScreen = new Screen(color(245, 245, 245));
   
-  //currentScreen.addWidget(new ButtonWidget(250, 100, "Click me!", () -> { println("Button clicked!"); }));
-  //currentScreen.addWidget(new CheckboxWidget(450, 100));
-  //currentScreen.addWidget(new ScatterplotWidget(600, 10));
-  //currentScreen.addWidget(new CalendarWidget(50, 250));
-  //currentScreen.addWidget(new LabelWidget(100, 200, "LabelWIdget"));
-  currentScreen.addWidget(new BarplotWidget(100, 30));
+  currentScreen.addWidget(new TextFieldWidget(50, 50, 200, 40, "Enter Airport Code" ) );
+  currentScreen.addWidget(new ButtonWidget(250, 100, "Click me!", () -> { println("Button clicked!"); }));
+  currentScreen.addWidget(new CheckboxWidget(450, 100));
+  currentScreen.addWidget(new ScatterplotWidget(600, 10));
+  currentScreen.addWidget(new CalendarWidget(50, 250));
+  currentScreen.addWidget(new LabelWidget(100, 200, "LabelWIdget"));
+
 }
 
 void draw() {
   currentScreen.drawScreen();
 }
+
+void keyTyped() {
+  currentScreen.onKeyTyped(key);
+}
+
 
 void mouseClicked() {
   currentScreen.onMouseClicked(mouseX, mouseY);
