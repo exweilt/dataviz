@@ -5,8 +5,11 @@ public ArrayList<DataLoading> dataFiles = new ArrayList<>();
 DataLoading flights = new DataLoading();
 Screen currentScreen;
 TextFieldWidget focusedTextField = null;  // Added on 17/03/2025 by Damon
+ScatterplotWidget scatter = new ScatterplotWidget(50, 50);
+TextFieldWidget input = new TextFieldWidget(550, 50, 200, 40, "Enter Airport Code" );
+ButtonWidget btn;
 
-
+String interest = "";
 /**
   *  Load static resources such as fonts and images at the start of the program.
   *
@@ -33,15 +36,30 @@ void setup() {
   print(flights.data.getString(1, "FL_DATE"));
   println(dataFiles.get(0));
 
+  btn = new ButtonWidget(350, 100, "Click me!", () -> {
+    interest = input.getText();
+    scatter.setPointsX(flights.data.getFloatColumn(interest));
+  });
   
   currentScreen = new Screen(color(245, 245, 245));
   
-  currentScreen.addWidget(new TextFieldWidget(50, 50, 200, 40, "Enter Airport Code" ) );
-  currentScreen.addWidget(new ButtonWidget(250, 100, "Click me!", () -> { println("Button clicked!"); }));
-  currentScreen.addWidget(new CheckboxWidget(450, 100));
-  currentScreen.addWidget(new ScatterplotWidget(600, 10));
-  currentScreen.addWidget(new CalendarWidget(50, 250));
-  currentScreen.addWidget(new LabelWidget(100, 200, "LabelWIdget"));
+  //scatter.setPointsX(flights.data.getFloatColumn("ORIGIN_WAC"));
+  scatter.setPointsY(flights.data.getFloatColumn("DISTANCE"));
+  
+  scatter.setMinX(-1.0);
+  scatter.setMaxX(100.0);
+  scatter.setMinY(-10.0);
+  scatter.setMaxY(3000.0);
+  
+  currentScreen.addWidget(scatter);
+  currentScreen.addWidget(input);
+ currentScreen.addWidget(btn);
+  
+  //currentScreen.addWidget(new ButtonWidget(250, 100, "Click me!", () -> { println("Button clicked!"); }));
+  //currentScreen.addWidget(new CheckboxWidget(450, 100));
+  //currentScreen.addWidget(new ScatterplotWidget(600, 10));
+  //currentScreen.addWidget(new CalendarWidget(50, 250));
+  //currentScreen.addWidget(new LabelWidget(100, 200, "LabelWIdget"));
 
 }
 
