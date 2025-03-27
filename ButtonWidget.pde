@@ -14,10 +14,12 @@
 public class ButtonWidget extends Widget {
   public color bg = color(245);
   public color fg = color(42);
+  public color hoveredFg = color(42);
   public color hoveredBg = color(230);
   public color pressedBg = color(220);
   public color borderColor = color(190);
   public float borderWidth = 1.5f;
+  public boolean fixedWidth = false;
   
   private float width = 0;
   private float height = 0;
@@ -27,6 +29,10 @@ public class ButtonWidget extends Widget {
   private Runnable onClick;
   private boolean isHovered = false;
   private float cornerRadius = 9.0f;
+  public float trRadius = 9.0f;
+  public float tlRadius = 9.0f;
+  public float brRadius = 9.0f;
+  public float blRadius = 9.0f;
 
   public ButtonWidget(float x_in, float y_in, String text, Runnable onClickCallback) {
     this.x = x_in;
@@ -48,9 +54,13 @@ public class ButtonWidget extends Widget {
     stroke(this.borderColor);
     strokeWeight(this.borderWidth);
     
-    rect(this.x, this.y, this.width, this.height, this.cornerRadius);
+    rect(this.x, this.y, this.width, this.height, this.tlRadius, this.trRadius, this.brRadius, this.blRadius);
     
-    fill(this.fg);
+    if  (this.isHovered) {
+      fill(this.hoveredFg);
+    } else {
+      fill(this.fg);
+    }
     textSize(this.fontSize);
     text(this.text, this.x + padding, this.y + this.height - padding);
     
@@ -85,7 +95,9 @@ public class ButtonWidget extends Widget {
 
   private void recalculateWidth() {
     textSize(this.fontSize);
-    this.width = textWidth(this.text) + padding*2;
+    if (!this.fixedWidth) {
+      this.width = textWidth(this.text) + padding*2;    
+    }
     this.height = textAscent() + textDescent() + padding*2;
   }
   
@@ -120,11 +132,14 @@ public class ButtonWidget extends Widget {
     this.recalculateWidth();
   }
   
-  public float getCornerRadius() {
-    return this.cornerRadius;
-  }
+  //public float getCornerRadius() {
+  //  return this.cornerRadius;
+  //}
   
   public void setCornerRadius(float newCornerRadius) {
-    this.cornerRadius = newCornerRadius;
+    this.trRadius = newCornerRadius;
+    this.tlRadius = newCornerRadius;
+    this.blRadius = newCornerRadius;
+    this.brRadius = newCornerRadius;
   }
 }
