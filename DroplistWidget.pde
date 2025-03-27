@@ -7,7 +7,7 @@
  *  (c) Lex created the class at 27/03/2025
  */
 public class DroplistWidget extends Widget {
-  private float width = 0;
+  public float width = 0;
   private float height = 0;
 
   public color bg = color(220);
@@ -79,7 +79,7 @@ public class DroplistWidget extends Widget {
 
   void updateButtons() {
     float currentY = this.y;
-    float width = this.longestOptionWidth + 24.0f;
+    this.width = this.longestOptionWidth + 24.0f;
 
     // Update main Button
     this.mainButton = new ButtonWidget(this.x, currentY, this.options[activeIndex] + " v", () -> {

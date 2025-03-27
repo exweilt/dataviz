@@ -9,6 +9,9 @@ ScatterplotWidget scatter = new ScatterplotWidget(50, 50);
 TextFieldWidget input = new TextFieldWidget(550, 50, 200, 40, "Enter Airport Code" );
 ButtonWidget btn;
 
+QueryingWidget filters;
+BarplotWidget bar;
+
 String interest = "";
 /**
   *  Load static resources such as fonts and images at the start of the program.
@@ -51,14 +54,24 @@ void setup() {
   scatter.setMinY(-10.0);
   scatter.setMaxY(3000.0);
   
+  bar = new BarplotWidget(400, 50);
+  currentScreen.addWidget(bar);
+  
+  
+  
  // currentScreen.addWidget(scatter);
  // currentScreen.addWidget(input);
  //currentScreen.addWidget(btn);
  
- DroplistWidget dl = new DroplistWidget(200, 200, new String[]{"Apple", "Banana", "Orange", "Lemon"});
- currentScreen.addWidget(dl);
- dl.setOptions(new String[]{"Ror", "Fsefq", "qr13roij", "LeFiomon"});
+ //DroplistWidget dl = new DroplistWidget(200, 200, new String[]{"Apple", "Banana", "Orange", "Lemon"});
+ //currentScreen.addWidget(dl);
+ //dl.setOptions(new String[]{"Ror", "Fsefq", "qr13roij", "LeFiomon"});
   
+   filters = new QueryingWidget(50, 50);
+   currentScreen.addWidget(filters);
+   
+   
+   
   //currentScreen.addWidget(new ButtonWidget(250, 100, "Click me!", () -> { println("Button clicked!"); }));
   //currentScreen.addWidget(new CheckboxWidget(450, 100));
   //currentScreen.addWidget(new ScatterplotWidget(600, 10));
