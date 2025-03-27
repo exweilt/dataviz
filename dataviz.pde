@@ -5,7 +5,7 @@ public ArrayList<DataLoading> dataFiles = new ArrayList<>();
 DataLoading flights = new DataLoading();
 Screen currentScreen;
 TextFieldWidget focusedTextField = null;  // Added on 17/03/2025 by Damon
-ScatterplotWidget scatter = new ScatterplotWidget(50, 50);
+ScatterplotWidget scatter = new ScatterplotWidget(50, 50, "X", "Y");
 TextFieldWidget input = new TextFieldWidget(550, 50, 200, 40, "Enter Airport Code" );
 ButtonWidget btn;
 
@@ -77,6 +77,67 @@ void setup() {
   //currentScreen.addWidget(new ScatterplotWidget(600, 10));
   //currentScreen.addWidget(new CalendarWidget(50, 250));
   //currentScreen.addWidget(new LabelWidget(100, 200, "LabelWIdget"));
+  
+  // Added by Haojin 27/03/2025
+  // Display all different screens
+  
+  Screen screen_home = new Screen(color(245, 245, 245));
+  Screen screen_barplot = new Screen(color(245, 245, 245));
+  Screen screen_calendar = new Screen(color(245, 245, 245));
+  Screen screen_histogram = new Screen(color(245, 245, 245));
+  Screen screen_Scatterplot = new Screen(color(245, 245, 245));
+  
+  currentScreen = screen_home;
+  screen_home.addWidget(new LabelWidget(375, 300, "This is Home Page"));
+  
+  screen_home.addWidget(new ButtonWidget(750, 550, "Next Page", 
+    () -> {
+        currentScreen = screen_barplot;
+    }
+  ));
+  
+  screen_barplot.addWidget(new BarplotWidget(100, 0));
+  screen_barplot.addWidget(new ButtonWidget(50, 550, "Previous Page", 
+    () -> {
+        currentScreen = screen_home;
+    }
+  ));
+  screen_barplot.addWidget(new ButtonWidget(750, 550, "Next Page", 
+    () -> {
+        currentScreen = screen_calendar;
+    }
+  ));
+  
+  screen_calendar.addWidget(new CalendarWidget(0, 0));
+  screen_calendar.addWidget(new ButtonWidget(50, 550, "Previous Page", 
+    () -> {
+        currentScreen = screen_barplot;
+    }
+  ));
+  screen_calendar.addWidget(new ButtonWidget(750, 550, "Next Page", 
+    () -> {
+        currentScreen = screen_histogram;
+    }
+  ));
+  
+  // screen_histogram.addWidget(new HistogramWidget(0, 0));
+  screen_histogram.addWidget(new ButtonWidget(50, 550, "Previous Page", 
+    () -> {
+        currentScreen = screen_calendar;
+    }
+  ));
+  screen_histogram.addWidget(new ButtonWidget(750, 550, "Next Page", 
+    () -> {
+        currentScreen = screen_Scatterplot;
+    }
+  ));
+  
+  screen_Scatterplot.addWidget(new ScatterplotWidget(100, 0, "Sample X", "Sample Y"));
+  screen_Scatterplot.addWidget(new ButtonWidget(50, 550, "Previous Page", 
+    () -> {
+        currentScreen = screen_histogram;
+    }
+  ));
 
 }
 
