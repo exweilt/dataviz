@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 class DataLoading {
   private Table data;
-  private ArrayList<String> columnNames = new ArrayList<>();
+  public ArrayList<String> columnNames = new ArrayList<>();
 
   public DataLoading(){}
 
