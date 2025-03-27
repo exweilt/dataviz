@@ -51,9 +51,13 @@ void setup() {
   scatter.setMinY(-10.0);
   scatter.setMaxY(3000.0);
   
-  currentScreen.addWidget(scatter);
-  currentScreen.addWidget(input);
- currentScreen.addWidget(btn);
+ // currentScreen.addWidget(scatter);
+ // currentScreen.addWidget(input);
+ //currentScreen.addWidget(btn);
+ 
+ DroplistWidget dl = new DroplistWidget(200, 200, new String[]{"Apple", "Banana", "Orange", "Lemon"});
+ currentScreen.addWidget(dl);
+ dl.setOptions(new String[]{"Ror", "Fsefq", "qr13roij", "LeFiomon"});
   
   //currentScreen.addWidget(new ButtonWidget(250, 100, "Click me!", () -> { println("Button clicked!"); }));
   //currentScreen.addWidget(new CheckboxWidget(450, 100));
