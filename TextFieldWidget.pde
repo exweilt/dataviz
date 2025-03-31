@@ -55,6 +55,8 @@ public class TextFieldWidget extends Widget {
  public void onMouseClicked(int mX, int mY) {
     boolean wasActive = isActive; 
     isActive = (mX > x && mX < x + w && mY > y && mY < y + h);
+    refreshBlink(isActive);
+    
     if (!wasActive && isActive) {
       println("TextFieldWidget activated");
     } else if (wasActive && !isActive) {
