@@ -32,7 +32,7 @@ public class QueryingWidget extends Widget {
   }
 
   @Override
-    public void draw() {
+  public void draw() {
     textAlign(LEFT, TOP);
 
     fill(this.fontColor);
@@ -43,13 +43,22 @@ public class QueryingWidget extends Widget {
       fill(140);
       text("No filters applied.", this.x, this.y + 50);
     }
+    
+    DroplistWidget activeDroplist = null;
     for (int i = 0; i < filters.size(); i++) {
-      this.droplists[i].draw();
+      if (droplists[i].isListDropped) {
+        activeDroplist = droplists[i];
+      } else {
+        this.droplists[i].draw();
+      }
       this.inputs[i].draw();
     }
 
     addBtn.draw();
     applyBtn.draw();
+    
+    if (activeDroplist != null)
+      activeDroplist.draw();
   }
 
   void reposition() {
@@ -78,7 +87,7 @@ public class QueryingWidget extends Widget {
     this.applyBtn.y = currentY;
   }
   
-  void apply() {
+  void apply() { //<>//
     //result = flights.;
     //result.columnNames
     
@@ -87,7 +96,7 @@ public class QueryingWidget extends Widget {
       for (int i = 0; i < filters.size(); i++) {
         if (!row.getString(filters.get(i)[0]).equals(filters.get(i)[1]))  {
           wasMet = false;
-          break; //<>// //<>//
+          break; //<>//
         }
         if (wasMet) {
           result.addRow(row);
