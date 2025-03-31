@@ -33,5 +33,5 @@ public class Widget {
     */
   public void onMouseMoved(int mouseX_in, int mouseY_in) {}
   
-  public void onKeyTyped(char key) {}
+  public void onKeyPressed() {}
 }

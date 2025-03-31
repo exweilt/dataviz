@@ -156,8 +156,8 @@ void draw() {
   currentScreen.drawScreen();
 }
 
-void keyTyped() {
-  currentScreen.onKeyTyped(key);
+void keyPressed() {
+  currentScreen.onKeyPressed();
 }
 
 

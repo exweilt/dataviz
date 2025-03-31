@@ -87,7 +87,7 @@ public class QueryingWidget extends Widget {
       for (int i = 0; i < filters.size(); i++) {
         if (!row.getString(filters.get(i)[0]).equals(filters.get(i)[1]))  {
           wasMet = false;
-          break; //<>//
+          break; //<>// //<>//
         }
         if (wasMet) {
           result.addRow(row);
@@ -134,9 +134,9 @@ public class QueryingWidget extends Widget {
   }
   
   @Override
-  public void onKeyTyped(char key) {
+  public void onKeyPressed() {
     for (TextFieldWidget i : this.inputs) {
-      i.onKeyTyped(key);
+      i.onKeyPressed();
     }
   }
 }
