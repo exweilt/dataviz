@@ -24,7 +24,7 @@ public class QueryingWidget extends Widget {
       this.addFilter();
     });
 
-    this.applyBtn = new ButtonWidget(this.x + 100, this.y + 50., "Apply", () -> {
+    this.applyBtn = new ButtonWidget(this.x + 100, this.y, "Apply", () -> {
       this.apply();
     });
     
@@ -39,6 +39,10 @@ public class QueryingWidget extends Widget {
     textSize(this.fontSize);
     text("Filters", this.x, this.y);
 
+    if (filters.size() == 0) {
+      fill(140);
+      text("No filters applied.", this.x, this.y + 50);
+    }
     for (int i = 0; i < filters.size(); i++) {
       this.droplists[i].draw();
       this.inputs[i].draw();
@@ -62,12 +66,16 @@ public class QueryingWidget extends Widget {
 
       currentY += 50.0;
     }
+    
+    //// Hotfix
+    //if (droplists.length > 0) {
+    //  droplists[droplists.length - 1].setListDropped(false);
+    //}
 
+    currentY += 40;
     this.addBtn.y = currentY;
-    currentY += 50;
 
     this.applyBtn.y = currentY;
-    currentY += 50;
   }
   
   void apply() {
@@ -79,7 +87,7 @@ public class QueryingWidget extends Widget {
       for (int i = 0; i < filters.size(); i++) {
         if (!row.getString(filters.get(i)[0]).equals(filters.get(i)[1]))  {
           wasMet = false;
-          break;
+          break; //<>//
         }
         if (wasMet) {
           result.addRow(row);
