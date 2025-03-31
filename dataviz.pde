@@ -36,7 +36,10 @@ private void loadResources() {
 }
 
 void setup() {
-  size(900, 600);
+  size(1000, 1000);
+  surface.setTitle("Plane flights data Visualizer");
+  surface.setResizable(true);
+
 
   loadResources();
 
