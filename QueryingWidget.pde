@@ -6,8 +6,9 @@ public class QueryingWidget extends Widget {
   ButtonWidget applyBtn;
   ArrayList<String[]> filters; // Only 0 and 1 indicies, key : value
 
-  DroplistWidget[] droplists;
-  TextFieldWidget[] inputs;
+  ArrayList<DroplistWidget> droplists;
+  ArrayList<TextFieldWidget> inputs;
+  ArrayList<ButtonWidget> deleteButtons;
   
   Table result = null;
 
@@ -17,8 +18,9 @@ public class QueryingWidget extends Widget {
 
     this.filters = new ArrayList<String[]>();
 
-    droplists = new DroplistWidget[0];
-    inputs = new TextFieldWidget[0];
+    droplists = new ArrayList<DroplistWidget>();
+    inputs = new ArrayList<TextFieldWidget>();
+    deleteButtons = new ArrayList<ButtonWidget>();
 
     this.addBtn = new ButtonWidget(this.x, this.y, "+", () -> {
       this.addFilter();
@@ -46,12 +48,13 @@ public class QueryingWidget extends Widget {
     
     DroplistWidget activeDroplist = null;
     for (int i = 0; i < filters.size(); i++) {
-      if (droplists[i].isListDropped) {
-        activeDroplist = droplists[i];
+      if (droplists.get(i).isListDropped) {
+        activeDroplist = droplists.get(i);
       } else {
-        this.droplists[i].draw();
+        this.droplists.get(i).draw();
       }
-      this.inputs[i].draw();
+      this.inputs.get(i).draw();
+      this.deleteButtons.get(i).draw();
     }
 
     addBtn.draw();
@@ -62,16 +65,46 @@ public class QueryingWidget extends Widget {
   }
 
   void reposition() {
-    droplists = new DroplistWidget[this.filters.size()];
-    inputs = new TextFieldWidget[this.filters.size()];
+    droplists = new ArrayList<DroplistWidget>(this.filters.size());
+    inputs = new ArrayList<TextFieldWidget>(this.filters.size());
+    deleteButtons = new ArrayList<ButtonWidget>(this.filters.size());
 
     float currentY = this.y + 70.0;
     for (int i = 0; i < this.filters.size(); i++) {
+      final int finalIdx = i;
+      
+      //// Generate new
+      //if (i >= droplists.size()) {
+      //  DroplistWidget newDrop = new DroplistWidget(this.x, currentY, flights.columnNames.toArray(new String[0]));
+      //  droplists.add(newDrop); //<>//
+        
+      //  TextFieldWidget newInput = new TextFieldWidget(this.x + newDrop.width + 15.0, currentY, 120., 40., "");
+      //  newInput.h = newDrop.mainButton.height;
+      //  inputs.add(newInput);   
+        
+      //  ButtonWidget newDelete = new ButtonWidget(newInput.x + newInput.w + 15.0, currentY, "", () -> {
+      //    deleteFilter(finalIdx);
+      //  });
+      //  newDelete.fixedWidth = true;
+      //  newDelete.width = newDelete.height;
+      //  newDelete.setOptionalIcon(binShape); //<>//
+      //  deleteButtons.add(newDelete);
+      //}
+      
       DroplistWidget newDrop = new DroplistWidget(this.x, currentY, flights.columnNames.toArray(new String[0]));
-      droplists[i] = newDrop;
-
+      droplists.set(i, newDrop);
+      
       TextFieldWidget newInput = new TextFieldWidget(this.x + newDrop.width + 15.0, currentY, 120., 40., "");
-      inputs[i] = newInput;
+      newInput.h = newDrop.mainButton.height;
+      inputs.set(i, newInput);   
+      
+      ButtonWidget newDelete = new ButtonWidget(newInput.x + newInput.w + 15.0, currentY, "", () -> {
+        deleteFilter(finalIdx);
+      });
+      newDelete.fixedWidth = true;
+      newDelete.width = newDelete.height;
+      newDelete.setOptionalIcon(binShape);
+      deleteButtons.set(i, newDelete);
 
       currentY += 50.0;
     }
@@ -87,7 +120,7 @@ public class QueryingWidget extends Widget {
     this.applyBtn.y = currentY;
   }
   
-  void apply() { //<>//
+  void apply() {
     //result = flights.;
     //result.columnNames
     
@@ -112,6 +145,14 @@ public class QueryingWidget extends Widget {
     this.reposition();
   }
 
+  void deleteFilter(int idx) {
+    this.filters.remove(idx);
+    droplists.remove(idx);
+    inputs.remove(idx);
+    deleteButtons.remove(idx);
+    this.reposition();
+  }
+
   @Override
   public boolean onMouseClicked(int mX, int mY) {
     for (DroplistWidget d : this.droplists) {
@@ -121,6 +162,10 @@ public class QueryingWidget extends Widget {
     
     for (TextFieldWidget i : this.inputs) {
       i.onMouseClicked(mX, mY);
+    }
+    
+    for (ButtonWidget b : this.deleteButtons) {
+      b.onMouseClicked(mX, mY);
     }
     
     this.addBtn.onMouseClicked(mX, mY);
@@ -140,6 +185,10 @@ public class QueryingWidget extends Widget {
     
     for (TextFieldWidget i : this.inputs) {
       i.onMouseMoved(mX, mY);
+    }
+    
+    for (ButtonWidget b : this.deleteButtons) {
+      b.onMouseMoved(mX, mY);
     }
   }
   

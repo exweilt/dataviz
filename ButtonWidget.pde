@@ -22,7 +22,7 @@ public class ButtonWidget extends Widget {
   public boolean fixedWidth = false;
   
   private float width = 0;
-  private float height = 0;
+  public float height = 0;
   private float padding = 8.0;
   private float fontSize = 20.0;
   private String text = "";
@@ -91,12 +91,14 @@ public class ButtonWidget extends Widget {
   public void onMouseMoved(int mX, int mY) {
     if (mX > this.x && mX < (this.x + this.width) && mY > this.y && mY < (this.y + this.height)) {
       if (!isHovered) {
-        cursor(HAND); // cursor just entered
+        cursor(HAND); // cursor just entered 
+        //println(millis() + " entered");
       }
       isHovered = true;
     } else {
       if (isHovered) {
         cursor(ARROW); // cursor just left
+        //println(millis() + " left");
       }
       isHovered = false;
     }

@@ -3,6 +3,7 @@ PFont mainFont;
 public static PShape checkmarkShape = null;
 public static PShape arrowdownShape = null;
 public static PShape arrowupShape = null;
+public static PShape binShape = null;
 
 public ArrayList<DataLoading> dataFiles = new ArrayList<>();
 DataLoading flights = new DataLoading();
@@ -33,10 +34,13 @@ private void loadResources() {
   
   arrowupShape = loadShape("arrowup.svg");
   arrowupShape.disableStyle();
+  
+  binShape = loadShape("bin.svg");
+  binShape.disableStyle();
 }
 
 void setup() {
-  size(1000, 1000);
+  size(1000, 900);
   surface.setTitle("Plane flights data Visualizer");
   surface.setResizable(true);
 
