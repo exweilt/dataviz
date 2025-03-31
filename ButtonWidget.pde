@@ -77,12 +77,14 @@ public class ButtonWidget extends Widget {
   }
 
   @Override
-  public void onMouseClicked(int mX, int mY) {
+  public boolean onMouseClicked(int mX, int mY) {
     if (mX > this.x && mX < (this.x + this.width) && mY > this.y && mY < (this.y + this.height)) {
       if (onClick != null) {
         onClick.run();
       }
+      return true;
     }
+    return false;
   }
   
   @Override

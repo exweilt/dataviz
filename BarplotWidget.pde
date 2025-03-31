@@ -59,8 +59,8 @@ public class BarplotWidget extends Widget {
   }
 
   @Override
-  public void onMouseClicked(int mX, int mY) {
-    
+  public boolean onMouseClicked(int mX, int mY) {
+    return false;
   }
   
   @Override

@@ -56,14 +56,30 @@ public class DroplistWidget extends Widget {
   }
 
   @Override
-    public void onMouseClicked(int mX, int mY) {
-    this.mainButton.onMouseClicked(mX, mY);
-
+  public boolean onMouseClicked(int mX, int mY) {
+    boolean wasMainButtonPressed = this.mainButton.onMouseClicked(mX, mY);
+    
+    if (wasMainButtonPressed) {
+      setListDropped(!isListDropped);
+    }
+    
+    boolean reacted = false;
     if (isListDropped) {
       for (ButtonWidget b : this.optionButtons) {
-        b.onMouseClicked(mX, mY);
+        if (b.onMouseClicked(mX, mY)) {
+          reacted = true;
+          break;
+        }
       }
+      
+      //if (!wasMainButtonPressed && !reacted)
+      //  setListDropped(false);
+      
+      if (!wasMainButtonPressed)
+        setListDropped(false);
     }
+    
+    return wasMainButtonPressed || reacted;
   }
 
   @Override
@@ -92,7 +108,7 @@ public class DroplistWidget extends Widget {
 
     // Update main Button
     this.mainButton = new ButtonWidget(this.x, currentY, this.options[activeIndex], () -> {
-      this.setListDropped(!this.isListDropped);
+      //this.setListDropped(!this.isListDropped);
     }
     );
    

@@ -74,9 +74,11 @@ public class CalendarWidget extends Widget {
   }
 
   @Override
-  public void onMouseClicked(int mX, int mY) {
-    this.leftBtn.onMouseClicked(mX, mY);
-    this.rightBtn.onMouseClicked(mX, mY);
+  public boolean onMouseClicked(int mX, int mY) {
+    if (this.leftBtn.onMouseClicked(mX, mY))
+      return true;
+      
+    return this.rightBtn.onMouseClicked(mX, mY);
   }
   
   @Override

@@ -25,7 +25,7 @@ public class QueryingWidget extends Widget {
     });
 
     this.applyBtn = new ButtonWidget(this.x + 100, this.y, "Apply", () -> {
-      this.apply();
+      //this.apply();
     });
     
     reposition();
@@ -113,19 +113,20 @@ public class QueryingWidget extends Widget {
   }
 
   @Override
-  public void onMouseClicked(int mX, int mY) {
-    this.addBtn.onMouseClicked(mX, mY);
-    this.applyBtn.onMouseClicked(mX, mY);
-
-
+  public boolean onMouseClicked(int mX, int mY) {
     for (DroplistWidget d : this.droplists) {
-      d.onMouseClicked(mX, mY);
+      if (d.onMouseClicked(mX, mY))
+        return true;
     }
     
     for (TextFieldWidget i : this.inputs) {
       i.onMouseClicked(mX, mY);
     }
-
+    
+    this.addBtn.onMouseClicked(mX, mY);
+    this.applyBtn.onMouseClicked(mX, mY);
+    
+    return false;
   }
 
   @Override

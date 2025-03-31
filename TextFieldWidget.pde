@@ -52,7 +52,7 @@ public class TextFieldWidget extends Widget {
 
   @Override
   // texting whether is active or deactive
- public void onMouseClicked(int mX, int mY) {
+ public boolean onMouseClicked(int mX, int mY) {
     boolean wasActive = isActive; 
     isActive = (mX > x && mX < x + w && mY > y && mY < y + h);
     refreshBlink(isActive);
@@ -62,6 +62,8 @@ public class TextFieldWidget extends Widget {
     } else if (wasActive && !isActive) {
       println("TextFieldWidget deactivated");
     }
+    
+    return isActive;
 }
 
 
@@ -79,7 +81,7 @@ public class TextFieldWidget extends Widget {
   @Override
   //use TextFieldWidget to handle the keyTpye input
 public void onKeyPressed() {
-  if (isActive) { //<>// //<>//
+  if (isActive) {
     if (key == BACKSPACE && text.length() > 0) {
       if (keyEvent.isControlDown()) {  
         int lastSpace = text.lastIndexOf(' ', cursorPosition - 1);
@@ -96,9 +98,9 @@ public void onKeyPressed() {
       }
     } else if (key == ENTER) {
       //applyFilter();
-    } else if (key == CODED) { //<>// //<>//
+    } else if (key == CODED) {
       if (keyCode == LEFT) {
-        cursorPosition = max(0, cursorPosition - 1); //<>// //<>//
+        cursorPosition = max(0, cursorPosition - 1);
       } else if (keyCode == RIGHT) {
         cursorPosition = min(text.length(), cursorPosition + 1);
       }
