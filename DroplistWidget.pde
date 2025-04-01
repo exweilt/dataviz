@@ -56,14 +56,30 @@ public class DroplistWidget extends Widget {
   }
 
   @Override
-    public void onMouseClicked(int mX, int mY) {
-    this.mainButton.onMouseClicked(mX, mY);
-
+  public boolean onMouseClicked(int mX, int mY) {
+    boolean wasMainButtonPressed = this.mainButton.onMouseClicked(mX, mY);
+    
+    if (wasMainButtonPressed) {
+      setListDropped(!isListDropped);
+    }
+    
+    boolean reacted = false;
     if (isListDropped) {
       for (ButtonWidget b : this.optionButtons) {
-        b.onMouseClicked(mX, mY);
+        if (b.onMouseClicked(mX, mY)) {
+          reacted = true;
+          break;
+        }
       }
+      
+      //if (!wasMainButtonPressed && !reacted)
+      //  setListDropped(false);
+      
+      if (!wasMainButtonPressed)
+        setListDropped(false);
     }
+    
+    return wasMainButtonPressed || reacted;
   }
 
   @Override
@@ -76,16 +92,29 @@ public class DroplistWidget extends Widget {
       }
     }
   }
-
+  void setListDropped(boolean newState) {
+    this.isListDropped = newState;
+    
+    if (newState) {
+      mainButton.setOptionalIcon(arrowupShape);
+    } else {
+      mainButton.setOptionalIcon(arrowdownShape);
+    }
+  }
+  
   void updateButtons() {
     float currentY = this.y;
     this.width = this.longestOptionWidth + 24.0f;
 
     // Update main Button
-    this.mainButton = new ButtonWidget(this.x, currentY, this.options[activeIndex] + " v", () -> {
-      this.isListDropped = !this.isListDropped;
+    this.mainButton = new ButtonWidget(this.x, currentY, this.options[activeIndex], () -> {
+      //this.setListDropped(!this.isListDropped);
     }
     );
+   
+    mainButton.setOptionalIcon(arrowdownShape);
+    
+    
     this.mainButton.fixedWidth = true;
     this.mainButton.width = width;
     this.mainButton.bg = color(200);

@@ -20,9 +20,11 @@ public class TextFieldWidget extends Widget {
 
   @Override
   public void draw() {
-    fill(isActive ? activeColor : defaultColor);
-    stroke(0);
-    rect(x, y, w, h, 10);
+    fill(defaultColor);
+    stroke(20);
+    strokeWeight(isActive ? 3.0 : 1.0);
+    rect(x, y, w, h, 5);
+    strokeWeight(1.0);
 
     fill(0);
     textAlign(LEFT, CENTER);
@@ -38,8 +40,7 @@ public class TextFieldWidget extends Widget {
      // Handling the blinking cursor
     if (isActive) {
       if (millis() - lastBlinkTime > 500) { 
-        showCursor = !showCursor; 
-        lastBlinkTime = millis();
+        refreshBlink(!showCursor);
       }
 
       if (showCursor) {
@@ -51,14 +52,18 @@ public class TextFieldWidget extends Widget {
 
   @Override
   // texting whether is active or deactive
- public void onMouseClicked(int mX, int mY) {
+ public boolean onMouseClicked(int mX, int mY) {
     boolean wasActive = isActive; 
     isActive = (mX > x && mX < x + w && mY > y && mY < y + h);
+    refreshBlink(isActive);
+    
     if (!wasActive && isActive) {
       println("TextFieldWidget activated");
     } else if (wasActive && !isActive) {
       println("TextFieldWidget deactivated");
     }
+    
+    return isActive;
 }
 
 
@@ -75,8 +80,8 @@ public class TextFieldWidget extends Widget {
 
   @Override
   //use TextFieldWidget to handle the keyTpye input
-public void onKeyTyped(char key) {
-  if (isActive) {
+public void onKeyPressed() {
+  if (isActive) { //<>// //<>// //<>//
     if (key == BACKSPACE && text.length() > 0) {
       if (keyEvent.isControlDown()) {  
         int lastSpace = text.lastIndexOf(' ', cursorPosition - 1);
@@ -92,10 +97,10 @@ public void onKeyTyped(char key) {
         cursorPosition = max(0, cursorPosition - 1);
       }
     } else if (key == ENTER) {
-      applyFilter();
-    } else if (key == CODED) {
+      //applyFilter();
+    } else if (key == CODED) { //<>// //<>// //<>//
       if (keyCode == LEFT) {
-        cursorPosition = max(0, cursorPosition - 1);
+        cursorPosition = max(0, cursorPosition - 1); //<>// //<>// //<>//
       } else if (keyCode == RIGHT) {
         cursorPosition = min(text.length(), cursorPosition + 1);
       }
@@ -103,9 +108,15 @@ public void onKeyTyped(char key) {
       text = text.substring(0, cursorPosition) + key + text.substring(cursorPosition);
       cursorPosition++;
     }
+    refreshBlink(true);
   }
 }
 
+  private void refreshBlink(boolean newState) {
+    showCursor = newState; 
+    lastBlinkTime = millis();
+  }
+  
  //Method for dealing with CTRL + backspace
  public void handleKeyPressed() {
   if (isActive && key == BACKSPACE && keyEvent.isControlDown()) {  
@@ -131,8 +142,8 @@ public void onKeyTyped(char key) {
   }
 }
 
-void keyPressed() {
-  if (focusedTextField != null) {
-    focusedTextField.handleKeyPressed();
-  }
-}
+//void keyPressed() {
+//  if (focusedTextField != null) {
+//    focusedTextField.handleKeyPressed();
+//  }
+//}

@@ -22,7 +22,7 @@ public class ButtonWidget extends Widget {
   public boolean fixedWidth = false;
   
   private float width = 0;
-  private float height = 0;
+  public float height = 0;
   private float padding = 8.0;
   private float fontSize = 20.0;
   private String text = "";
@@ -33,6 +33,7 @@ public class ButtonWidget extends Widget {
   public float tlRadius = 9.0f;
   public float brRadius = 9.0f;
   public float blRadius = 9.0f;
+  private PShape optionalRightIcon = null; 
 
   public ButtonWidget(float x_in, float y_in, String text, Runnable onClickCallback) {
     this.x = x_in;
@@ -64,30 +65,40 @@ public class ButtonWidget extends Widget {
     textSize(this.fontSize);
     text(this.text, this.x + padding, this.y + this.height - padding);
     
+    if (this.optionalRightIcon != null) {
+      float pad = this.height / 5.0;
+      noStroke();
+      shape(this.optionalRightIcon, this.x + this.width - this.height + pad, this.y + pad, this.height / 2.0, this.height / 2.0);
+    }
+    
     // Revert stroke to default
     stroke(0);
     strokeWeight(1);
   }
 
   @Override
-  public void onMouseClicked(int mX, int mY) {
+  public boolean onMouseClicked(int mX, int mY) {
     if (mX > this.x && mX < (this.x + this.width) && mY > this.y && mY < (this.y + this.height)) {
       if (onClick != null) {
         onClick.run();
       }
+      return true;
     }
+    return false;
   }
   
   @Override
   public void onMouseMoved(int mX, int mY) {
     if (mX > this.x && mX < (this.x + this.width) && mY > this.y && mY < (this.y + this.height)) {
       if (!isHovered) {
-        cursor(HAND); // cursor just entered
+        cursor(HAND); // cursor just entered 
+        //println(millis() + " entered");
       }
       isHovered = true;
     } else {
       if (isHovered) {
         cursor(ARROW); // cursor just left
+        //println(millis() + " left");
       }
       isHovered = false;
     }
@@ -95,10 +106,16 @@ public class ButtonWidget extends Widget {
 
   private void recalculateWidth() {
     textSize(this.fontSize);
-    if (!this.fixedWidth) {
-      this.width = textWidth(this.text) + padding*2;    
-    }
+    
     this.height = textAscent() + textDescent() + padding*2;
+
+    if (!this.fixedWidth) {
+      this.width = textWidth(this.text) + padding*2;
+      
+      if (this.optionalRightIcon != null) {
+        this.width += height;
+      }
+    }
   }
   
   public void setCallback(Runnable routine) {
@@ -141,5 +158,14 @@ public class ButtonWidget extends Widget {
     this.tlRadius = newCornerRadius;
     this.blRadius = newCornerRadius;
     this.brRadius = newCornerRadius;
+  }
+  
+  public void setOptionalIcon(PShape icon) {
+    this.optionalRightIcon = icon;
+    this.recalculateWidth();
+  }
+  
+  public PShape getOptionalIcon() {
+    return this.optionalRightIcon;
   }
 }
