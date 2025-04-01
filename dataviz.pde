@@ -12,6 +12,7 @@ TextFieldWidget focusedTextField = null;  // Added on 17/03/2025 by Damon
 ScatterplotWidget scatter = new ScatterplotWidget(50, 50, "X", "Y");
 TextFieldWidget input = new TextFieldWidget(550, 50, 200, 40, "Enter Airport Code" );
 ButtonWidget btn;
+TableWidget table;
 
 QueryingWidget filters;
 BarplotWidget bar;
@@ -98,6 +99,7 @@ void setup() {
 
   Screen screen_home = new Screen(color(245, 245, 245));
   Screen screen_query = new Screen(color(245, 245, 245));
+  Screen screen_table = new Screen(color(245, 245, 245));
   Screen screen_barplot = new Screen(color(245, 245, 245));
   Screen screen_histogram = new Screen(color(245, 245, 245));
   Screen screen_piechart = new Screen(color(245, 245, 245));  // added by Damon
@@ -110,7 +112,7 @@ void setup() {
   ));
   screen_query.addWidget(new ButtonWidget(750, 550, "Next Page",
     () -> {
-    currentScreen = screen_barplot;
+    currentScreen = screen_table;
   }
   ));
   filters = new QueryingWidget(50, 50);
@@ -125,9 +127,24 @@ void setup() {
   }
   ));
 
+  //  ================= Table Page ====================
+  screen_table.addWidget(new ButtonWidget(50, 550, "Previous Page",
+    () -> {
+    currentScreen = screen_query;
+  }
+  ));
+  screen_table.addWidget(new ButtonWidget(750, 550, "Next Page",
+    () -> {
+    currentScreen = screen_barplot;
+  }
+  ));
+  table = new TableWidget(50, 50, flights.data);
+  screen_table.addWidget(table);
+  //  =================================================
+
   bar = new BarplotWidget(100, 0);
   screen_barplot.addWidget(bar);
-  ButtonWidget updateBarBtn = new ButtonWidget(500, 300, "Update",
+  ButtonWidget updateBarBtn = new ButtonWidget(500, 600, "Update",
     () -> {
     HashMap<String, Integer> map = StatisticFunctions.absoluteFrequency(filters.result.getStringColumn("ORIGIN"));
     bar.categoriesX = map.keySet().toArray(new String[0]);
@@ -141,7 +158,7 @@ void setup() {
   screen_barplot.addWidget(updateBarBtn);
   screen_barplot.addWidget(new ButtonWidget(50, 550, "Previous Page",
     () -> {
-    currentScreen = screen_query;
+    currentScreen = screen_table;
   }
   ));
   screen_barplot.addWidget(new ButtonWidget(750, 550, "Next Page",
