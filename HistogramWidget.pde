@@ -65,7 +65,7 @@ public class HistogramWidget extends Widget {
         rect(columnX, bottomY, COLUMN_WIDTH, -frequency.get(i));
         strokeWeight(1);
         i = tempI;
-      } //<>//
+      } //<>// //<>// //<>//
       columnX += COLUMN_WIDTH;
       nextValue++;
       //if (nextValue > seenValues.size()) break;
@@ -91,7 +91,8 @@ public class HistogramWidget extends Widget {
   }
 
   @Override
-    public void onMouseClicked(int mX, int mY) {
+    public boolean onMouseClicked(int mX, int mY) {
+      return false;
   }
 
   @Override

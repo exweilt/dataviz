@@ -9,13 +9,13 @@ public class BarplotWidget extends Widget {
   private float width = 600.0f;
   private float height = 500.0f;
   private String[] categoriesX = {"Apple", "Banana", "Orange"};
-  private float[] pointsY = {400, 70, 210};
+  private float[] pointsY = {400., 70., 210.};
   //public float scaleX = 8.0f; // n pixels per 1 x unit of graph
   public float scaleY = 1.0f;
   //public int stepX = 5;
   //public int stepY = 10;
   //public PVector topLeftPos = new PVector(-25, 125); // Coordinate position of the left top corner of plot
-   color[] colors = {color(230, 10, 10), color(10, 20, 230), color(20, 210, 40)};
+   color[] colors = {color(230, 10, 10)};
 
   public BarplotWidget(float x_in, float y_in) {
     this.x = x_in;
@@ -28,8 +28,8 @@ public class BarplotWidget extends Widget {
     noStroke();
     rect(this.x, this.y, this.width, this.height);
     
-    float COLUMN_WIDTH = 70.0f;
-    float COLUMN_PADDING = 30.0f;
+    float COLUMN_WIDTH = 30.0f;
+    float COLUMN_PADDING = 10.0f;
     
     float bottomY = this.y + this.height - 60;
     textSize(12);
@@ -39,7 +39,7 @@ public class BarplotWidget extends Widget {
       fill(30);
       text(this.categoriesX[i], columnX, bottomY + 30.0);
       
-      fill (colors[i % 3]); //<>//
+      fill (colors[i % this.colors.length]);
       //circle(columnX, bottomY, 10);
       rect(columnX, bottomY, COLUMN_WIDTH, -this.pointsY[i] * this.scaleY);
     }
@@ -59,8 +59,8 @@ public class BarplotWidget extends Widget {
   }
 
   @Override
-  public void onMouseClicked(int mX, int mY) {
-    
+  public boolean onMouseClicked(int mX, int mY) {
+    return false;
   }
   
   @Override
@@ -89,6 +89,14 @@ public class BarplotWidget extends Widget {
   
   public float[] getY() {
     return this.pointsY;
+  }
+  
+  public void setCategoryValue(String cat, Float value) {
+    for (int i = 0; i < this.categoriesX.length; i++) {
+      if (this.categoriesX[i].equals(cat)) {
+        this.pointsY[i] = value;
+      }
+    }
   }
   
   //public float getMaxX() {

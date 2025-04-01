@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   fill="#000000"
+   width="800"
+   height="800"
+   viewBox="0 0 512 512"
+   version="1.1"
+   id="svg2"
+   sodipodi:docname="bin.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="namedview2"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1">
+    <inkscape:page
+       x="0"
+       y="0"
+       width="512"
+       height="512"
+       id="page2"
+       margin="0"
+       bleed="0" />
+  </sodipodi:namedview>
+  <title
+     id="title1">ionicons-v5-k</title>
+  <polygon
+     points="174.54,352 200,377.46 256,321.46 312,377.46 337.46,352 281.46,296 337.46,240 312,214.54 256,270.54 200,214.54 174.54,240 230.54,296 "
+     style="display:inline;fill:none"
+     id="polygon1" />
+  <polygon
+     points="174.54,352 200,377.46 256,321.46 312,377.46 337.46,352 281.46,296 337.46,240 312,214.54 256,270.54 200,214.54 174.54,240 230.54,296 "
+     style="display:inline;fill:none"
+     id="polygon2" />
+  <path
+     d="M 64,160 93.74,442.51 A 24,24 0 0 0 117.61,464 h 276.78 a 24,24 0 0 0 23.87,-21.49 L 448,160 Z m 248,217.46 -56,-56 -56,56 -25.46,-25.46 56,-56 -56,-56 25.46,-25.46 56,56 56,-56 25.46,25.46 -56,56 56,56 z"
+     id="path2"
+     style="display:inline" />
+  <rect
+     x="32"
+     y="48"
+     width="448"
+     height="80"
+     rx="12"
+     ry="12"
+     id="rect2"
+     style="display:inline" />
+</svg>

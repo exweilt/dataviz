@@ -56,9 +56,9 @@ public class Screen {
     }
   }
   
-  public void onKeyTyped(char key) {
+  public void onKeyPressed() {
    for (Widget w : widgets) {
-     w.onKeyTyped(key);
+     w.onKeyPressed();
     }
   }
 
