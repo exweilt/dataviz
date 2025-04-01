@@ -18,13 +18,19 @@ public class ScatterplotWidget extends Widget {
   public int stepY = 10;
   public PVector topLeftPos = new PVector(-25, 125); // Coordinate position of the left top corner of plot
   
+  public String text_x;
+  public String text_y;
+  
   final private static float TICK_RADIUS = 2.0;
   final private static float TICK_WEIGHT = 3.0;
   final private static float TICK_TEXT_OFFSET = 8.0;
 
-  public ScatterplotWidget(float x_in, float y_in) {
+  public ScatterplotWidget(float x_in, float y_in, String text_x, String text_y) {
     this.x = x_in;
     this.y = y_in;
+    
+    this.text_x = text_x;
+    this.text_y = text_y;
     
     setMinX(-5.0);
     setMaxX(30.0);
@@ -57,7 +63,7 @@ public class ScatterplotWidget extends Widget {
     for (int tick = (int(getMinX()) / stepX) * stepX; tick < maxX; tick += stepX) {
       if (tick == 0)
         continue;
-      PVector p = plotToScreen(tick, 0); //<>//
+      PVector p = plotToScreen(tick, 0); //<>// //<>// //<>// //<>//
       //PVector p2 = plotToScreen(tick, -1);
       //PVector pText = plotToScreen(tick, -8);
       line(p.x, p.y + TICK_RADIUS, p.x, p.y - TICK_RADIUS);
@@ -88,13 +94,25 @@ public class ScatterplotWidget extends Widget {
       circle(p.x, p.y, this.markerRadius);
     }
     
+    
+    // Haojin Added Vertical and Horizontal Text for Scatterplot
     textAlign(LEFT);
     strokeWeight(1.0);
+    
+    fill(color(0));
+    textSize(16);
+    text(this.text_x, this.x + this.width / 2 - 20, this.y + this.height + 30);
+
+    pushMatrix();
+    translate(this.x - 20, this.y + this.height / 2 + 20);
+    rotate(radians(270));
+    text(this.text_y, 0, 0);
+    popMatrix();
   }
 
   @Override
-  public void onMouseClicked(int mX, int mY) {
-
+  public boolean onMouseClicked(int mX, int mY) {
+    return false;
   }
   
   @Override
