@@ -65,7 +65,7 @@ public class HistogramWidget extends Widget {
         rect(columnX, bottomY, COLUMN_WIDTH, -frequency.get(i));
         strokeWeight(1);
         i = tempI;
-      } //<>//
+      } //<>// //<>// //<>//
       columnX += COLUMN_WIDTH;
       nextValue++;
       //if (nextValue > seenValues.size()) break;

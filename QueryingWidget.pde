@@ -10,7 +10,7 @@ public class QueryingWidget extends Widget {
   ArrayList<TextFieldWidget> inputs;
   ArrayList<ButtonWidget> deleteButtons;
   
-  Table result = null;
+  public Table result = null;
 
   public QueryingWidget(float x_in, float y_in) {
     this.x = x_in;
@@ -31,6 +31,7 @@ public class QueryingWidget extends Widget {
     });
     
     reposition();
+    this.apply();
   }
 
   @Override
@@ -129,7 +130,7 @@ public class QueryingWidget extends Widget {
       for (int i = 0; i < filters.size(); i++) {
         if (!row.getString(droplists.get(i).getSelectedString()).toLowerCase().contains(inputs.get(i).text.toLowerCase()))  {
           wasMet = false;
-          break; //<>//
+          break;
         }
       }
       if (wasMet) {
@@ -137,7 +138,8 @@ public class QueryingWidget extends Widget {
       }
     }
     
-    println(result.getRowCount()); //<>//
+    println(result.getRowCount());
+    this.result = result;
     //bar.categoriesX = StatisticFunctions.absoluteFrequency(result.getStringColumn("ORIGIN")).keySet().toArray(new String[0]);
   }
 

@@ -63,7 +63,7 @@ public class ScatterplotWidget extends Widget {
     for (int tick = (int(getMinX()) / stepX) * stepX; tick < maxX; tick += stepX) {
       if (tick == 0)
         continue;
-      PVector p = plotToScreen(tick, 0); //<>// //<>//
+      PVector p = plotToScreen(tick, 0); //<>// //<>// //<>// //<>//
       //PVector p2 = plotToScreen(tick, -1);
       //PVector pText = plotToScreen(tick, -8);
       line(p.x, p.y + TICK_RADIUS, p.x, p.y - TICK_RADIUS);

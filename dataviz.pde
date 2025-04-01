@@ -1,4 +1,4 @@
-/* Resources */
+/* Resources */ //<>// //<>//
 PFont mainFont;
 public static PShape checkmarkShape = null;
 public static PShape arrowdownShape = null;
@@ -28,13 +28,13 @@ private void loadResources() {
 
   checkmarkShape = loadShape("checkmark.svg");
   checkmarkShape.disableStyle();
-  
+
   arrowdownShape = loadShape("arrowdown.svg");
   arrowdownShape.disableStyle();
-  
+
   arrowupShape = loadShape("arrowup.svg");
   arrowupShape.disableStyle();
-  
+
   binShape = loadShape("bin.svg");
   binShape.disableStyle();
 }
@@ -84,8 +84,7 @@ void setup() {
   //currentScreen.addWidget(dl);
   //dl.setOptions(new String[]{"Ror", "Fsefq", "qr13roij", "LeFiomon"});
 
-  filters = new QueryingWidget(50, 50);
-  currentScreen.addWidget(filters);
+  //currentScreen.addWidget(filters);
 
 
 
@@ -104,17 +103,19 @@ void setup() {
   Screen screen_calendar = new Screen(color(245, 245, 245));
   Screen screen_histogram = new Screen(color(245, 245, 245));
   Screen screen_Scatterplot = new Screen(color(245, 245, 245));
-  
+
   screen_query.addWidget(new ButtonWidget(50, 550, "Previous Page",
-  () -> {
+    () -> {
     currentScreen = screen_home;
-  }));
+  }
+  ));
   screen_query.addWidget(new ButtonWidget(750, 550, "Next Page",
     () -> {
     currentScreen = screen_barplot;
   }
   ));
-  screen_query.addWidget(new QueryingWidget(50, 50));
+  filters = new QueryingWidget(50, 50);
+  screen_query.addWidget(filters);
 
 
   currentScreen = screen_query;
@@ -125,7 +126,20 @@ void setup() {
   }
   ));
 
-  screen_barplot.addWidget(new BarplotWidget(100, 0));
+  bar = new BarplotWidget(100, 0);
+  screen_barplot.addWidget(bar);
+  ButtonWidget updateBarBtn = new ButtonWidget(500, 300, "Update",
+    () -> {
+    HashMap<String, Integer> map = StatisticFunctions.absoluteFrequency(filters.result.getStringColumn("ORIGIN"));
+    bar.categoriesX = map.keySet().toArray(new String[0]);
+    bar.pointsY = new float[bar.categoriesX.length];
+    for (String label : bar.categoriesX) {
+      bar.setCategoryValue(label, map.get(label).floatValue());
+    }
+  }
+  );
+  updateBarBtn.onClick.run();
+  screen_barplot.addWidget(updateBarBtn);
   screen_barplot.addWidget(new ButtonWidget(50, 550, "Previous Page",
     () -> {
     currentScreen = screen_query;
@@ -175,6 +189,13 @@ void draw() {
 
 void keyPressed() {
   currentScreen.onKeyPressed();
+  
+  if (keyCode == LEFT) {
+    bar.x += 20.0; //<>//
+  }
+  if (keyCode == RIGHT) {
+    bar.x -= 20.0;
+  }
 }
 
 
