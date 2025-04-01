@@ -99,7 +99,6 @@ void setup() {
   Screen screen_home = new Screen(color(245, 245, 245));
   Screen screen_query = new Screen(color(245, 245, 245));
   Screen screen_barplot = new Screen(color(245, 245, 245));
-  Screen screen_calendar = new Screen(color(245, 245, 245));
   Screen screen_histogram = new Screen(color(245, 245, 245));
   Screen screen_piechart = new Screen(color(245, 245, 245));  // added by Damon
   Screen screen_Scatterplot = new Screen(color(245, 245, 245));
@@ -147,26 +146,14 @@ void setup() {
   ));
   screen_barplot.addWidget(new ButtonWidget(750, 550, "Next Page",
     () -> {
-    currentScreen = screen_calendar;
-  }
-  ));
-
-  screen_calendar.addWidget(new CalendarWidget(0, 0));
-  screen_calendar.addWidget(new ButtonWidget(50, 550, "Previous Page",
-    () -> {
-    currentScreen = screen_barplot;
-  }
-  ));
-  screen_calendar.addWidget(new ButtonWidget(750, 550, "Next Page",
-    () -> {
-    currentScreen = screen_histogram;
+    currentScreen = screen_piechart;
   }
   ));
 
   // screen_histogram.addWidget(new HistogramWidget(0, 0));
   screen_histogram.addWidget(new ButtonWidget(50, 550, "Previous Page",
     () -> {
-    currentScreen = screen_calendar;
+    currentScreen = screen_piechart;
   }
   ));
   
@@ -185,28 +172,28 @@ void setup() {
 // Histogram goes forward to PieChart
 screen_histogram.addWidget(new ButtonWidget(750, 550, "Next Page", 
   () -> {
-    currentScreen = screen_piechart;
+    currentScreen = screen_Scatterplot;
   }
 ));
 
 // PieChart goes back to Histogram
 screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page", 
   () -> {
-    currentScreen = screen_histogram;
+    currentScreen = screen_barplot;
   }
 ));
 
 // PieChart goes forward to Scatterplot
 screen_piechart.addWidget(new ButtonWidget(750, 550, "Next Page", 
   () -> {
-    currentScreen = screen_Scatterplot;
+    currentScreen = screen_histogram;
   }
 ));
 
 // Scatterplot goes back to PieChart
 screen_Scatterplot.addWidget(new ButtonWidget(50, 550, "Previous Page", 
   () -> {
-    currentScreen = screen_piechart;
+    currentScreen = screen_histogram;
   }
 ));
 
