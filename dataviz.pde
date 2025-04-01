@@ -76,6 +76,7 @@ void setup() {
 
 
 
+
   // currentScreen.addWidget(scatter);
   // currentScreen.addWidget(input);
   //currentScreen.addWidget(btn);
@@ -85,8 +86,6 @@ void setup() {
   //dl.setOptions(new String[]{"Ror", "Fsefq", "qr13roij", "LeFiomon"});
 
   //currentScreen.addWidget(filters);
-
-
 
   //currentScreen.addWidget(new ButtonWidget(250, 100, "Click me!", () -> { println("Button clicked!"); }));
   //currentScreen.addWidget(new CheckboxWidget(450, 100));
@@ -102,6 +101,7 @@ void setup() {
   Screen screen_barplot = new Screen(color(245, 245, 245));
   Screen screen_calendar = new Screen(color(245, 245, 245));
   Screen screen_histogram = new Screen(color(245, 245, 245));
+  Screen screen_piechart = new Screen(color(245, 245, 245));  // added by Damon
   Screen screen_Scatterplot = new Screen(color(245, 245, 245));
 
   screen_query.addWidget(new ButtonWidget(50, 550, "Previous Page",
@@ -169,18 +169,48 @@ void setup() {
     currentScreen = screen_calendar;
   }
   ));
-  screen_histogram.addWidget(new ButtonWidget(750, 550, "Next Page",
-    () -> {
-    currentScreen = screen_Scatterplot;
+  
+// Add the PieChart screen by Damon
+  PieChartWidget pie = new PieChartWidget(100, 100, flights.data);
+  screen_piechart.addWidget(pie);
+  screen_piechart.addWidget(input);
+  screen_piechart.addWidget(new ButtonWidget(350, 500, "Generate PieChart", 
+  () -> {
+    String code = input.getText();   // Load the code from input TextField
+    pie.setFilter(code);             // Call PieChart filter function
   }
-  ));
+));
 
-  screen_Scatterplot.addWidget(new ScatterplotWidget(100, 0, "Sample X", "Sample Y"));
-  screen_Scatterplot.addWidget(new ButtonWidget(50, 550, "Previous Page",
-    () -> {
+// Histogram goes forward to PieChart
+screen_histogram.addWidget(new ButtonWidget(750, 550, "Next Page", 
+  () -> {
+    currentScreen = screen_piechart;
+  }
+));
+
+// PieChart goes back to Histogram
+screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page", 
+  () -> {
     currentScreen = screen_histogram;
   }
-  ));
+));
+
+// PieChart goes forward to Scatterplot
+screen_piechart.addWidget(new ButtonWidget(750, 550, "Next Page", 
+  () -> {
+    currentScreen = screen_Scatterplot;
+  }
+));
+
+// Scatterplot goes back to PieChart
+screen_Scatterplot.addWidget(new ButtonWidget(50, 550, "Previous Page", 
+  () -> {
+    currentScreen = screen_piechart;
+  }
+));
+
+
+
 }
 
 void draw() {
