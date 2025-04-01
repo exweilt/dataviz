@@ -27,7 +27,7 @@ public class QueryingWidget extends Widget {
     });
 
     this.applyBtn = new ButtonWidget(this.x + 100, this.y, "Apply", () -> {
-      //this.apply();
+      this.apply();
     });
     
     reposition();
@@ -65,9 +65,9 @@ public class QueryingWidget extends Widget {
   }
 
   void reposition() {
-    droplists = new ArrayList<DroplistWidget>(this.filters.size());
-    inputs = new ArrayList<TextFieldWidget>(this.filters.size());
-    deleteButtons = new ArrayList<ButtonWidget>(this.filters.size());
+    droplists = new ArrayList<DroplistWidget>();
+    inputs = new ArrayList<TextFieldWidget>();
+    deleteButtons = new ArrayList<ButtonWidget>();
 
     float currentY = this.y + 70.0;
     for (int i = 0; i < this.filters.size(); i++) {
@@ -92,11 +92,11 @@ public class QueryingWidget extends Widget {
       //}
       
       DroplistWidget newDrop = new DroplistWidget(this.x, currentY, flights.columnNames.toArray(new String[0]));
-      droplists.set(i, newDrop);
+      droplists.add(newDrop);
       
       TextFieldWidget newInput = new TextFieldWidget(this.x + newDrop.width + 15.0, currentY, 120., 40., "");
       newInput.h = newDrop.mainButton.height;
-      inputs.set(i, newInput);   
+      inputs.add(newInput);   
       
       ButtonWidget newDelete = new ButtonWidget(newInput.x + newInput.w + 15.0, currentY, "", () -> {
         deleteFilter(finalIdx);
@@ -104,7 +104,7 @@ public class QueryingWidget extends Widget {
       newDelete.fixedWidth = true;
       newDelete.width = newDelete.height;
       newDelete.setOptionalIcon(binShape);
-      deleteButtons.set(i, newDelete);
+      deleteButtons.add(newDelete);
 
       currentY += 50.0;
     }
@@ -121,22 +121,23 @@ public class QueryingWidget extends Widget {
   }
   
   void apply() {
-    //result = flights.;
-    //result.columnNames
+    result = flights.data.copy();
+    result.clearRows();
     
     for (TableRow row : flights.data.rows()) {
       boolean wasMet = true;
       for (int i = 0; i < filters.size(); i++) {
-        if (!row.getString(filters.get(i)[0]).equals(filters.get(i)[1]))  {
+        if (!row.getString(droplists.get(i).getSelectedString()).toLowerCase().contains(inputs.get(i).text.toLowerCase()))  {
           wasMet = false;
           break; //<>//
         }
-        if (wasMet) {
-          result.addRow(row);
-        }
+      }
+      if (wasMet) {
+        result.addRow(row);
       }
     }
-    print(result); //<>//
+    
+    println(result.getRowCount()); //<>//
     //bar.categoriesX = StatisticFunctions.absoluteFrequency(result.getStringColumn("ORIGIN")).keySet().toArray(new String[0]);
   }
 

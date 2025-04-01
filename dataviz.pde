@@ -99,26 +99,36 @@ void setup() {
   // Display all different screens
 
   Screen screen_home = new Screen(color(245, 245, 245));
+  Screen screen_query = new Screen(color(245, 245, 245));
   Screen screen_barplot = new Screen(color(245, 245, 245));
   Screen screen_calendar = new Screen(color(245, 245, 245));
   Screen screen_histogram = new Screen(color(245, 245, 245));
   Screen screen_Scatterplot = new Screen(color(245, 245, 245));
-  Screen screen_query = new Screen(color(245, 245, 245));
   
+  screen_query.addWidget(new ButtonWidget(50, 550, "Previous Page",
+  () -> {
+    currentScreen = screen_home;
+  }));
+  screen_query.addWidget(new ButtonWidget(750, 550, "Next Page",
+    () -> {
+    currentScreen = screen_barplot;
+  }
+  ));
   screen_query.addWidget(new QueryingWidget(50, 50));
+
 
   currentScreen = screen_query;
   screen_home.addWidget(new LabelWidget(375, 300, "This is Home Page"));
 
   screen_home.addWidget(new ButtonWidget(750, 550, "Next Page", () -> {
-    currentScreen = screen_barplot;
+    currentScreen = screen_query;
   }
   ));
 
   screen_barplot.addWidget(new BarplotWidget(100, 0));
   screen_barplot.addWidget(new ButtonWidget(50, 550, "Previous Page",
     () -> {
-    currentScreen = screen_home;
+    currentScreen = screen_query;
   }
   ));
   screen_barplot.addWidget(new ButtonWidget(750, 550, "Next Page",
