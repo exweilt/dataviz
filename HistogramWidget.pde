@@ -8,11 +8,11 @@ public class HistogramWidget extends Widget {
   private float width = 900.0f;
   private float height = 600.0f;
   private String category;
+  private float scaleY = 0.5f;
+  private color lableColour = color(230, 10, 10);
   public ArrayList<Float> seenValues = new ArrayList<>();
   public float[] values;
   public ArrayList<Integer> frequency = new ArrayList<>();
-  public float scaleY = 0.5f;
-  private color lableColour = color(230, 10, 10);
   public int xLimit=23;
 
   public HistogramWidget(float x_in, float y_in) {
@@ -22,8 +22,9 @@ public class HistogramWidget extends Widget {
 
   @Override
     public void draw() {
+    
     float nextValue = 1.0;
-
+    
     // Background rectangle
     fill(this.bg);
     noStroke();
@@ -54,7 +55,6 @@ public class HistogramWidget extends Widget {
           break;
         }  
       }
-      print(seenValues.get(i)-nextValue);
       if ((seenValues.get(i)-nextValue) != 0){
         fill (lableColour);
         i = tempI;
@@ -114,7 +114,9 @@ public class HistogramWidget extends Widget {
   
   public void setValues(float[] values) {
     this.values = values;
-    
+    // Resets Variables on Set
+    seenValues.clear();
+    frequency.clear();
     //Finds the frequency's
     for (int i=0; i<values.length;i++){
       float current = values[i];
@@ -140,28 +142,12 @@ public class HistogramWidget extends Widget {
           freq++;
         }
       }
-      
-      
-      
       frequency.add(freq);
       seenValues.add(current);
-      
-      System.out.println("Current Value: " + current);
-      System.out.println("Seen Values: " + seenValues);
-      System.out.println("Frequency List: " + frequency);
-      System.out.println("Seen Size: " + seenValues.size() + ", Frequency Size: " + frequency.size());
-
     }
     
-    //print(sort(frequency.toArray()));
-    //seenValues.sort(null);
-    //frequency.sort(null);
     seenValues = seenValues.stream().distinct().collect(Collectors.toCollection(ArrayList::new));
     frequency = frequency.stream().collect(Collectors.toCollection(ArrayList::new));
-    println("SEEN VALUES");
-    println(seenValues.size());
-    println("FREQ");
-    println(frequency.size());
     
   }
   
