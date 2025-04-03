@@ -9,6 +9,7 @@ public class QueryingWidget extends Widget {
   ArrayList<DroplistWidget> droplists;
   ArrayList<TextFieldWidget> inputs;
   ArrayList<ButtonWidget> deleteButtons;
+  Runnable onApply;
   
   public Table result = null;
 
@@ -140,6 +141,10 @@ public class QueryingWidget extends Widget {
     
     println(result.getRowCount());
     this.result = result; //<>//
+    
+    if (this.onApply != null) {
+      this.onApply.run();
+    }
     //bar.categoriesX = StatisticFunctions.absoluteFrequency(result.getStringColumn("ORIGIN")).keySet().toArray(new String[0]);
   }
 
@@ -167,8 +172,8 @@ public class QueryingWidget extends Widget {
       i.onMouseClicked(mX, mY);
     }
     
-    for (ButtonWidget b : this.deleteButtons) {
-      b.onMouseClicked(mX, mY);
+    for (int i = 0; i < deleteButtons.size(); i++) {
+      this.deleteButtons.get(i).onMouseClicked(mX, mY);
     }
     
     this.addBtn.onMouseClicked(mX, mY);
