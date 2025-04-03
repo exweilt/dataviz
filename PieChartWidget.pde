@@ -15,6 +15,9 @@ public class PieChartWidget extends Widget {
     this.data = data;
     this.field = "Origin"; 
     this.dataMap = new HashMap<>();
+    
+    colorMode(HSB, 255);  // For multiple colors in the piechart
+
   }
 
   public void setField(String f) {
@@ -62,25 +65,36 @@ public class PieChartWidget extends Widget {
     for (float v : values) total += v;
 
     float angle = 0;
-    int colorIdx = 0;
-    color[] palette = { color(200, 100, 100), color(100, 200, 150), color(100, 100, 250), color(250, 180, 50) };
+    color[] palette = new color[labels.size()];
+    for (int i = 0; i < labels.size(); i++) {
+       float hue = map(i, 0, labels.size(), 0, 255);
+       palette[i] = color(hue, 200, 255);
+   }
 
     for (int i = 0; i < values.size(); i++) {
-      float value = values.get(i);
-      float angleSize = map(value, 0, total, 0, TWO_PI);
+    float value = values.get(i);
+    float angleSize = map(value, 0, total, 0, TWO_PI);
 
-      fill(palette[colorIdx % palette.length]);
-      arc(x, y, 200, 200, angle, angle + angleSize);
+    fill(palette[i]);
+    arc(x, y, 200, 200, angle, angle + angleSize);
 
-      angle += angleSize;
-      colorIdx++;
-    }
+    angle += angleSize;
+  }
 
     // Draw legends next to the pie chart
     fill(0);
-    textSize(12);
+   textSize(12);
     for (int i = 0; i < labels.size(); i++) {
-      text(labels.get(i), x + 150, y - 80 + i * 20);
-    }
+   // Draw the color cube for each legend(added by Damon on 03/04/2025)
+     fill(palette[i]);
+     rect(x + 150, y - 80 + i * 20, 12, 12);
+
+  // Draw the corresponding label text
+     fill(0);
+      float percentage = values.get(i) / total * 100;
+      String labelWithPercent = labels.get(i) + String.format(" (%.1f%%)", percentage);
+      text(labelWithPercent, x + 170, y - 70 + i * 20);  
+     
+     }
   }
 }
