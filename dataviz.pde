@@ -7,9 +7,8 @@ public static PShape binShape = null;
 
 DataLoading flights = new DataLoading();
 Screen currentScreen;
-TextFieldWidget focusedTextField = null;  // Added on 17/03/2025 by Damon
+TextFieldWidget focusedTextField = null;  // Added on 17/03/2025 by Damon // modified by william
 ScatterplotWidget scatter = new ScatterplotWidget(50, 50, "X", "Y");
-TextFieldWidget input = new TextFieldWidget(550, 50, 200, 40, "Enter Airport Code" );
 ButtonWidget btn;
 TableWidget table;
 ContainerWidget container;
@@ -49,11 +48,11 @@ void setup() {
   loadResources();
   flights.loadData("flights2kCleaned.csv");
 
-  btn = new ButtonWidget(350, 100, "Click me!", () -> {
-    interest = input.getText();
-    scatter.setPointsX(flights.data.getFloatColumn(interest));
-  }
-  );
+  //btn = new ButtonWidget(350, 100, "Click me!", () -> {
+  //  interest = input.getText();
+  //  scatter.setPointsX(flights.data.getFloatColumn(interest));
+  //}
+  //);
 
   currentScreen = new Screen(color(245, 245, 245));
 
@@ -71,7 +70,7 @@ void setup() {
 
   // Added by Haojin 27/03/2025
   // Modified and cleaned by William 02/04
-  // Display all different screens
+  // 66666666666666666666666666666666666666666666Display all different screens
 
   Screen screen_home = new Screen(color(245, 245, 245));
   Screen screen_query = new Screen(color(245, 245, 245));
@@ -151,6 +150,10 @@ void setup() {
 
   // Pie chart screen
   // Add the PieChart screen by Damon
+  // Edited by William
+  TextFieldWidget input = new TextFieldWidget(550, 50, 200, 40, "Enter Origin Airport");
+  LabelWidget pieChartLabel = new LabelWidget(300,50, "Piechart: Origin -> Dest");
+  screen_piechart.addWidget(pieChartLabel);
   PieChartWidget pie = new PieChartWidget(100, 100, flights.data);
   screen_piechart.addWidget(pie);
   screen_piechart.addWidget(input);
