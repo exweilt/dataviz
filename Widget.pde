@@ -35,5 +35,9 @@ public class Widget {
     */
   public void onMouseMoved(int mouseX_in, int mouseY_in) {}
   
+  public void onMouseDragged(int mX, int mY) {}
+  
+  public void onMouseReleased(int mX, int mY) {}
+  
   public void onKeyPressed() {}
 }

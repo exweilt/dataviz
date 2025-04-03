@@ -62,4 +62,24 @@ public class Screen {
     }
   }
 
+
+ public void onMouseReleased(int mX, int mY) {
+   for (Widget w : widgets) {
+     w.onMouseReleased(mX, mY);
+    }
+  }
+  
+
+ public void onMousePressed(int mX, int mY) {
+   for (Widget w : widgets) {
+     w.onMousePressed(mX, mY);
+    }
+  }
+  
+
+ public void onMouseDragged(int mX, int mY) {
+   for (Widget w : widgets) {
+     w.onMouseDragged(mX, mY);
+    }
+  }
 }

@@ -1,4 +1,4 @@
-/* Resources */ //<>// //<>//
+/* Resources */ //<>// //<>// //<>//
 PFont mainFont;
 public static PShape checkmarkShape = null;
 public static PShape arrowdownShape = null;
@@ -13,6 +13,7 @@ ScatterplotWidget scatter = new ScatterplotWidget(50, 50, "X", "Y");
 TextFieldWidget input = new TextFieldWidget(550, 50, 200, 40, "Enter Airport Code" );
 ButtonWidget btn;
 TableWidget table;
+ContainerWidget container;
 
 QueryingWidget filters;
 BarplotWidget bar;
@@ -44,7 +45,7 @@ void setup() {
   size(1000, 900);
   surface.setTitle("Plane flights data Visualizer");
   surface.setResizable(true);
-
+  tb = getGraphics();
 
   loadResources();
 
@@ -128,18 +129,20 @@ void setup() {
   ));
 
   //  ================= Table Page ====================
-  screen_table.addWidget(new ButtonWidget(50, 550, "Previous Page",
+  screen_table.addWidget(new ButtonWidget(50, 850, "Previous Page",
     () -> {
     currentScreen = screen_query;
   }
   ));
-  screen_table.addWidget(new ButtonWidget(750, 550, "Next Page",
+  screen_table.addWidget(new ButtonWidget(750, 850, "Next Page",
     () -> {
     currentScreen = screen_barplot;
   }
   ));
   table = new TableWidget(50, 50, flights.data);
-  screen_table.addWidget(table);
+  container = new ContainerWidget(50, 50, 800, 700, 4000, 10000);
+  container.addWidget(table);
+  screen_table.addWidget(container);
   //  =================================================
 
   bar = new BarplotWidget(100, 0);
@@ -188,7 +191,7 @@ void setup() {
 
 // Histogram goes forward to PieChart
 screen_histogram.addWidget(new ButtonWidget(750, 550, "Next Page", 
-  () -> {
+  () -> { //<>//
     currentScreen = screen_Scatterplot;
   }
 ));
@@ -226,10 +229,10 @@ void keyPressed() {
   currentScreen.onKeyPressed();
   
   if (keyCode == LEFT) {
-    bar.x += 20.0; //<>//
+    container.contentX -= 20.0; //<>//
   }
   if (keyCode == RIGHT) {
-    bar.x -= 20.0;
+    container.contentX += 20.0;
   }
 }
 
@@ -240,4 +243,30 @@ void mouseClicked() {
 
 void mouseMoved() {
   currentScreen.onMouseMoved(mouseX, mouseY);
+}
+
+void mousePressed() {
+  currentScreen.onMousePressed(mouseX, mouseY);
+}
+
+void mouseReleased() {
+  currentScreen.onMouseReleased(mouseX, mouseY);
+}
+
+void mouseDragged() {
+  currentScreen.onMouseDragged(mouseX, mouseY);
+}
+
+PGraphics[] bufferStack = new PGraphics[0];
+PGraphics tb; // top buffer
+
+void pushBuffer(PGraphics newBuffer) {
+  bufferStack = Arrays.copyOf(bufferStack, bufferStack.length + 1);
+  bufferStack[bufferStack.length - 1] = tb;
+  tb = newBuffer;
+}
+
+void popBuffer() {
+  tb = bufferStack[bufferStack.length - 1];
+  bufferStack = Arrays.copyOf(bufferStack, bufferStack.length - 1);
 }

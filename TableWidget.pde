@@ -30,15 +30,15 @@ public class TableWidget extends Widget {
   
   @Override
   public void draw() {
-    textAlign(LEFT, CENTER);
-    textSize(fontSize);
-    fill(this.fontColor);
+    tb.textAlign(LEFT, CENTER); //<>//
+    tb.textSize(fontSize);
+    tb.fill(this.fontColor);
     
     float paddingX = 160.0f;
     float paddingY = 40.0f;
     float indexingPadding = 20.0f;
     
-    circle(this.x, this.y, 10.0);
+    tb.circle(this.x, this.y, 10.0);
     
     ///* Draw column Titles */
     //float totalPadding = indexingPadding + this.columnPadding * 3;
@@ -54,16 +54,16 @@ public class TableWidget extends Widget {
       //line(this.x, this.y, this.x + 1500, this.y);
       
       // Draw row index
-      text(i+1, this.x + totalPadding, rowYPos);
+      tb.text(i+1, this.x + totalPadding, rowYPos);
       totalPadding += indexingPadding + this.columnPadding * 2;
       
       int colnum = data.getColumnCount();
       
       for (int j = 0; j < colnum; j++) {
         if (i == 0) {
-          text(data.getColumnTitles()[j], this.x + totalPadding, rowYPos); //<>//
+          tb.text(data.getColumnTitles()[j], this.x + totalPadding, rowYPos); //<>//
         } else {
-          text(data.getString(i-1, j), this.x + totalPadding, rowYPos);
+          tb.text(data.getString(i-1, j), this.x + totalPadding, rowYPos);
         }
         totalPadding += this.columnWidths[j] + columnPadding * 2;
       }
@@ -71,24 +71,24 @@ public class TableWidget extends Widget {
     }
     
     // Draw Vertical Lines
-    stroke(200);
+    tb.stroke(200);
     float currentX = this.x + columnPadding*2 + indexingPadding;
     for (int i = 0; i < data.getColumnCount(); i++) {
-        line(currentX, this.y, currentX, this.y + 3000);
+        tb.line(currentX, this.y, currentX, this.y + 3000);
         currentX += this.columnWidths[i] + columnPadding*2;
     }
-    line(currentX, this.y, currentX, this.y + 3000);
+    tb.line(currentX, this.y, currentX, this.y + 3000);
     
     // Draw Horizontal Lines
     //float currentY = this.y;
     float startX = this.x + indexingPadding + 2*columnPadding;
     for (int i = 0; i < data.getRowCount(); i++) {
         float yPos = this.y + i*(columnBaseHeight);
-        line(startX, yPos, startX + 1500, yPos);
+        tb.line(startX, yPos, startX + 2500, yPos);
     }
-    line(currentX, this.y, currentX, this.y + 3000);
+    tb.line(currentX, this.y, currentX, this.y + 3000);
     
-    textAlign(LEFT, BOTTOM);
+    tb.textAlign(LEFT, BOTTOM);
   }
   
   public float determineTrueColumnWidth(int columnId) {
