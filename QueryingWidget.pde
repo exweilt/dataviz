@@ -123,7 +123,7 @@ public class QueryingWidget extends Widget {
   
   void apply() {
     result = flights.data.copy();
-    result.clearRows();
+    result.clearRows(); //<>//
     
     for (TableRow row : flights.data.rows()) {
       boolean wasMet = true;
@@ -139,7 +139,7 @@ public class QueryingWidget extends Widget {
     }
     
     println(result.getRowCount());
-    this.result = result;
+    this.result = result; //<>//
     //bar.categoriesX = StatisticFunctions.absoluteFrequency(result.getStringColumn("ORIGIN")).keySet().toArray(new String[0]);
   }
 

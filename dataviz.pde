@@ -97,8 +97,10 @@ void setup() {
 
 
   currentScreen = screen_query;
-  screen_home.addWidget(new LabelWidget(375, 300, "This is Home Page"));
-
+  screen_home.addWidget(new LabelWidget(250, 300, "This is Home Page", 40));
+  //screen_home.addWidget(new LabelWidget(375, 300, "Welcome to the flights data visualizer!"));
+  //screen_home.addWidget(new LabelWidget(375, 300, "Click next to continue."));
+  
   screen_home.addWidget(new ButtonWidget(750, 550, "Next Page", () -> {
     currentScreen = screen_query;
   }
@@ -115,7 +117,7 @@ void setup() {
     currentScreen = screen_barplot;
   }
   ));
-  table = new TableWidget(50, 50, flights.data);
+  table = new TableWidget(50, 50, filters.result);
   container = new ContainerWidget(50, 50, 800, 700, 4000, 10000);
   container.addWidget(table);
   screen_table.addWidget(container);
@@ -158,14 +160,7 @@ void setup() {
     pie.setFilter(code);             // Call PieChart filter function
   }
 
-));
-
-// Histogram goes forward to PieChart
-screen_histogram.addWidget(new ButtonWidget(750, 550, "Next Page", 
-  () -> { //<>//
-    currentScreen = screen_Scatterplot;
-  }
-));
+)); //<>//
 
 // PieChart goes back to Histogram
 screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page", 
@@ -184,7 +179,7 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
   HistogramWidget hist = new HistogramWidget(10,10);
   screen_histogram.addWidget(hist);
   
-  String[] histOptions = {"DEST_WAC", "ORIGIN_WAC", "DISTANCE", "DEP_TIME", "ARR_TIME"};
+  String[] histOptions = {"DEST_WAC", "ORIGIN_WAC", "DEP_TIME", "ARR_TIME"};
   DroplistWidget histDropList = new DroplistWidget(0,0, histOptions);
   hist.setValues(flights.data.getFloatColumn(histDropList.getSelectedString()));
   screen_histogram.addWidget(histDropList);

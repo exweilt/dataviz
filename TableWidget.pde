@@ -30,6 +30,7 @@ public class TableWidget extends Widget {
   
   @Override
   public void draw() {
+    this.data = filters.result;
     tb.textAlign(LEFT, CENTER); //<>//
     tb.textSize(fontSize);
     tb.fill(this.fontColor);
