@@ -5,7 +5,6 @@ public static PShape arrowdownShape = null;
 public static PShape arrowupShape = null;
 public static PShape binShape = null;
 
-public ArrayList<DataLoading> dataFiles = new ArrayList<>();
 DataLoading flights = new DataLoading();
 Screen currentScreen;
 TextFieldWidget focusedTextField = null;  // Added on 17/03/2025 by Damon
@@ -48,14 +47,7 @@ void setup() {
   tb = getGraphics();
 
   loadResources();
-
-  // tmp
-  dataFiles.add(flights);
   flights.loadData("flights2kCleaned.csv");
-  flights.printColumns();
-  println(flights.stringToDate("01/01/2022", "01/04/2022"));
-  print(flights.data.getString(1, "FL_DATE"));
-  println(dataFiles.get(0));
 
   btn = new ButtonWidget(350, 100, "Click me!", () -> {
     interest = input.getText();
@@ -77,25 +69,8 @@ void setup() {
   currentScreen.addWidget(bar);
 
 
-
-
-  // currentScreen.addWidget(scatter);
-  // currentScreen.addWidget(input);
-  //currentScreen.addWidget(btn);
-
-  //DroplistWidget dl = new DroplistWidget(200, 200, new String[]{"Apple", "Banana", "Orange", "Lemon"});
-  //currentScreen.addWidget(dl);
-  //dl.setOptions(new String[]{"Ror", "Fsefq", "qr13roij", "LeFiomon"});
-
-  //currentScreen.addWidget(filters);
-
-  //currentScreen.addWidget(new ButtonWidget(250, 100, "Click me!", () -> { println("Button clicked!"); }));
-  //currentScreen.addWidget(new CheckboxWidget(450, 100));
-  //currentScreen.addWidget(new ScatterplotWidget(600, 10));
-  //currentScreen.addWidget(new CalendarWidget(50, 250));
-  //currentScreen.addWidget(new LabelWidget(100, 200, "LabelWIdget"));
-
   // Added by Haojin 27/03/2025
+  // Modified and cleaned by William 02/04
   // Display all different screens
 
   Screen screen_home = new Screen(color(245, 245, 245));
@@ -106,6 +81,7 @@ void setup() {
   Screen screen_piechart = new Screen(color(245, 245, 245));  // added by Damon
   Screen screen_Scatterplot = new Screen(color(245, 245, 245));
 
+  // Home screen
   screen_query.addWidget(new ButtonWidget(50, 550, "Previous Page",
     () -> {
     currentScreen = screen_home;
@@ -145,6 +121,7 @@ void setup() {
   screen_table.addWidget(container);
   //  =================================================
 
+  // barplot screen
   bar = new BarplotWidget(100, 0);
   screen_barplot.addWidget(bar);
   ButtonWidget updateBarBtn = new ButtonWidget(500, 600, "Update",
@@ -170,15 +147,8 @@ void setup() {
   }
   ));
 
-  // screen_histogram.addWidget(new HistogramWidget(0, 0));
-  screen_histogram.addWidget(new ButtonWidget(50, 550, "Previous Page",
-    () -> {
-    currentScreen = screen_piechart;
-  }
-  ));
-  
-
-// Add the PieChart screen by Damon
+  // Pie chart screen
+  // Add the PieChart screen by Damon
   PieChartWidget pie = new PieChartWidget(100, 100, flights.data);
   screen_piechart.addWidget(pie);
   screen_piechart.addWidget(input);
@@ -187,6 +157,7 @@ void setup() {
     String code = input.getText();   // Load the code from input TextField
     pie.setFilter(code);             // Call PieChart filter function
   }
+
 ));
 
 // Histogram goes forward to PieChart
@@ -199,26 +170,52 @@ screen_histogram.addWidget(new ButtonWidget(750, 550, "Next Page",
 // PieChart goes back to Histogram
 screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page", 
   () -> {
+
     currentScreen = screen_barplot;
   }
-));
+  ));
+  screen_piechart.addWidget(new ButtonWidget(750, 550, "Next Page", 
+    () -> {
+    currentScreen = screen_histogram;
+  }
+  ));
 
-// PieChart goes forward to Scatterplot
-screen_piechart.addWidget(new ButtonWidget(750, 550, "Next Page", 
+  // Histogram Screen
+  HistogramWidget hist = new HistogramWidget(10,10);
+  screen_histogram.addWidget(hist);
+  
+  String[] histOptions = {"DEST_WAC", "ORIGIN_WAC", "DISTANCE", "DEP_TIME", "ARR_TIME"};
+  DroplistWidget histDropList = new DroplistWidget(0,0, histOptions);
+  hist.setValues(flights.data.getFloatColumn(histDropList.getSelectedString()));
+  screen_histogram.addWidget(histDropList);
+  ButtonWidget updateHistBtn = new ButtonWidget(500, 600, "Update",
+    () -> {
+    hist.setCategory(histDropList.getSelectedString());
+    hist.setValues(flights.data.getFloatColumn(histDropList.getSelectedString()));
+    }
+  );
+  updateHistBtn.onClick.run();
+  
+  screen_histogram.addWidget(updateHistBtn);
+  screen_histogram.addWidget(new ButtonWidget(50, 600, "Previous Page",
+    () -> {
+    currentScreen = screen_piechart;
+  }
+  ));
+  screen_histogram.addWidget(new ButtonWidget(750, 600, "Next Page", 
+    () -> {
+    currentScreen = screen_Scatterplot;
+  }
+  ));
+
+  
+
+  // Scatter plot Screen
+  screen_Scatterplot.addWidget(new ButtonWidget(50, 550, "Previous Page", 
   () -> {
     currentScreen = screen_histogram;
   }
-));
-
-// Scatterplot goes back to PieChart
-screen_Scatterplot.addWidget(new ButtonWidget(50, 550, "Previous Page", 
-  () -> {
-    currentScreen = screen_histogram;
-  }
-));
-
-
-
+  ));
 }
 
 void draw() {
