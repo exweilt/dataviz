@@ -18,8 +18,6 @@ public class TableWidget extends Widget {
   //private float columnPaddingY = 2.0f;
   private float columnBaseHeight = 40.0f;
   
-  
-
   public TableWidget(float x_in, float y_in, Table data) {
     this.x = x_in;
     this.y = y_in;
@@ -69,6 +67,7 @@ public class TableWidget extends Widget {
         totalPadding += this.columnWidths[j] + columnPadding * 2;
       }
       totalPadding -= columnPadding;
+      //println("Drawing line ", i);
     }
     
     // Draw Vertical Lines

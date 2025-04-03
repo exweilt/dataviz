@@ -31,12 +31,26 @@ public class ContainerWidget extends Widget {
     this.widgets = new Widget[0];
     
     hscroll = new ScrollbarWidget(this.x, this.y + this.height, w, 25., false);
+    hscroll.progressMax = 2000;
     vscroll = new ScrollbarWidget(this.x + width, this.y, 25., h, true);
+    vscroll.progressMax = 80000;
     
+    redraw();
     //ScrollbarWidget vscroll;
   }
   
   public void draw() {
+    //if (millis() % 20 == 0) {
+    //  redraw();
+    //}
+    
+   image(this.buffer, this.x, this.y, this.width, this.height, this.contentX, this.contentY, this.contentX + (int)this.width, this.contentY + (int)this.height);
+    
+    hscroll.draw();
+    vscroll.draw();
+  }
+    
+  public void redraw() {
     this.buffer.beginDraw();
     this.buffer.clear();
     pushBuffer(this.buffer);
@@ -47,10 +61,6 @@ public class ContainerWidget extends Widget {
     
     popBuffer();
     this.buffer.endDraw();
-    image(this.buffer, this.x, this.y, this.width, this.height, this.contentX, this.contentY, this.contentX + (int)this.width, this.contentY + (int)this.height);
-    
-    hscroll.draw();
-    vscroll.draw();
   }
   
   //void drawHorizontalScrollbar() {

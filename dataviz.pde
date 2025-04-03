@@ -92,18 +92,21 @@ void setup() {
   }
   ));
   filters = new QueryingWidget(50, 50);
+  filters.onApply = () -> {
+    table.data = filters.result;
+    container.redraw();
+  };
   screen_query.addWidget(filters);
 
 
   currentScreen = screen_query;
   screen_home.addWidget(new LabelWidget(250, 300, "This is Home Page", 40));
-  //screen_home.addWidget(new LabelWidget(375, 300, "Welcome to the flights data visualizer!"));
-  //screen_home.addWidget(new LabelWidget(375, 300, "Click next to continue."));
+  screen_home.addWidget(new LabelWidget(250, 400, "Welcome to the flights data visualizer!"));
+  screen_home.addWidget(new LabelWidget(250, 450, "Click next page to continue."));
   
   screen_home.addWidget(new ButtonWidget(750, 550, "Next Page", () -> {
     currentScreen = screen_query;
-  }
-  ));
+  }));
 
   //  ================= Table Page ====================
   screen_table.addWidget(new ButtonWidget(50, 850, "Previous Page",
@@ -117,7 +120,7 @@ void setup() {
   }
   ));
   table = new TableWidget(50, 50, filters.result);
-  container = new ContainerWidget(50, 50, 800, 700, 4000, 10000);
+  container = new ContainerWidget(50, 50, 800, 700, 4000, 100000);
   container.addWidget(table);
   screen_table.addWidget(container);
   //  =================================================
