@@ -38,7 +38,7 @@ private void loadResources() {
   binShape = loadShape("bin.svg");
   binShape.disableStyle();
 }
-
+  PieChartWidget pie;  // Announce the declaration of pie for filters.onApply part
 void setup() {
   size(1000, 900);
   surface.setTitle("Plane flights data Visualizer");
@@ -91,9 +91,11 @@ void setup() {
     currentScreen = screen_table;
   }
   ));
+  
   filters = new QueryingWidget(50, 50);
   filters.onApply = () -> {
     table.data = filters.result;
+    pie.setFilterFromUI();  // added by Damon for updating the data of the pie chart synchronously
     container.redraw();
   };
   screen_query.addWidget(filters);
@@ -120,7 +122,7 @@ void setup() {
   }
   ));
   table = new TableWidget(50, 50, filters.result);
-  container = new ContainerWidget(50, 50, 800, 700, 4000, 100000);
+  container = new ContainerWidget(50, 50, 800, 700, 4000, 10000);
   container.addWidget(table);
   screen_table.addWidget(container);
   //  =================================================
@@ -154,16 +156,15 @@ void setup() {
   // Pie chart screen
   // Add the PieChart screen by Damon
   // Edited by William
-  TextFieldWidget input = new TextFieldWidget(550, 50, 200, 40, "Enter Origin Airport");
-  LabelWidget pieChartLabel = new LabelWidget(300,50, "Piechart: Origin -> Dest");
-  screen_piechart.addWidget(pieChartLabel);
-  PieChartWidget pie = new PieChartWidget(100, 100, flights.data);
+  //TextFieldWidget input = new TextFieldWidget(550, 50, 200, 40, "Enter Origin Airport");
+  //LabelWidget pieChartLabel = new LabelWidget(300,50, "Piechart: Origin -> Dest");
+  //screen_piechart.addWidget(pieChartLabel);  no more need for these lines, edited by Damon
+  pie = new PieChartWidget(100, 100, filters); // get QueryingWidget Filter
   screen_piechart.addWidget(pie);
-  screen_piechart.addWidget(input);
+  //screen_piechart.addWidget(input);
   screen_piechart.addWidget(new ButtonWidget(350, 500, "Generate PieChart", 
   () -> {
-    String code = input.getText();   // Load the code from input TextField
-    pie.setFilter(code);             // Call PieChart filter function
+    pie.setFilterFromUI();   // Obtain the filter fields and values from the UI of PieChart itself
   }
 
 )); //<>//
