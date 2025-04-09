@@ -42,6 +42,11 @@ public class ButtonWidget extends Widget {
     this.setText(text);
   }
   
+  public ButtonWidget(float x_in, float y_in) {
+    this.x = x_in;
+    this.y = y_in;
+  }
+  
   @Override
   public void draw() {
     onMouseMoved(mouseX, mouseY); // Fixes visual bug
@@ -170,5 +175,10 @@ public class ButtonWidget extends Widget {
   
   public PShape getOptionalIcon() {
     return this.optionalRightIcon;
+  }
+  public void setPosition(float x,float y, String text){
+    this.x = x;
+    this.y = y;
+    this.setText(text);
   }
 }

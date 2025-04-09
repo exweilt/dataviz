@@ -6,8 +6,8 @@
   */
 public class BarplotWidget extends Widget {
   private color bg = color(230, 230, 230, 255);
-  private float width = 600.0f;
-  private float height = 500.0f;
+  float width;
+  float height;
   private String[] categoriesX = {"Apple", "Banana", "Orange"};
   private float[] pointsY = {400., 70., 210.};
   //public float scaleX = 8.0f; // n pixels per 1 x unit of graph
@@ -26,19 +26,22 @@ public class BarplotWidget extends Widget {
   public void draw() {
     tb.fill(this.bg);
     tb.noStroke();
-    tb.textAlign(RIGHT);
-    //rect(this.x, this.y, this.width, this.height);
+    tb.rect(this.x, this.y, this.width, this.height);
+
     
     float COLUMN_WIDTH = 30.0f;
     float COLUMN_PADDING = 10.0f;
     
-    //float bottomY = this.y + this.height - 60;
+
+    float bottomY = this.y + this.height - 60; // comment out?
+
     tb.textSize(12);
     for (int i = 0; i < this.categoriesX.length; i++) {
       //float columnX = this.x + i * (COLUMN_WIDTH + COLUMN_PADDING) + 40.;
       float yPos = this.y + i * (COLUMN_WIDTH + COLUMN_PADDING) + 40.;
       
       tb.fill(30);
+
       tb.text(this.categoriesX[i], this.x - 5, yPos + 30.0);
       
       tb.fill (colors[i % this.colors.length]);
