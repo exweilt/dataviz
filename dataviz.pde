@@ -13,6 +13,7 @@ ButtonWidget btn;
 TableWidget table;
 ContainerWidget container;
 ContainerWidget bar_container;
+DroplistWidget barDropSelector;
 
 QueryingWidget filters;
 BarplotWidget bar;
@@ -99,7 +100,7 @@ void setup() {
     container.redraw();
     
     // Barplot update
-    HashMap<String, Integer> map = StatisticFunctions.absoluteFrequency(filters.result.getStringColumn("ORIGIN"));
+    HashMap<String, Integer> map = StatisticFunctions.absoluteFrequency(filters.result.getStringColumn(barDropSelector.getSelectedString()));
     bar.categoriesX = map.keySet().toArray(new String[0]);
     bar.pointsY = new float[bar.categoriesX.length];
     for (String label : bar.categoriesX) {
@@ -138,9 +139,23 @@ void setup() {
 
   // barplot screen
   bar = new BarplotWidget(100, 20);
-  bar_container = new ContainerWidget(50, 50, 800, 700, 800, 1000);
+  bar_container = new ContainerWidget(50, 50, 600, 700, 600, 1000);
   bar_container.addWidget(bar);
   screen_barplot.addWidget(bar_container);
+  barDropSelector = new DroplistWidget(700, 200, flights.columnNames.toArray(new String[0]));
+  LabelWidget barSelectorLabel = new LabelWidget(700, 180, "Select column of interest.");
+  screen_barplot.addWidget(barDropSelector);
+  screen_barplot.addWidget(barSelectorLabel);
+  barDropSelector.onSelected = () -> {
+    // Barplot update
+    HashMap<String, Integer> map = StatisticFunctions.absoluteFrequency(filters.result.getStringColumn(barDropSelector.getSelectedString()));
+    bar.categoriesX = map.keySet().toArray(new String[0]);
+    bar.pointsY = new float[bar.categoriesX.length];
+    for (String label : bar.categoriesX) {
+      bar.setCategoryValue(label, map.get(label).floatValue());
+    }
+    bar_container.redraw();
+  };
 
   //ButtonWidget updateBarBtn = new ButtonWidget(500, 600, "Update",
   //  () -> {
@@ -151,7 +166,7 @@ void setup() {
   //    bar.setCategoryValue(label, map.get(label).floatValue());
   //  }
   //}
-  //);
+  //); //<>//
   //updateBarBtn.onClick.run();
   //screen_barplot.addWidget(updateBarBtn);
   screen_barplot.addWidget(new ButtonWidget(50, 800, "Previous Page",
@@ -166,7 +181,7 @@ void setup() {
   ));
 
   // Pie chart screen
-  // Add the PieChart screen by Damon //<>//
+  // Add the PieChart screen by Damon
   // Edited by William
   TextFieldWidget input = new TextFieldWidget(550, 50, 200, 40, "Enter Origin Airport");
   LabelWidget pieChartLabel = new LabelWidget(300,50, "Piechart: Origin -> Dest");
@@ -212,7 +227,7 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
   updateHistBtn.onClick.run();
   
   screen_histogram.addWidget(updateHistBtn);
-  screen_histogram.addWidget(new ButtonWidget(50, 600, "Previous Page",
+  screen_histogram.addWidget(new ButtonWidget(50, 600, "Previous Page", //<>//
     () -> {
     currentScreen = screen_piechart;
   }
@@ -227,7 +242,7 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
 
   // Scatter plot Screen
   screen_Scatterplot.addWidget(new ButtonWidget(50, 550, "Previous Page", 
-  () -> { //<>//
+  () -> {
     currentScreen = screen_histogram;
   }
   ));

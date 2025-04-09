@@ -31,9 +31,9 @@ public class ContainerWidget extends Widget {
     this.widgets = new Widget[0];
     
     hscroll = new ScrollbarWidget(this.x, this.y + this.height, w, 25., false);
-    hscroll.progressMax = this.contentWidth;
+    hscroll.progressMax = this.contentWidth - w;
     vscroll = new ScrollbarWidget(this.x + width, this.y, 25., h, true);
-    vscroll.progressMax = this.contentHeight;
+    vscroll.progressMax = this.contentHeight - h;
     
     redraw();
     //ScrollbarWidget vscroll;

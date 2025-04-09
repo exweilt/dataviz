@@ -31,6 +31,8 @@ public class DroplistWidget extends Widget {
 
   ButtonWidget[] optionButtons;
   ButtonWidget mainButton;
+  
+  Runnable onSelected;
 
   public DroplistWidget(float x_in, float y_in, String[] options) {
     this.x = x_in;
@@ -172,6 +174,10 @@ public class DroplistWidget extends Widget {
     this.activeIndex = optionIndex;
 
     this.updateButtons();
+    
+    if (this.onSelected != null) {
+      this.onSelected.run();
+    }
   }
 
   int getSelectedIndex() {
