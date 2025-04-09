@@ -6,8 +6,8 @@
   */
 public class BarplotWidget extends Widget {
   private color bg = color(230, 230, 230, 255);
-  private float width = 600.0f;
-  private float height = 500.0f;
+  float width;
+  float height;
   private String[] categoriesX = {"Apple", "Banana", "Orange"};
   private float[] pointsY = {400., 70., 210.};
   //public float scaleX = 8.0f; // n pixels per 1 x unit of graph
@@ -24,38 +24,38 @@ public class BarplotWidget extends Widget {
   
   @Override
   public void draw() {
-    fill(this.bg);
-    noStroke();
-    rect(this.x, this.y, this.width, this.height);
+    tb.fill(this.bg);
+    tb.noStroke();
+    tb.rect(this.x, this.y, this.width, this.height);
     
     float COLUMN_WIDTH = 30.0f;
     float COLUMN_PADDING = 10.0f;
     
     float bottomY = this.y + this.height - 60;
-    textSize(12);
+    tb.textSize(12);
     for (int i = 0; i < this.categoriesX.length; i++) {
       float columnX = this.x + i * (COLUMN_WIDTH + COLUMN_PADDING) + 40.;
       
-      fill(30);
-      text(this.categoriesX[i], columnX, bottomY + 30.0);
+      tb.fill(30);
+      tb.text(this.categoriesX[i], columnX, bottomY + 30.0);
       
-      fill (colors[i % this.colors.length]);
+      tb.fill (colors[i % this.colors.length]);
       //circle(columnX, bottomY, 10);
-      rect(columnX, bottomY, COLUMN_WIDTH, -this.pointsY[i] * this.scaleY);
+      tb.rect(columnX, bottomY, COLUMN_WIDTH, -this.pointsY[i] * this.scaleY);
     }
     
-    fill(30);
+    tb.fill(30);
     for (int tickY = 0; tickY <= 500; tickY += 50) {
       float yPos = bottomY - tickY * this.scaleY;
-      text(tickY, this.x + 5., yPos);
-      strokeWeight(1.0);
-      stroke(150);
+      tb.text(tickY, this.x + 5., yPos);
+      tb.strokeWeight(1.0);
+      tb.stroke(150);
       //circle (this.x, yPos, 10);
-      line(this.x, yPos, this.x + 400.0, yPos);
+      tb.line(this.x, yPos, this.x + 400.0, yPos);
     }
     
-    textAlign(LEFT);
-    strokeWeight(1.0);
+    tb.textAlign(LEFT);
+    tb.strokeWeight(1.0);
   }
 
   @Override

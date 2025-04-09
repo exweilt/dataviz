@@ -18,6 +18,8 @@ public class ContainerWidget extends Widget {
   int contentY;
   ScrollbarWidget hscroll;
   ScrollbarWidget vscroll;
+  boolean hor=false;
+  boolean ver=false;
 
   public ContainerWidget(float x, float y, float w, float h, int contentWidth, int contentHeight) {
     this.x = x;
@@ -44,10 +46,27 @@ public class ContainerWidget extends Widget {
     //  redraw();
     //}
     
-   image(this.buffer, this.x, this.y, this.width, this.height, this.contentX, this.contentY, this.contentX + (int)this.width, this.contentY + (int)this.height);
-    
-    hscroll.draw();
-    vscroll.draw();
+    image(this.buffer, this.x, this.y, this.width, this.height, this.contentX, this.contentY, this.contentX + (int)this.width, this.contentY + (int)this.height);
+    hscroll.setPosition(width*0.1,height, width*0.9, 25);
+    vscroll.setPosition(width,height*0.1,25, height*0.9);
+    if (hor == true)
+      hscroll.draw();
+      
+    if (ver == true)
+      vscroll.draw();
+  }
+  
+  public void selectScrollOptions(boolean horizontal, boolean vertical){
+    hor = horizontal;
+    ver = vertical;
+  }
+  
+  
+   public void setPosition(float x, float y, float w, float h){
+    this.x =x;
+    this.y = y;
+    this.width = w;
+    this.height = h;
   }
     
   public void redraw() {
