@@ -12,6 +12,7 @@ ScatterplotWidget scatter = new ScatterplotWidget(50, 50, "X", "Y");
 ButtonWidget btn;
 TableWidget table;
 ContainerWidget container;
+ContainerWidget bar_container;
 
 QueryingWidget filters;
 BarplotWidget bar;
@@ -93,8 +94,18 @@ void setup() {
   ));
   filters = new QueryingWidget(50, 50);
   filters.onApply = () -> {
+    // Table update
     table.data = filters.result;
     container.redraw();
+    
+    // Barplot update
+    HashMap<String, Integer> map = StatisticFunctions.absoluteFrequency(filters.result.getStringColumn("ORIGIN"));
+    bar.categoriesX = map.keySet().toArray(new String[0]);
+    bar.pointsY = new float[bar.categoriesX.length];
+    for (String label : bar.categoriesX) {
+      bar.setCategoryValue(label, map.get(label).floatValue());
+    }
+    bar_container.redraw();
   };
   screen_query.addWidget(filters);
 
@@ -126,33 +137,36 @@ void setup() {
   //  =================================================
 
   // barplot screen
-  bar = new BarplotWidget(100, 0);
-  screen_barplot.addWidget(bar);
-  ButtonWidget updateBarBtn = new ButtonWidget(500, 600, "Update",
-    () -> {
-    HashMap<String, Integer> map = StatisticFunctions.absoluteFrequency(filters.result.getStringColumn("ORIGIN"));
-    bar.categoriesX = map.keySet().toArray(new String[0]);
-    bar.pointsY = new float[bar.categoriesX.length];
-    for (String label : bar.categoriesX) {
-      bar.setCategoryValue(label, map.get(label).floatValue());
-    }
-  }
-  );
-  updateBarBtn.onClick.run();
-  screen_barplot.addWidget(updateBarBtn);
-  screen_barplot.addWidget(new ButtonWidget(50, 550, "Previous Page",
+  bar = new BarplotWidget(100, 20);
+  bar_container = new ContainerWidget(50, 50, 800, 700, 800, 1000);
+  bar_container.addWidget(bar);
+  screen_barplot.addWidget(bar_container);
+
+  //ButtonWidget updateBarBtn = new ButtonWidget(500, 600, "Update",
+  //  () -> {
+  //  HashMap<String, Integer> map = StatisticFunctions.absoluteFrequency(filters.result.getStringColumn("ORIGIN"));
+  //  bar.categoriesX = map.keySet().toArray(new String[0]);
+  //  bar.pointsY = new float[bar.categoriesX.length];
+  //  for (String label : bar.categoriesX) {
+  //    bar.setCategoryValue(label, map.get(label).floatValue());
+  //  }
+  //}
+  //);
+  //updateBarBtn.onClick.run();
+  //screen_barplot.addWidget(updateBarBtn);
+  screen_barplot.addWidget(new ButtonWidget(50, 800, "Previous Page",
     () -> {
     currentScreen = screen_table;
   }
   ));
-  screen_barplot.addWidget(new ButtonWidget(750, 550, "Next Page",
+  screen_barplot.addWidget(new ButtonWidget(750, 800, "Next Page",
     () -> {
     currentScreen = screen_piechart;
   }
   ));
 
   // Pie chart screen
-  // Add the PieChart screen by Damon
+  // Add the PieChart screen by Damon //<>//
   // Edited by William
   TextFieldWidget input = new TextFieldWidget(550, 50, 200, 40, "Enter Origin Airport");
   LabelWidget pieChartLabel = new LabelWidget(300,50, "Piechart: Origin -> Dest");
@@ -166,7 +180,7 @@ void setup() {
     pie.setFilter(code);             // Call PieChart filter function
   }
 
-)); //<>// //<>//
+)); //<>//
 
 // PieChart goes back to Histogram
 screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page", 
@@ -213,7 +227,7 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
 
   // Scatter plot Screen
   screen_Scatterplot.addWidget(new ButtonWidget(50, 550, "Previous Page", 
-  () -> {
+  () -> { //<>//
     currentScreen = screen_histogram;
   }
   ));
@@ -227,7 +241,7 @@ void draw() {
 
 void keyPressed() {
   currentScreen.onKeyPressed();
-   //<>//
+  
   if (keyCode == LEFT) {
     container.contentX -= 20.0; //<>//
   }
