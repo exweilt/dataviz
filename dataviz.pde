@@ -20,6 +20,9 @@ DroplistWidget scatterSelectorY;
 QueryingWidget filters;
 BarplotWidget bar;
 
+PImage bg;
+int y;
+
 String interest = "";
 /**
  *  Load static resources such as fonts and images at the start of the program.
@@ -58,6 +61,7 @@ void setup() {
   bar = new BarplotWidget(400, 50);
   currentScreen.addWidget(bar);
 
+  bg = loadImage("Flight.jpg");
 
   // Added by Haojin 27/03/2025
   // Modified and cleaned by William 02/04
@@ -282,6 +286,7 @@ void keyPressed() {
   if (keyCode == RIGHT) {
     container.contentX += 20.0;
   }
+
 }
 
 

@@ -18,7 +18,8 @@ public class Screen {
   }
 
   public void drawScreen() {
-    background(bgColor);
+
+    image(bg, 0, 0, width, height);
     
     for (Widget w : widgets) {
       w.draw();
