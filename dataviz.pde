@@ -1,4 +1,4 @@
-/* Resources */ //<>// //<>// //<>//
+/* Resources */ //<>// //<>// //<>// //<>//
 PFont mainFont;
 public static PShape checkmarkShape = null;
 public static PShape arrowdownShape = null;
@@ -99,8 +99,8 @@ void setup() {
   screen_query.addWidget(filters);
 
 
-  currentScreen = screen_query;
-  screen_home.addWidget(new LabelWidget(250, 300, "This is Home Page", 40));
+  currentScreen = screen_home;
+  screen_home.addWidget(new LabelWidget(250, 300, "Flights visualizer", 40));
   screen_home.addWidget(new LabelWidget(250, 400, "Welcome to the flights data visualizer!"));
   screen_home.addWidget(new LabelWidget(250, 450, "Click next page to continue."));
   
@@ -166,7 +166,7 @@ void setup() {
     pie.setFilter(code);             // Call PieChart filter function
   }
 
-)); //<>//
+)); //<>// //<>//
 
 // PieChart goes back to Histogram
 screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page", 
@@ -217,6 +217,8 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
     currentScreen = screen_histogram;
   }
   ));
+  
+  filters.apply();
 }
 
 void draw() {
@@ -225,7 +227,7 @@ void draw() {
 
 void keyPressed() {
   currentScreen.onKeyPressed();
-  
+   //<>//
   if (keyCode == LEFT) {
     container.contentX -= 20.0; //<>//
   }
