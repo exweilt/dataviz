@@ -19,6 +19,7 @@ public class Screen {
 
   public void drawScreen() {
     background(bgColor);
+    
     for (Widget w : widgets) {
       w.draw();
     }
@@ -51,6 +52,8 @@ public class Screen {
 
 
   public void onMouseMoved(int mX, int mY) {
+    cursor(ARROW);
+    
     for (Widget w : widgets) {
       w.onMouseMoved(mX, mY);
     }

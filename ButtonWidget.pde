@@ -91,13 +91,14 @@ public class ButtonWidget extends Widget {
   public void onMouseMoved(int mX, int mY) {
     if (mX > this.x && mX < (this.x + this.width) && mY > this.y && mY < (this.y + this.height)) {
       if (!isHovered) {
-        cursor(HAND); // cursor just entered 
+        //cursor(HAND); // cursor just entered 
         //println(millis() + " entered");
       }
+      cursor(HAND);
       isHovered = true;
     } else {
       if (isHovered) {
-        cursor(ARROW); // cursor just left
+        //cursor(ARROW); // cursor just left
         //println(millis() + " left");
       }
       isHovered = false;

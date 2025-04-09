@@ -49,7 +49,6 @@ public class HistogramWidget extends Widget {
       // loops to find column values
       int tempI = i;
       for (int k=0;k<seenValues.size();k++){
-        println(seenValues.get(k)+ " and " + nextValue);
         if ((seenValues.get(k) - nextValue) == 0.0){
           i = k;
           break;
