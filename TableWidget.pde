@@ -37,7 +37,7 @@ public class TableWidget extends Widget {
     float paddingY = 40.0f;
     float indexingPadding = 20.0f;
     
-    tb.circle(this.x, this.y, 10.0);
+    //tb.circle(this.x, this.y, 10.0);
     
     ///* Draw column Titles */
     //float totalPadding = indexingPadding + this.columnPadding * 3;
@@ -53,7 +53,7 @@ public class TableWidget extends Widget {
       //line(this.x, this.y, this.x + 1500, this.y);
       
       // Draw row index
-      tb.text(i+1, this.x + totalPadding, rowYPos);
+      tb.text(i+1, this.x + totalPadding - 20., rowYPos);
       totalPadding += indexingPadding + this.columnPadding * 2;
       
       int colnum = data.getColumnCount();

@@ -8,17 +8,27 @@
 public class Screen {
   ArrayList<Widget> widgets = new ArrayList<Widget>();
   color bgColor;
+  PImage img;
+  boolean background = false;
   
   Screen(color bgColor) {
     this.bgColor = bgColor;
+  }
+  Screen(){
+    this.background = true;
   }
   
   public void addWidget(Widget w) {
     widgets.add(w);
   }
-
   public void drawScreen() {
-    background(bgColor);
+    if(background == true){
+      image(bg, 0, 0, width, height);
+    }
+    else{
+      background(bgColor);
+    }
+    
     for (Widget w : widgets) {
       w.draw();
     }
@@ -51,6 +61,8 @@ public class Screen {
 
 
   public void onMouseMoved(int mX, int mY) {
+    cursor(ARROW);
+    
     for (Widget w : widgets) {
       w.onMouseMoved(mX, mY);
     }

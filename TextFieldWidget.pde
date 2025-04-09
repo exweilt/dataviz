@@ -73,7 +73,7 @@ public class TextFieldWidget extends Widget {
     if (mX > x && mX < x + w && mY > y && mY < y + h) {
       cursor(TEXT);
     } else {
-      cursor(ARROW);
+      //cursor(ARROW);
     }
   }
 

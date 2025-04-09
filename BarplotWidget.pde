@@ -27,33 +27,38 @@ public class BarplotWidget extends Widget {
     tb.fill(this.bg);
     tb.noStroke();
     tb.rect(this.x, this.y, this.width, this.height);
+
     
     float COLUMN_WIDTH = 30.0f;
     float COLUMN_PADDING = 10.0f;
     
-    float bottomY = this.y + this.height - 60;
+
+    float bottomY = this.y + this.height - 60; // comment out?
+
     tb.textSize(12);
     for (int i = 0; i < this.categoriesX.length; i++) {
-      float columnX = this.x + i * (COLUMN_WIDTH + COLUMN_PADDING) + 40.;
+      //float columnX = this.x + i * (COLUMN_WIDTH + COLUMN_PADDING) + 40.;
+      float yPos = this.y + i * (COLUMN_WIDTH + COLUMN_PADDING) + 40.;
       
       tb.fill(30);
-      tb.text(this.categoriesX[i], columnX, bottomY + 30.0);
+
+      tb.text(this.categoriesX[i], this.x - 5, yPos + 30.0);
       
       tb.fill (colors[i % this.colors.length]);
-      //circle(columnX, bottomY, 10);
-      tb.rect(columnX, bottomY, COLUMN_WIDTH, -this.pointsY[i] * this.scaleY);
+      tb.rect(this.x + 20., yPos, this.pointsY[i] * this.scaleY, COLUMN_WIDTH);
     }
     
     tb.fill(30);
-    for (int tickY = 0; tickY <= 500; tickY += 50) {
-      float yPos = bottomY - tickY * this.scaleY;
-      tb.text(tickY, this.x + 5., yPos);
+    for (int tickX = 0; tickX <= 500; tickX += 50) {
+      float xPos = this.x + tickX * this.scaleY;
+      tb.text(tickX, xPos, this.y + 5.);
       tb.strokeWeight(1.0);
-      tb.stroke(150);
+      tb.stroke(100, 100, 100, 100);
       //circle (this.x, yPos, 10);
-      tb.line(this.x, yPos, this.x + 400.0, yPos);
+      tb.line(xPos, this.y, xPos, this.y + 10000);
     }
     
+    tb.textAlign(LEFT);
     tb.textAlign(LEFT);
     tb.strokeWeight(1.0);
   }

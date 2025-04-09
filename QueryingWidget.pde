@@ -10,6 +10,9 @@ public class QueryingWidget extends Widget {
   ArrayList<TextFieldWidget> inputs;
   ArrayList<ButtonWidget> deleteButtons;
   Runnable onApply;
+  CheckboxWidget sortCheckbox;
+  DroplistWidget sortColumn;
+  DroplistWidget sortType;
   
   public Table result = null;
 
@@ -30,6 +33,10 @@ public class QueryingWidget extends Widget {
     this.applyBtn = new ButtonWidget(this.x + 100, this.y, "Apply", () -> {
       this.apply();
     });
+    
+    sortCheckbox = new CheckboxWidget(this.x + 570, this.y - 5);
+    sortColumn = new DroplistWidget(this.x + 500, this.y + 50, flights.columnNames.toArray(new String[0]));
+    sortType = new DroplistWidget(this.x + 780, this.y + 50, new String[] {"Anscending", "Descending"});
     
     reposition();
     this.apply();
@@ -64,6 +71,14 @@ public class QueryingWidget extends Widget {
     
     if (activeDroplist != null)
       activeDroplist.draw();
+    
+    textAlign(LEFT, TOP);
+    fill(this.fontColor);
+    textSize(this.fontSize);
+    text("Sort", this.x + 500, this.y);
+    this.sortCheckbox.draw();
+    this.sortColumn.draw();
+    this.sortType.draw();
   }
 
   void reposition() {
@@ -178,6 +193,10 @@ public class QueryingWidget extends Widget {
     
     this.addBtn.onMouseClicked(mX, mY);
     this.applyBtn.onMouseClicked(mX, mY);
+    
+    this.sortCheckbox.onMouseClicked(mX, mY);
+    this.sortColumn.onMouseClicked(mX, mY);
+    this.sortType.onMouseClicked(mX, mY);
     
     return false;
   }

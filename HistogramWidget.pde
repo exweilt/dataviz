@@ -1,4 +1,4 @@
-// Histogram Widget Created By William 26/03 //<>//
+// Histogram Widget Created By William 26/03 //<>// //<>//
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -47,8 +47,8 @@ public class HistogramWidget extends Widget {
 
       // loops to find column values
       int tempI = i;
-      for (int k=0; k<seenValues.size(); k++) {
-        if ((seenValues.get(k) - nextValue) == 0.0) {
+      for (int k=0;k<seenValues.size();k++){
+        if ((seenValues.get(k) - nextValue) == 0.0){
           i = k;
           break;
         }
@@ -62,7 +62,7 @@ public class HistogramWidget extends Widget {
         tb.rect(columnX, bottomY, COLUMN_WIDTH, -frequency.get(i));
         tb.strokeWeight(1);
         i = tempI;
-      } //<>// //<>//
+      } //<>// //<>// //<>//
       columnX += COLUMN_WIDTH;
       nextValue++;
       //if (nextValue > seenValues.size()) break;
