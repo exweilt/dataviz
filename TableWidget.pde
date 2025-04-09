@@ -31,7 +31,7 @@ public class TableWidget extends Widget {
     this.data = filters.result;
     textAlign(LEFT, CENTER); //<>//
     textSize(fontSize);
-    fill(this.fontColor);
+    
     
     float paddingX = 160.0f;
     float paddingY = 40.0f;
@@ -52,8 +52,11 @@ public class TableWidget extends Widget {
       minClipY = currentClip.y;
       maxClipY = currentClip.y + currentClip.h;
     }
-    //fill(200, 200, 200, 200);
-    background(255, 255, 255, 100);
+    fill(255, 255, 255, 230);
+    noStroke();
+    rect(currentClip.x, currentClip.y, currentClip.w, currentClip.h);
+    //background(255, 255, 255);
+    fill(this.fontColor);
     
     for (int i = 0; i <= data.getRowCount(); i++) {
       float rowYPos = this.y + i*columnBaseHeight + columnBaseHeight/2;

@@ -46,7 +46,7 @@ public class QueryingWidget extends Widget {
   public void draw() {
     textAlign(LEFT, TOP);
 
-    fill(this.fontColor);
+    fill(255);
     textSize(this.fontSize);
     text("Filters", this.x, this.y);
 
@@ -73,7 +73,7 @@ public class QueryingWidget extends Widget {
       activeDroplist.draw();
     
     textAlign(LEFT, TOP);
-    fill(this.fontColor);
+    fill(255);
     textSize(this.fontSize);
     text("Sort", this.x + 500, this.y);
     this.sortCheckbox.draw();
@@ -93,7 +93,7 @@ public class QueryingWidget extends Widget {
       //// Generate new
       //if (i >= droplists.size()) {
       //  DroplistWidget newDrop = new DroplistWidget(this.x, currentY, flights.columnNames.toArray(new String[0]));
-      //  droplists.add(newDrop); //<>// //<>//
+      //  droplists.add(newDrop); //<>//
         
       //  TextFieldWidget newInput = new TextFieldWidget(this.x + newDrop.width + 15.0, currentY, 120., 40., "");
       //  newInput.h = newDrop.mainButton.height;
@@ -104,7 +104,7 @@ public class QueryingWidget extends Widget {
       //  });
       //  newDelete.fixedWidth = true;
       //  newDelete.width = newDelete.height;
-      //  newDelete.setOptionalIcon(binShape); //<>// //<>//
+      //  newDelete.setOptionalIcon(binShape); //<>//
       //  deleteButtons.add(newDelete);
       //}
       

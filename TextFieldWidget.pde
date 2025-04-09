@@ -100,7 +100,7 @@ public void onKeyPressed() {
       //applyFilter();
     } else if (key == CODED) { //<>//
       if (keyCode == LEFT) {
-        cursorPosition = max(0, cursorPosition - 1); //<>// //<>// //<>//
+        cursorPosition = max(0, cursorPosition - 1); //<>// //<>//
       } else if (keyCode == RIGHT) {
         cursorPosition = min(text.length(), cursorPosition + 1);
       }

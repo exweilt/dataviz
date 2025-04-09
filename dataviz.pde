@@ -1,4 +1,4 @@
-/* Resources */ //<>// //<>// //<>// //<>// //<>//
+/* Resources */ //<>// //<>// //<>// //<>//
 PFont mainFont;
 public static PShape checkmarkShape = null;
 public static PShape arrowdownShape = null;
@@ -86,7 +86,7 @@ void setup() {
     currentScreen = screen_table;
   }
   ));
-  LabelWidget l = new LabelWidget(50, 50, "Filters and sorting here applies to all the graphs on the following pages.");
+  LabelWidget l = new LabelWidget(50, 50, "Filters and sorting here applies to all the graphs on the following pages.", 18, 255);
   l.fontSize = 24;
   screen_query.addWidget(l);
   filters = new QueryingWidget(50, 150);
@@ -115,9 +115,10 @@ void setup() {
 
 
   currentScreen = screen_home;
-  screen_home.addWidget(new LabelWidget(250, 300, "Flights visualizer", 40));
-  screen_home.addWidget(new LabelWidget(250, 400, "Welcome to the flights data visualizer!"));
-  screen_home.addWidget(new LabelWidget(250, 450, "Click next page to continue."));
+  screen_home.addWidget(new RectangleWidget(200, 270, 540, 270, color(0, 0, 0, 70)));
+  screen_home.addWidget(new LabelWidget(280, 350, "Flights visualizer", 50, 255));
+  screen_home.addWidget(new LabelWidget(300, 450, "Welcome to the flights data visualizer!", 18, 255));
+  screen_home.addWidget(new LabelWidget(300, 500, "Click next page to continue.", 18, 255));
   
   screen_home.addWidget(new ButtonWidget(750, 550, "Next Page", () -> {
     currentScreen = screen_query;
@@ -205,7 +206,7 @@ void setup() {
     pie.setFilter(code);             // Call PieChart filter function
   }
 
-)); //<>// //<>//
+)); //<>//
 
 // PieChart goes back to Histogram
 screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page", 
@@ -245,7 +246,7 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
   screen_histogram.addWidget(new ButtonWidget(750, 600, "Next Page", 
     () -> {
     currentScreen = screen_Scatterplot;
-  } //<>// //<>//
+  } //<>//
   ));
 
   
@@ -295,7 +296,7 @@ void keyPressed() {
   currentScreen.onKeyPressed();
   
   if (keyCode == LEFT) {
-    container.contentX -= 20.0; //<>// //<>//
+    container.contentX -= 20.0; //<>//
   }
   if (keyCode == RIGHT) {
     container.contentX += 20.0;
