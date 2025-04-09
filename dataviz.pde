@@ -93,7 +93,10 @@ void setup() {
     currentScreen = screen_table;
   }
   ));
-  filters = new QueryingWidget(50, 50);
+  LabelWidget l = new LabelWidget(50, 50, "Filters and sorting here applies to all the graphs on the following pages.");
+  l.fontSize = 24;
+  screen_query.addWidget(l);
+  filters = new QueryingWidget(50, 150);
   filters.onApply = () -> {
     // Table update
     table.data = filters.result;
@@ -163,10 +166,10 @@ void setup() {
   //  bar.categoriesX = map.keySet().toArray(new String[0]);
   //  bar.pointsY = new float[bar.categoriesX.length];
   //  for (String label : bar.categoriesX) {
-  //    bar.setCategoryValue(label, map.get(label).floatValue());
+  //    bar.setCategoryValue(label, map.get(label).floatValue()); //<>//
   //  }
   //}
-  //); //<>//
+  //);
   //updateBarBtn.onClick.run();
   //screen_barplot.addWidget(updateBarBtn);
   screen_barplot.addWidget(new ButtonWidget(50, 800, "Previous Page",
@@ -224,10 +227,10 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
     hist.setValues(flights.data.getFloatColumn(histDropList.getSelectedString()));
     }
   );
-  updateHistBtn.onClick.run();
+  updateHistBtn.onClick.run(); //<>//
   
   screen_histogram.addWidget(updateHistBtn);
-  screen_histogram.addWidget(new ButtonWidget(50, 600, "Previous Page", //<>//
+  screen_histogram.addWidget(new ButtonWidget(50, 600, "Previous Page",
     () -> {
     currentScreen = screen_piechart;
   }
