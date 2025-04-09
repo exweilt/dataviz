@@ -56,8 +56,8 @@ public class ContainerWidget extends Widget {
     //clip(this.x, this.y, this.width, this.height);
     pushClip(new Clip(this.x, this.y, this.width, this.height));
     for (int i = 0; i < this.widgets.length; i++) {
-      this.widgets[i].x = this.x - contentX + 20.;
-      this.widgets[i].y = this.y - contentY + 20.;
+      this.widgets[i].x = this.x - contentX + 40.;
+      this.widgets[i].y = this.y - contentY + 40.;
       this.widgets[i].draw();
     }
     //noClip();
@@ -134,8 +134,18 @@ public class ContainerWidget extends Widget {
     println("contentX = ", contentX);
     
     for (int i = 0; i < this.widgets.length; i++) {
-      this.widgets[i].x = this.x - contentX + 20.;
-      this.widgets[i].y = this.y - contentY + 20.;
+      this.widgets[i].x = this.x - contentX + 40.;
+      this.widgets[i].y = this.y - contentY + 40.;
     }
+  }
+  
+  void setContentWidth(int newWidth) {
+    this.contentWidth = newWidth;
+    hscroll.progressMax = max(newWidth - this.width, 0);
+  }
+  
+  void setContentHeight(int newHeight) {
+    this.contentHeight = newHeight;
+    vscroll.progressMax = max(newHeight - this.height, 0);
   }
 }

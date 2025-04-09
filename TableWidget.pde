@@ -29,7 +29,7 @@ public class TableWidget extends Widget {
   @Override
   public void draw() {
     this.data = filters.result;
-    textAlign(LEFT, CENTER); //<>// //<>//
+    textAlign(LEFT, CENTER); //<>//
     textSize(fontSize);
     fill(this.fontColor);
     
@@ -60,7 +60,7 @@ public class TableWidget extends Widget {
       if (rowYPos <= minClipY) {
         continue;
       } else if (rowYPos > maxClipY) {
-        break; //<>//
+        break;
       }
       float totalPadding = columnPadding;  // reset
      
@@ -101,7 +101,7 @@ public class TableWidget extends Widget {
     //float currentY = this.y;
     float w = getWidth();
     float startX = this.x + indexingPadding + 2*columnPadding;
-    for (int i = 0; i < data.getRowCount(); i++) {
+    for (int i = 0; i < data.getRowCount() + 1; i++) {
         float yPos = this.y + i*(columnBaseHeight);
         if (yPos <= minClipY) {
           continue;
@@ -156,7 +156,7 @@ public class TableWidget extends Widget {
       sum += w;
     }
     
-    return sum + 30.0;
+    return sum + 270.0;
   }
   
   public float getHeight() {

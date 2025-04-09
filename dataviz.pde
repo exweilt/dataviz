@@ -1,4 +1,4 @@
-/* Resources */ //<>// //<>// //<>// //<>//
+/* Resources */ //<>// //<>// //<>// //<>// //<>//
 PFont mainFont;
 public static PShape checkmarkShape = null;
 public static PShape arrowdownShape = null;
@@ -94,8 +94,8 @@ void setup() {
     // Table update
     table.data = filters.result;
     //container.redraw();
-    container.contentWidth = (int)table.getWidth();
-    container.contentHeight = (int)table.getHeight();
+    container.setContentWidth((int)table.getWidth());
+    container.setContentHeight((int)table.getHeight());
     
     // Barplot update
     HashMap<String, Integer> map = StatisticFunctions.absoluteFrequency(filters.result.getStringColumn(barDropSelector.getSelectedString()));
@@ -104,7 +104,12 @@ void setup() {
     for (String label : bar.categoriesX) {
       bar.setCategoryValue(label, map.get(label).floatValue());
     }
-    bar_container.redraw();
+    bar.updateScale();
+    bar_container.setContentWidth((int)bar.getWidth());
+    bar_container.setContentHeight((int)bar.getHeight());
+    println("new bar container width = ", (int)bar.getWidth());
+    println("new bar container height = ", (int)bar.getHeight());
+    //bar_container.redraw();
   };
   screen_query.addWidget(filters);
 
@@ -137,6 +142,7 @@ void setup() {
 
   // barplot screen
   bar = new BarplotWidget(100, 20);
+  bar.width = 600;
   bar_container = new ContainerWidget(50, 50, 600, 700, 600, 1000);
   bar_container.addWidget(bar);
   screen_barplot.addWidget(bar_container);
@@ -152,7 +158,13 @@ void setup() {
     for (String label : bar.categoriesX) {
       bar.setCategoryValue(label, map.get(label).floatValue());
     }
-    bar_container.redraw();
+    //bar_container.redraw();
+    bar.updateScale();
+    bar_container.setContentWidth((int)bar.getWidth());
+    bar_container.setContentHeight((int)bar.getHeight());
+    
+    println("new bar container width = ", (int)bar.getWidth());
+    println("new bar container height = ", (int)bar.getHeight());
   };
 
   //ButtonWidget updateBarBtn = new ButtonWidget(500, 600, "Update",
@@ -172,7 +184,7 @@ void setup() {
     currentScreen = screen_table;
   }
   ));
-  screen_barplot.addWidget(new ButtonWidget(750, 800, "Next Page", //<>//
+  screen_barplot.addWidget(new ButtonWidget(750, 800, "Next Page",
     () -> {
     currentScreen = screen_piechart;
   }
@@ -193,7 +205,7 @@ void setup() {
     pie.setFilter(code);             // Call PieChart filter function
   }
 
-)); //<>//
+)); //<>// //<>//
 
 // PieChart goes back to Histogram
 screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page", 
@@ -233,7 +245,7 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
   screen_histogram.addWidget(new ButtonWidget(750, 600, "Next Page", 
     () -> {
     currentScreen = screen_Scatterplot;
-  } //<>//
+  } //<>// //<>//
   ));
 
   
@@ -283,7 +295,7 @@ void keyPressed() {
   currentScreen.onKeyPressed();
   
   if (keyCode == LEFT) {
-    container.contentX -= 20.0; //<>//
+    container.contentX -= 20.0; //<>// //<>//
   }
   if (keyCode == RIGHT) {
     container.contentX += 20.0;
