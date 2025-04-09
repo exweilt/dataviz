@@ -50,7 +50,7 @@ void setup() {
   size(1000, 900);
   surface.setTitle("Plane flights data Visualizer");
   surface.setResizable(true);
-  tb = getGraphics();
+  //tb = getGraphics();
 
   loadResources();
   flights.loadData("flights2kCleaned.csv");
@@ -93,7 +93,9 @@ void setup() {
   filters.onApply = () -> {
     // Table update
     table.data = filters.result;
-    container.redraw();
+    //container.redraw();
+    container.contentWidth = (int)table.getWidth();
+    container.contentHeight = (int)table.getHeight();
     
     // Barplot update
     HashMap<String, Integer> map = StatisticFunctions.absoluteFrequency(filters.result.getStringColumn(barDropSelector.getSelectedString()));
@@ -128,7 +130,7 @@ void setup() {
   }
   ));
   table = new TableWidget(50, 50, filters.result);
-  container = new ContainerWidget(50, 50, 800, 700, 4000, 100000);
+  container = new ContainerWidget(50, 50, 800, 700, (int)table.getWidth(), (int)table.getHeight());
   container.addWidget(table);
   screen_table.addWidget(container);
   //  =================================================
@@ -310,16 +312,40 @@ void mouseDragged() {
   currentScreen.onMouseDragged(mouseX, mouseY);
 }
 
-PGraphics[] bufferStack = new PGraphics[0];
-PGraphics tb; // top buffer
-
-void pushBuffer(PGraphics newBuffer) {
-  bufferStack = Arrays.copyOf(bufferStack, bufferStack.length + 1);
-  bufferStack[bufferStack.length - 1] = tb;
-  tb = newBuffer;
+class Clip {
+  float x;
+  float y;
+  float w;
+  float h;
+  
+  public Clip(float x, float y, float w, float h) {
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+  }
 }
 
-void popBuffer() {
-  tb = bufferStack[bufferStack.length - 1];
-  bufferStack = Arrays.copyOf(bufferStack, bufferStack.length - 1);
+Clip currentClip = null;
+Clip[] clipStack = new Clip[0];
+
+void pushClip(Clip newClip) {
+  clipStack = Arrays.copyOf(clipStack, clipStack.length + 1);
+  clipStack[clipStack.length - 1] = currentClip;
+  currentClip = newClip;
+  if (currentClip != null) {
+    clip(currentClip.x, currentClip.y, currentClip.w, currentClip.h);
+  } else {
+    noClip();
+  }
+}
+
+void popClip() {
+  currentClip = clipStack[clipStack.length - 1];
+  clipStack = Arrays.copyOf(clipStack, clipStack.length - 1);
+  if (currentClip != null) {
+    clip(currentClip.x, currentClip.y, currentClip.w, currentClip.h);
+  } else {
+    noClip();
+  }
 }

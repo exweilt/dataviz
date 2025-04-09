@@ -24,40 +24,40 @@ public class BarplotWidget extends Widget {
   
   @Override
   public void draw() {
-    tb.fill(this.bg);
-    tb.noStroke();
-    tb.textAlign(RIGHT);
+    fill(this.bg);
+    noStroke();
+    textAlign(RIGHT);
     //rect(this.x, this.y, this.width, this.height);
     
     float COLUMN_WIDTH = 30.0f;
     float COLUMN_PADDING = 10.0f;
     
     //float bottomY = this.y + this.height - 60;
-    tb.textSize(12);
+    textSize(12);
     for (int i = 0; i < this.categoriesX.length; i++) {
       //float columnX = this.x + i * (COLUMN_WIDTH + COLUMN_PADDING) + 40.;
       float yPos = this.y + i * (COLUMN_WIDTH + COLUMN_PADDING) + 40.;
       
-      tb.fill(30);
-      tb.text(this.categoriesX[i], this.x - 5, yPos + 30.0);
+      fill(30);
+      text(this.categoriesX[i], this.x - 5, yPos + 30.0);
       
-      tb.fill (colors[i % this.colors.length]);
-      tb.rect(this.x + 20., yPos, this.pointsY[i] * this.scaleY, COLUMN_WIDTH);
+      fill (colors[i % this.colors.length]);
+      rect(this.x + 20., yPos, this.pointsY[i] * this.scaleY, COLUMN_WIDTH);
     }
     
-    tb.fill(30);
+    fill(30);
     for (int tickX = 0; tickX <= 500; tickX += 50) {
       float xPos = this.x + tickX * this.scaleY;
-      tb.text(tickX, xPos, this.y + 5.);
-      tb.strokeWeight(1.0);
-      tb.stroke(100, 100, 100, 100);
+      text(tickX, xPos, this.y + 5.);
+      strokeWeight(1.0);
+      stroke(100, 100, 100, 100);
       //circle (this.x, yPos, 10);
-      tb.line(xPos, this.y, xPos, this.y + 10000);
+      line(xPos, this.y, xPos, this.y + 10000);
     }
     
-    tb.textAlign(LEFT);
-    tb.textAlign(LEFT);
-    tb.strokeWeight(1.0);
+    textAlign(LEFT);
+    textAlign(LEFT);
+    strokeWeight(1.0);
   }
 
   @Override
