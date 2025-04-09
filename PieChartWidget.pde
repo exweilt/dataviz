@@ -16,7 +16,7 @@ public class PieChartWidget extends Widget {
     this.field = "Origin"; 
     this.dataMap = new HashMap<>();
     
-    colorMode(HSB, 255);  // For multiple colors in the piechart
+    //colorMode(HSB, 255);  // For multiple colors in the piechart
 
   }
 

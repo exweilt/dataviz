@@ -29,7 +29,7 @@ public class TableWidget extends Widget {
   @Override
   public void draw() {
     this.data = filters.result;
-    textAlign(LEFT, CENTER); //<>//
+    textAlign(LEFT, CENTER); //<>// //<>//
     textSize(fontSize);
     fill(this.fontColor);
     
@@ -37,7 +37,7 @@ public class TableWidget extends Widget {
     float paddingY = 40.0f;
     float indexingPadding = 20.0f;
     
-    //circle(this.x, this.y, 10.0);
+    
     
     ///* Draw column Titles */
     //float totalPadding = indexingPadding + this.columnPadding * 3;
@@ -46,10 +46,24 @@ public class TableWidget extends Widget {
     //  totalPadding += this.columnWidths[j] + columnPadding * 2;
     //}
     
+    float minClipY = 0.0;
+    float maxClipY = 100000;
+    if (currentClip != null) {
+      minClipY = currentClip.y;
+      maxClipY = currentClip.y + currentClip.h;
+    }
+    //fill(200, 200, 200, 200);
+    background(255, 255, 255, 100);
+    
     for (int i = 0; i <= data.getRowCount(); i++) {
       float rowYPos = this.y + i*columnBaseHeight + columnBaseHeight/2;
+      if (rowYPos <= minClipY) {
+        continue;
+      } else if (rowYPos > maxClipY) {
+        break; //<>//
+      }
       float totalPadding = columnPadding;  // reset
-      
+     
       //line(this.x, this.y, this.x + 1500, this.y);
       
       // Draw row index
@@ -76,18 +90,25 @@ public class TableWidget extends Widget {
     // Draw Vertical Lines
     stroke(200);
     float currentX = this.x + columnPadding*2 + indexingPadding;
+    float startY = max(this.y, minClipY);
     for (int i = 0; i < data.getColumnCount(); i++) {
-        line(currentX, this.y, currentX, this.y + 3000);
+        line(currentX, startY, currentX, maxClipY);
         currentX += this.columnWidths[i] + columnPadding*2;
     }
     line(currentX, this.y, currentX, this.y + 3000);
     
     // Draw Horizontal Lines
     //float currentY = this.y;
+    float w = getWidth();
     float startX = this.x + indexingPadding + 2*columnPadding;
     for (int i = 0; i < data.getRowCount(); i++) {
         float yPos = this.y + i*(columnBaseHeight);
-        line(startX, yPos, startX + this.width, yPos);
+        if (yPos <= minClipY) {
+          continue;
+        } else if (yPos > maxClipY) {
+          break;
+        }
+        line(startX, yPos, startX + w, yPos);
     }
     line(currentX, this.y, currentX, this.y + this.height);
     

@@ -6,8 +6,8 @@
   */
 public class BarplotWidget extends Widget {
   private color bg = color(230, 230, 230, 255);
-  private float width = 600.0f;
-  private float height = 500.0f;
+  //private float width = 600.0f;
+  //private float height = 500.0f;
   private String[] categoriesX = {"Apple", "Banana", "Orange"};
   private float[] pointsY = {400., 70., 210.};
   //public float scaleX = 8.0f; // n pixels per 1 x unit of graph
@@ -100,6 +100,19 @@ public class BarplotWidget extends Widget {
       }
     }
   }
+  
+  //public float getWidth() {
+  //  float sum = 0.0f;
+  //  for (float w : this.columnWidths) {
+  //    sum += w;
+  //  }
+    
+  //  return sum + 30.0;
+  //}
+  
+  //public float getHeight() {
+  //  return data.getRowCount() * this.columnBaseHeight + 70.0;
+  //}
   
   //public float getMaxX() {
   //  return this.topLeftPos.x + this.width / this.scaleX;
