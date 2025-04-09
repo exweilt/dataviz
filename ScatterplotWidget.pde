@@ -8,8 +8,8 @@ public class ScatterplotWidget extends Widget {
   private color bg = color(230, 230, 230, 255);
   private color markerColor = color(255, 200, 10, 255);
   private float markerRadius = 4.0f;
-  private float width = 300.0f;
-  private float height = 300.0f;
+  private float width = 500.0f;
+  private float height = 500.0f;
   private float[] pointsX = {2.0, 4.0, 4.5, 5.0, 9.0, 9.0, 23.5, 25.0};
   private float[] pointsY = {10.0, 30.0, 28.5, 43.0, 70.0, 49.0, 129.5, 135.0};
   public float scaleX = 8.0f; // n pixels per 1 x unit of graph

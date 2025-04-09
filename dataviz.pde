@@ -8,12 +8,14 @@ public static PShape binShape = null;
 DataLoading flights = new DataLoading();
 Screen currentScreen;
 TextFieldWidget focusedTextField = null;  // Added on 17/03/2025 by Damon // modified by william
-ScatterplotWidget scatter = new ScatterplotWidget(50, 50, "X", "Y");
+ScatterplotWidget scatter;
 ButtonWidget btn;
 TableWidget table;
 ContainerWidget container;
 ContainerWidget bar_container;
 DroplistWidget barDropSelector;
+DroplistWidget scatterSelectorX;
+DroplistWidget scatterSelectorY;
 
 QueryingWidget filters;
 BarplotWidget bar;
@@ -50,21 +52,8 @@ void setup() {
   loadResources();
   flights.loadData("flights2kCleaned.csv");
 
-  //btn = new ButtonWidget(350, 100, "Click me!", () -> {
-  //  interest = input.getText();
-  //  scatter.setPointsX(flights.data.getFloatColumn(interest));
-  //}
-  //);
 
   currentScreen = new Screen(color(245, 245, 245));
-
-  //scatter.setPointsX(flights.data.getFloatColumn("ORIGIN_WAC"));
-  scatter.setPointsY(flights.data.getFloatColumn("DISTANCE"));
-
-  scatter.setMinX(-1.0);
-  scatter.setMaxX(100.0);
-  scatter.setMinY(-10.0);
-  scatter.setMaxY(3000.0);
 
   bar = new BarplotWidget(400, 50);
   currentScreen.addWidget(bar);
@@ -72,7 +61,7 @@ void setup() {
 
   // Added by Haojin 27/03/2025
   // Modified and cleaned by William 02/04
-  // 66666666666666666666666666666666666666666666Display all different screens
+  // Display all different screens
 
   Screen screen_home = new Screen(color(245, 245, 245));
   Screen screen_query = new Screen(color(245, 245, 245));
@@ -166,7 +155,7 @@ void setup() {
   //  bar.categoriesX = map.keySet().toArray(new String[0]);
   //  bar.pointsY = new float[bar.categoriesX.length];
   //  for (String label : bar.categoriesX) {
-  //    bar.setCategoryValue(label, map.get(label).floatValue()); //<>//
+  //    bar.setCategoryValue(label, map.get(label).floatValue());
   //  }
   //}
   //);
@@ -177,7 +166,7 @@ void setup() {
     currentScreen = screen_table;
   }
   ));
-  screen_barplot.addWidget(new ButtonWidget(750, 800, "Next Page",
+  screen_barplot.addWidget(new ButtonWidget(750, 800, "Next Page", //<>//
     () -> {
     currentScreen = screen_piechart;
   }
@@ -227,7 +216,7 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
     hist.setValues(flights.data.getFloatColumn(histDropList.getSelectedString()));
     }
   );
-  updateHistBtn.onClick.run(); //<>//
+  updateHistBtn.onClick.run();
   
   screen_histogram.addWidget(updateHistBtn);
   screen_histogram.addWidget(new ButtonWidget(50, 600, "Previous Page",
@@ -238,17 +227,44 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
   screen_histogram.addWidget(new ButtonWidget(750, 600, "Next Page", 
     () -> {
     currentScreen = screen_Scatterplot;
-  }
+  } //<>//
   ));
 
   
 
-  // Scatter plot Screen
-  screen_Scatterplot.addWidget(new ButtonWidget(50, 550, "Previous Page", 
+  // =============================== Scatter plot Screen ===============================
+  
+    //btn = new ButtonWidget(350, 100, "Click me!", () -> {
+  //  interest = input.getText();
+  //  scatter.setPointsX(flights.data.getFloatColumn(interest));
+  //}
+  //);
+  scatter = new ScatterplotWidget(50, 50, "X", "Y");
+  scatterSelectorX = new DroplistWidget(650, 200, flights.columnNames.toArray(new String[0]));
+  scatterSelectorX.onSelected = () -> {
+    scatter.setPointsX(filters.result.getFloatColumn(scatterSelectorX.getSelectedString()));
+  };
+  screen_Scatterplot.addWidget(scatterSelectorX);
+  scatterSelectorY = new DroplistWidget(650, 500, flights.columnNames.toArray(new String[0]));
+  scatterSelectorY.onSelected = () -> {
+    scatter.setPointsY(filters.result.getFloatColumn(scatterSelectorY.getSelectedString()));
+  };
+  screen_Scatterplot.addWidget(scatterSelectorY);
+  screen_Scatterplot.addWidget(new LabelWidget(650, 180, "Select X data"));
+  screen_Scatterplot.addWidget(new LabelWidget(650, 480, "Select Y data"));
+  //scatter.setPointsX(flights.data.getFloatColumn("ORIGIN_WAC"));
+  scatter.setPointsY(flights.data.getFloatColumn("DISTANCE"));
+
+  scatter.setMinX(-1.0);
+  scatter.setMaxX(100.0);
+  scatter.setMinY(-10.0);
+  scatter.setMaxY(3000.0);
+  screen_Scatterplot.addWidget(new ButtonWidget(50, 650, "Previous Page", 
   () -> {
     currentScreen = screen_histogram;
   }
   ));
+  screen_Scatterplot.addWidget(scatter);
   
   filters.apply();
 }
