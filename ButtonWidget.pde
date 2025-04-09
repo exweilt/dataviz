@@ -44,6 +44,8 @@ public class ButtonWidget extends Widget {
   
   @Override
   public void draw() {
+    onMouseMoved(mouseX, mouseY); // Fixes visual bug
+    
     textAlign(LEFT);
     if (this.isHovered && mousePressed) {
       fill(this.pressedBg);
