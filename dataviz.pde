@@ -1,4 +1,4 @@
-/* Resources */ //<>// //<>// //<>// //<>//
+/* Resources */ //<>// //<>// //<>// //<>// //<>//
 PFont mainFont;
 public static PShape checkmarkShape = null;
 public static PShape arrowdownShape = null;
@@ -49,17 +49,17 @@ private void loadResources() {
 void setup() {
   size(1000, 900);
   surface.setTitle("Plane flights data Visualizer");
-  surface.setResizable(true);
+  //surface.setResizable(true);
   //tb = getGraphics();
 
   loadResources();
   flights.loadData("flights2kCleaned.csv");
 
 
-  currentScreen = new Screen(color(245, 245, 245));
+  //currentScreen = new Screen(color(245, 245, 245));
 
-  bar = new BarplotWidget(400, 50);
-  currentScreen.addWidget(bar);
+  //bar = new BarplotWidget(400, 50);
+  //currentScreen.addWidget(bar);
 
   bg = loadImage("Flight.jpg");
 
@@ -67,7 +67,7 @@ void setup() {
   // Modified and cleaned by William 02/04
   // Display all different screens
 
-  Screen screen_home = new Screen(color(245, 245, 245));
+  Screen screen_home = new Screen(bg);
   Screen screen_query = new Screen(color(245, 245, 245));
   Screen screen_table = new Screen(color(245, 245, 245));
   Screen screen_barplot = new Screen(color(245, 245, 245));
@@ -86,7 +86,7 @@ void setup() {
     currentScreen = screen_table;
   }
   ));
-  LabelWidget l = new LabelWidget(50, 50, "Filters and sorting here applies to all the graphs on the following pages.", 18, 255);
+  LabelWidget l = new LabelWidget(50, 50, "Filters and sorting here applies to all the graphs on the following pages.", 18);
   l.fontSize = 24;
   screen_query.addWidget(l);
   filters = new QueryingWidget(50, 150);
@@ -248,7 +248,7 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
     currentScreen = screen_Scatterplot;
   } //<>//
   ));
-
+ //<>//
   
 
   // =============================== Scatter plot Screen ===============================
@@ -256,7 +256,7 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
     //btn = new ButtonWidget(350, 100, "Click me!", () -> {
   //  interest = input.getText();
   //  scatter.setPointsX(flights.data.getFloatColumn(interest));
-  //}
+  //} //<>//
   //);
   scatter = new ScatterplotWidget(50, 50, "X", "Y");
   scatterSelectorX = new DroplistWidget(650, 200, flights.columnNames.toArray(new String[0]));
@@ -318,7 +318,7 @@ void mousePressed() {
 }
 
 void mouseReleased() {
-  currentScreen.onMouseReleased(mouseX, mouseY);
+  currentScreen.onMouseReleased(mouseX, mouseY); //<>//
 }
 
 void mouseDragged() {
