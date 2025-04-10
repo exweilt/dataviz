@@ -1,4 +1,4 @@
-// Histogram Widget Created By William 26/03 //<>// //<>//
+// Histogram Widget Created By William 26/03
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;

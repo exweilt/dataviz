@@ -139,14 +139,14 @@ public class QueryingWidget extends Widget {
   void apply() {
     result = flights.data.copy();
     result.clearRows();   // Reset result table, but copy column titles!
-     //<>//
+    
     // For each row and for each filter if every filter is met append the row to the result. 
     for (TableRow row : flights.data.rows()) {
       boolean wasMet = true;
       for (int i = 0; i < droplists.size(); i++) {
         if (!row.getString(droplists.get(i).getSelectedString()).toLowerCase().contains(inputs.get(i).text.toLowerCase()))  {
           wasMet = false;
-          break; //<>//
+          break; 
         }
       } 
       if (wasMet) {
@@ -228,19 +228,23 @@ public class QueryingWidget extends Widget {
 
   @Override
   public boolean onMouseClicked(int mX, int mY) {
+    // Handle droplists
     for (DroplistWidget d : this.droplists) {
       if (d.onMouseClicked(mX, mY))
         return true;
     }
     
+    // Handle text fields
     for (TextFieldWidget i : this.inputs) {
       i.onMouseClicked(mX, mY);
     }
     
+    // Handle delete buttons
     for (int i = 0; i < deleteButtons.size(); i++) {
       this.deleteButtons.get(i).onMouseClicked(mX, mY);
     }
     
+    // Handle the rest
     this.addBtn.onMouseClicked(mX, mY);
     this.applyBtn.onMouseClicked(mX, mY);
     

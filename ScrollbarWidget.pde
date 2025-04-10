@@ -88,7 +88,7 @@ public class ScrollbarWidget extends Widget {
       float scrollPos = this.x + this.width * (1 - progressRatio) * (this.value - progressMin)/(this.progressMax - progressMin);
       if (mX > scrollPos && mX < scrollPos + width * progressRatio && mY > this.y && mY < this.y + this.height) {
         this.isDragging = true;
-        grabX = mX; //<>//
+        grabX = mX; 
         grabY = mY;
         grabValue = value;    
       }

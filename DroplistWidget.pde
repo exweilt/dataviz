@@ -21,6 +21,7 @@ public class DroplistWidget extends Widget {
 
   boolean isListDropped = false;
 
+  // Dummy values for testing
   String[] options = {"Apple", "Banana", "Orange", "Lemon"};
   int activeIndex = 0;
 
@@ -47,7 +48,7 @@ public class DroplistWidget extends Widget {
   }
 
   @Override
-    public void draw() {
+  public void draw() {
     this.mainButton.draw();
 
     if (isListDropped) {
@@ -74,9 +75,6 @@ public class DroplistWidget extends Widget {
         }
       }
       
-      //if (!wasMainButtonPressed && !reacted)
-      //  setListDropped(false);
-      
       if (!wasMainButtonPressed)
         setListDropped(false);
     }
@@ -85,7 +83,7 @@ public class DroplistWidget extends Widget {
   }
 
   @Override
-    public void onMouseMoved(int mX, int mY) {
+  public void onMouseMoved(int mX, int mY) {
     this.mainButton.onMouseMoved(mX, mY);
 
     if (isListDropped) {
@@ -94,6 +92,7 @@ public class DroplistWidget extends Widget {
       }
     }
   }
+  
   void setListDropped(boolean newState) {
     this.isListDropped = newState;
     
