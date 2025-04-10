@@ -10,11 +10,7 @@ public class BarplotWidget extends Widget {
   float height;
   private String[] categoriesX = {"Apple", "Banana", "Orange"};
   private float[] pointsY = {400., 70., 210.};
-  //public float scaleX = 8.0f; // n pixels per 1 x unit of graph
   public float scaleY = 1.0f;
-  //public int stepX = 5;
-  //public int stepY = 10;
-  //public PVector topLeftPos = new PVector(-25, 125); // Coordinate position of the left top corner of plot
    color[] colors = {color(230, 10, 10)};
     float COLUMN_WIDTH = 30.0f;
     float COLUMN_PADDING = 10.0f;
@@ -24,19 +20,12 @@ public class BarplotWidget extends Widget {
     this.y = y_in;
   }
   
-  @Override
+  @Override  // Draws the columns to the screen
   public void draw() {
-
     fill(this.bg); //<>// //<>//
     noStroke();
-    //textAlign(RIGHT);
     background(255);
-    //rect(this.x, this.y, this.width, this.height);
 
-    
-    
-
-    //this.scaleY = getWidth() 
     if (this.categoriesX.length >= 1) {
       //float bottomY = this.y + this.height - 60;
       textSize(12);
@@ -81,19 +70,12 @@ public class BarplotWidget extends Widget {
   
   }
   
-  void updateScale() {
+  void updateScale() { // Updates the scale dynamically
     //float w = currentClip.w;
     if (this.categoriesX.length >= 1) {
       this.scaleY = (width / StatisticFunctions.max(this.pointsY)) * 0.7;
     }
   }
-  
-  //public PVector plotToScreen(float pointX, float pointY) {
-  //  float screenX = this.x + (pointX - this.topLeftPos.x) * this.scaleX;
-  //  float screenY = this.y - (pointY - this.topLeftPos.y) * this.scaleY;
-    
-  //  return new PVector(screenX, screenY);
-  //}
   
   public void setX(String[] categories) {
     this.categoriesX = categories;
@@ -111,6 +93,7 @@ public class BarplotWidget extends Widget {
     return this.pointsY;
   }
   
+  // Sets the category values
   public void setCategoryValue(String cat, Float value) {
     for (int i = 0; i < this.categoriesX.length; i++) {
       if (this.categoriesX[i].equals(cat)) {
@@ -119,9 +102,9 @@ public class BarplotWidget extends Widget {
     }
   }
   
+  // Sets the width of the bar plot
   public float getWidth() {
     float w = 0;
-    
     if (this.categoriesX.length >= 1) {
       w = StatisticFunctions.max(this.pointsY) * scaleY;
     }
@@ -131,46 +114,6 @@ public class BarplotWidget extends Widget {
   
   public float getHeight() {
     return this.categoriesX.length * (COLUMN_WIDTH + COLUMN_PADDING) + 40.;
-    //return data.getRowCount() * this.columnBaseHeight + 70.0;
   }
-  
-  //public float getMaxX() {
-  //  return this.topLeftPos.x + this.width / this.scaleX;
-  //}
-  
-  //public void setMaxX(float newMaxX) {
-  //  this.scaleX = this.width / (newMaxX - getMinX());
-  //}
 
-  //public float getMinX() {
-  //  return this.topLeftPos.x;
-  //}
-  
-  //public void setMinX(float newMinX) {
-  //  //float previousMinX = this.topLeftPos.x;
-  //  float previousMaxX = getMaxX();
-    
-  //  this.topLeftPos.x = newMinX;
-  //  this.scaleX = this.width / (previousMaxX - newMinX);
-  //}
-  
-  //public float getMinY() {
-  //  return this.topLeftPos.y - this.height / this.scaleY;
-  //}
-  
-  //public void setMinY(float newMinY) {
-  //  this.scaleY = this.height / (getMaxY() - newMinY);
-  //}
-
-  //public float getMaxY() {
-  //  return this.topLeftPos.y;
-  //}
-  
-  //public void setMaxY(float newMaxY) {
-  //  //float previousMinX = this.topLeftPos.x;
-  //  float previousMinY = getMinY();
-    
-  //  this.topLeftPos.y = newMaxY;
-  //  this.scaleY = this.height / (newMaxY - previousMinY);
-  //}
 }
