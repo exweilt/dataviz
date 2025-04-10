@@ -86,14 +86,16 @@ public class ScrollbarWidget extends Widget {
  public void onMouseDragged(int mX, int mY) {
    if (isDragging) {
      if (isVertical) {
+       //if ()
         float newVal = grabValue + (mY - grabY) * ((progressMax - progressMin) / ((height * (1 - progressRatio))));
-        this.value = min(progressMax, max(progressMin, newVal));       
+        this.value = min(progressMax, max(progressMin, newVal));   //<>//
+        //println("newVal = ", newVal);
      } else {
         float newVal = grabValue + (mX - grabX) * ((progressMax - progressMin) / ((width * (1 - progressRatio))));
         this.value = min(progressMax, max(progressMin, newVal));       
      }
  
    }
-
+    //println("new value = ", this.value);
   }
 }

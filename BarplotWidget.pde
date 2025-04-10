@@ -16,7 +16,9 @@ public class BarplotWidget extends Widget {
   //public int stepY = 10;
   //public PVector topLeftPos = new PVector(-25, 125); // Coordinate position of the left top corner of plot
    color[] colors = {color(230, 10, 10)};
-
+    float COLUMN_WIDTH = 30.0f;
+    float COLUMN_PADDING = 10.0f;
+    
   public BarplotWidget(float x_in, float y_in) {
     this.x = x_in;
     this.y = y_in;
@@ -24,43 +26,49 @@ public class BarplotWidget extends Widget {
   
   @Override
   public void draw() {
-    tb.fill(this.bg);
-    tb.noStroke();
-    tb.rect(this.x, this.y, this.width, this.height);
+
+    fill(this.bg); //<>// //<>//
+    noStroke();
+    //textAlign(RIGHT);
+    background(255);
+    //rect(this.x, this.y, this.width, this.height);
 
     
-    float COLUMN_WIDTH = 30.0f;
-    float COLUMN_PADDING = 10.0f;
     
 
-    float bottomY = this.y + this.height - 60; // comment out?
-
-    tb.textSize(12);
-    for (int i = 0; i < this.categoriesX.length; i++) {
-      //float columnX = this.x + i * (COLUMN_WIDTH + COLUMN_PADDING) + 40.;
-      float yPos = this.y + i * (COLUMN_WIDTH + COLUMN_PADDING) + 40.;
+    //this.scaleY = getWidth() 
+    if (this.categoriesX.length >= 1) {
+      //float bottomY = this.y + this.height - 60;
+      textSize(12);
+      for (int i = 0; i < this.categoriesX.length; i++) {
+        //float columnX = this.x + i * (COLUMN_WIDTH + COLUMN_PADDING) + 40.;
+        float yPos = this.y + i * (COLUMN_WIDTH + COLUMN_PADDING) + 40.;
+        
+        fill(30);
+        text(this.categoriesX[i], this.x - 5, yPos + 15);
+        
+        fill (colors[i % this.colors.length]);
+        rect(this.x + 150, yPos, this.pointsY[i] * this.scaleY, COLUMN_WIDTH);
+      }
       
-      tb.fill(30);
+      float maxVal = StatisticFunctions.max(this.pointsY);
+      int step = ((int)(maxVal/10) <= 0) ? 1 : ((int)(maxVal/10));
+      float h = getHeight();
 
-      tb.text(this.categoriesX[i], this.x - 5, yPos + 30.0);
       
-      tb.fill (colors[i % this.colors.length]);
-      tb.rect(this.x + 20., yPos, this.pointsY[i] * this.scaleY, COLUMN_WIDTH);
+      fill(30);
+      for (int tickX = 0; tickX <= (int)maxVal; tickX += step) {
+        float xPos = this.x + tickX * this.scaleY + 150;
+        text(tickX, xPos, this.y + 5.);
+        strokeWeight(1.0);
+        stroke(100, 100, 100, 100);
+        //circle (this.x, yPos, 10);
+        line(xPos, this.y, xPos, this.y + h);
+      }
     }
     
-    tb.fill(30);
-    for (int tickX = 0; tickX <= 500; tickX += 50) {
-      float xPos = this.x + tickX * this.scaleY;
-      tb.text(tickX, xPos, this.y + 5.);
-      tb.strokeWeight(1.0);
-      tb.stroke(100, 100, 100, 100);
-      //circle (this.x, yPos, 10);
-      tb.line(xPos, this.y, xPos, this.y + 10000);
-    }
-    
-    tb.textAlign(LEFT);
-    tb.textAlign(LEFT);
-    tb.strokeWeight(1.0);
+    //textAlign(LEFT);
+    strokeWeight(1.0);
   }
 
   @Override
@@ -71,6 +79,13 @@ public class BarplotWidget extends Widget {
   @Override
   public void onMouseMoved(int mX, int mY) {
   
+  }
+  
+  void updateScale() {
+    //float w = currentClip.w;
+    if (this.categoriesX.length >= 1) {
+      this.scaleY = (width / StatisticFunctions.max(this.pointsY)) * 0.7;
+    }
   }
   
   //public PVector plotToScreen(float pointX, float pointY) {
@@ -102,6 +117,21 @@ public class BarplotWidget extends Widget {
         this.pointsY[i] = value;
       }
     }
+  }
+  
+  public float getWidth() {
+    float w = 0;
+    
+    if (this.categoriesX.length >= 1) {
+      w = StatisticFunctions.max(this.pointsY) * scaleY;
+    }
+    
+    return w + 200.;
+  }
+  
+  public float getHeight() {
+    return this.categoriesX.length * (COLUMN_WIDTH + COLUMN_PADDING) + 40.;
+    //return data.getRowCount() * this.columnBaseHeight + 70.0;
   }
   
   //public float getMaxX() {

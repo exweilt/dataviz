@@ -8,8 +8,8 @@
 public class Screen {
   ArrayList<Widget> widgets = new ArrayList<Widget>();
   color bgColor;
-  PImage img;
-  boolean background = false;
+  PImage bgImage;
+
   
   Screen(color bgColor) {
     this.bgColor = bgColor;
@@ -18,14 +18,18 @@ public class Screen {
     this.background = true;
   }
   
+  Screen(PImage img) {
+    this.bgImage = img;
+  }
+  
   public void addWidget(Widget w) {
     widgets.add(w);
   }
   public void drawScreen() {
-    if(background == true){
-      image(bg, 0, 0, width, height);
-    }
-    else{
+
+    if (this.bgImage != null) {
+      image(bgImage, 0, 0, width, height);
+    } else {
       background(bgColor);
     }
     

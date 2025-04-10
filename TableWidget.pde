@@ -6,8 +6,8 @@
   */
 public class TableWidget extends Widget {
   private color bg = color(250, 250, 250, 255);
-  //private float width = 350.0f;
-  //private float height = 350.0f;
+  private float width = 350.0f;
+  private float height = 350.0f;
   //private float cornerRadius = 30.0f;
   private color fontColor = color(40);
   //private float horizontalPadding = 50.0f;
@@ -29,15 +29,15 @@ public class TableWidget extends Widget {
   @Override
   public void draw() {
     this.data = filters.result;
-    tb.textAlign(LEFT, CENTER); //<>//
-    tb.textSize(fontSize);
-    tb.fill(this.fontColor);
+    textAlign(LEFT, CENTER); //<>//
+    textSize(fontSize);
+    
     
     float paddingX = 160.0f;
     float paddingY = 40.0f;
     float indexingPadding = 20.0f;
     
-    //tb.circle(this.x, this.y, 10.0);
+    
     
     ///* Draw column Titles */
     //float totalPadding = indexingPadding + this.columnPadding * 3;
@@ -46,49 +46,76 @@ public class TableWidget extends Widget {
     //  totalPadding += this.columnWidths[j] + columnPadding * 2;
     //}
     
+    float minClipY = 0.0;
+    float maxClipY = 100000;
+    if (currentClip != null) {
+      minClipY = currentClip.y;
+      maxClipY = currentClip.y + currentClip.h;
+    }
+    fill(255, 255, 255, 230);
+    noStroke();
+    rect(currentClip.x, currentClip.y, currentClip.w, currentClip.h);
+    //background(255, 255, 255);
+    fill(this.fontColor);
+    
     for (int i = 0; i <= data.getRowCount(); i++) {
       float rowYPos = this.y + i*columnBaseHeight + columnBaseHeight/2;
+      if (rowYPos <= minClipY) {
+        continue;
+      } else if (rowYPos > maxClipY) {
+        break;
+      }
       float totalPadding = columnPadding;  // reset
-      
+     
       //line(this.x, this.y, this.x + 1500, this.y);
       
       // Draw row index
-      tb.text(i+1, this.x + totalPadding - 20., rowYPos);
+      text(i+1, this.x + totalPadding - 20., rowYPos);
       totalPadding += indexingPadding + this.columnPadding * 2;
       
       int colnum = data.getColumnCount();
       
       for (int j = 0; j < colnum; j++) {
         if (i == 0) {
-          tb.text(data.getColumnTitles()[j], this.x + totalPadding, rowYPos); //<>//
+          text(data.getColumnTitles()[j], this.x + totalPadding, rowYPos); //<>//
         } else {
-          tb.text(data.getString(i-1, j), this.x + totalPadding, rowYPos);
+          text(data.getString(i-1, j), this.x + totalPadding, rowYPos);
         }
         totalPadding += this.columnWidths[j] + columnPadding * 2;
       }
       totalPadding -= columnPadding;
       //println("Drawing line ", i);
+      //this.width = totalPadding;
+      //this.height = rowYPos;
     }
     
+    
     // Draw Vertical Lines
-    tb.stroke(200);
+    stroke(200);
     float currentX = this.x + columnPadding*2 + indexingPadding;
+    float startY = max(this.y, minClipY);
     for (int i = 0; i < data.getColumnCount(); i++) {
-        tb.line(currentX, this.y, currentX, this.y + 3000);
+        line(currentX, startY, currentX, maxClipY);
         currentX += this.columnWidths[i] + columnPadding*2;
     }
-    tb.line(currentX, this.y, currentX, this.y + 3000);
+    line(currentX, this.y, currentX, this.y + 3000);
     
     // Draw Horizontal Lines
     //float currentY = this.y;
+    float w = getWidth();
     float startX = this.x + indexingPadding + 2*columnPadding;
-    for (int i = 0; i < data.getRowCount(); i++) {
+    for (int i = 0; i < data.getRowCount() + 1; i++) {
         float yPos = this.y + i*(columnBaseHeight);
-        tb.line(startX, yPos, startX + 2500, yPos);
+        if (yPos <= minClipY) {
+          continue;
+        } else if (yPos > maxClipY) {
+          break;
+        }
+        line(startX, yPos, startX + w, yPos);
     }
-    tb.line(currentX, this.y, currentX, this.y + 3000);
+    line(currentX, this.y, currentX, this.y + this.height);
     
-    tb.textAlign(LEFT, BOTTOM);
+    textAlign(LEFT, BOTTOM);
   }
   
   public float determineTrueColumnWidth(int columnId) {
@@ -124,5 +151,18 @@ public class TableWidget extends Widget {
   @Override
   public void onMouseMoved(int mX, int mY) {
 
+  }
+  
+  public float getWidth() {
+    float sum = 0.0f;
+    for (float w : this.columnWidths) {
+      sum += w;
+    }
+    
+    return sum + 270.0;
+  }
+  
+  public float getHeight() {
+    return data.getRowCount() * this.columnBaseHeight + 70.0;
   }
 }

@@ -13,7 +13,9 @@ public class PieChartWidget extends Widget {
  PieChartWidget(float x, float y, QueryingWidget filters) {
     this.x = x;
     this.y = y;
+
     this.filters = filters;
+
 
     this.fieldSelector = new DroplistWidget(500, 50, filters.getAvailableFields());
 

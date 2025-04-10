@@ -16,6 +16,14 @@ public class LabelWidget extends Widget {
     this.fontSize = size;
   }
   
+  public LabelWidget(float x_in, float y_in, String text, float size, color col) {
+    this.x = x_in;
+    this.y = y_in;
+    this.text = text;
+    this.fontSize = size;
+    this.fontColor = col;
+  }
+  
   @Override
   public void draw() {
     textAlign(LEFT);

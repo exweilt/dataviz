@@ -81,7 +81,7 @@ public class TextFieldWidget extends Widget {
   @Override
   //use TextFieldWidget to handle the keyTpye input
 public void onKeyPressed() {
-  if (isActive) { //<>// //<>//
+  if (isActive) { //<>//
     if (key == BACKSPACE && text.length() > 0) {
       if (keyEvent.isControlDown()) {  
         int lastSpace = text.lastIndexOf(' ', cursorPosition - 1);
@@ -98,7 +98,7 @@ public void onKeyPressed() {
       }
     } else if (key == ENTER) {
       //applyFilter();
-    } else if (key == CODED) { //<>// //<>//
+    } else if (key == CODED) { //<>//
       if (keyCode == LEFT) {
         cursorPosition = max(0, cursorPosition - 1); //<>// //<>//
       } else if (keyCode == RIGHT) {

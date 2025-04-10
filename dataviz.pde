@@ -63,16 +63,16 @@ private void loadResources() {
 
   PieChartWidget pie;  // Announce the declaration of pie for filters.onApply part
 void setup() {
-  size(1000, 900);
+  size(1300, 900);
   surface.setTitle("Plane flights data Visualizer");
-  surface.setResizable(true);
-  tb = getGraphics();
+  //surface.setResizable(true);
+  //tb = getGraphics();
 
   loadResources();
-  flights.loadData("flights2kCleaned.csv");
+  flights.loadData("flights10k.csv");
 
 
-  currentScreen = new Screen(color(245, 245, 245));
+  //currentScreen = new Screen(color(245, 245, 245));
 
 
   //bar = new BarplotWidget(400, 50);
@@ -84,13 +84,15 @@ void setup() {
   // Modified and cleaned by William 02/04
   // Display all different screens
 
-  Screen screen_home = new Screen();
-  Screen screen_query = new Screen(color(245, 245, 245));
-  Screen screen_table = new Screen(color(245, 245, 245));
-  Screen screen_barplot = new Screen(color(245, 245, 245));
-  Screen screen_histogram = new Screen(color(245, 245, 245));
-  Screen screen_piechart = new Screen(color(245, 245, 245));  // added by Damon
-  Screen screen_Scatterplot = new Screen(color(245, 245, 245));
+
+  Screen screen_home = new Screen(bg);
+  Screen screen_query = new Screen(color(255));
+  Screen screen_table = new Screen(color(255));
+  Screen screen_barplot = new Screen(color(255));
+  Screen screen_histogram = new Screen(color(255));
+  Screen screen_piechart = new Screen(color(255));  // added by Damon
+  Screen screen_Scatterplot = new Screen(color(255));
+
 
   // Home screen
   currentScreen = screen_home;
@@ -110,23 +112,25 @@ void setup() {
   leftFilterScreenBtn = new ButtonWidget(displayWidth*0.05f, displayHeight*0.75f, "Previous Page",
     () -> {
     currentScreen = screen_home;
-  });
-  rightFilterScreenBtn = new ButtonWidget(displayWidth*0.85f, displayHeight*0.75f, "Next Page",
+
+  }
+  ));
+  screen_query.addWidget(new ButtonWidget(1100, 550, "Next Page",
     () -> {
     currentScreen = screen_table;
-  });
-  
-  screen_query.addWidget(leftFilterScreenBtn);
-  screen_query.addWidget(rightFilterScreenBtn);
-  LabelWidget l = new LabelWidget(50, 50, "Filters and sorting here applies to all the graphs on the following pages.");
+  }
+  ));
+  LabelWidget l = new LabelWidget(200, 25, "Filters and sorting here applies to all the graphs on the following pages.", 16, 180);
   l.fontSize = 24;
   screen_query.addWidget(l);
-  // QueryingWidget
-  filters = new QueryingWidget(50, 150);
+  filters = new QueryingWidget(50, 50);
+
   filters.onApply = () -> {
     // Table update
     table.data = filters.result;
-    container.redraw();
+    //container.redraw();
+    container.setContentWidth((int)table.getWidth());
+    container.setContentHeight((int)table.getHeight());
     
     // Barplot update
     HashMap<String, Integer> map = StatisticFunctions.absoluteFrequency(filters.result.getStringColumn(barDropSelector.getSelectedString()));
@@ -135,41 +139,55 @@ void setup() {
     for (String label : bar.categoriesX) {
       bar.setCategoryValue(label, map.get(label).floatValue());
     }
-    barContainer.redraw();
+
+    bar.updateScale();
+    bar_container.setContentWidth((int)bar.getWidth());
+    bar_container.setContentHeight((int)bar.getHeight());
+    println("new bar container width = ", (int)bar.getWidth());
+    println("new bar container height = ", (int)bar.getHeight());
+    //bar_container.redraw();
     
-     pie.setFilterFromUI();
+    pie.setFilterFromUI();
   };
   screen_query.addWidget(filters);
 
 
-  //currentScreen = screen_home;
-  //screen_home.addWidget(new LabelWidget(250, 300, "Flights visualizer", 40));
-  //screen_home.addWidget(new LabelWidget(250, 400, "Welcome to the flights data visualizer!"));
-  //screen_home.addWidget(new LabelWidget(250, 450, "Click next page to continue."));
+  currentScreen = screen_home;
+  screen_home.addWidget(new RectangleWidget(400, 270, 540, 270, color(0, 0, 0, 70)));
+  screen_home.addWidget(new LabelWidget(480, 350, "Flights visualizer", 50, 255));
+  screen_home.addWidget(new LabelWidget(500, 450, "Welcome to the flights data visualizer!", 18, 255));
+  screen_home.addWidget(new LabelWidget(500, 500, "Click next page to continue.", 18, 255));
   
-  
-  //  ================= Table Screen ====================
-  leftTableScreenBtn = new ButtonWidget(displayWidth*0.05f, displayHeight*0.75f, "Previous Page",
+  screen_home.addWidget(new ButtonWidget(900, 650, "Next Page", () -> {
+    currentScreen = screen_query;
+  }));
+
+  //  ================= Table Page ====================
+  screen_table.addWidget(new ButtonWidget(50, 800, "Previous Page",
     () -> {
     currentScreen = screen_query;
-  });
-  rightTableScreenBtn = new ButtonWidget(displayWidth*0.85f, displayHeight*0.75f, "Next Page",
+  }
+  ));
+  screen_table.addWidget(new ButtonWidget(1100, 800, "Next Page",
     () -> {
     currentScreen = screen_barplot;
-  });
-  screen_table.addWidget(leftTableScreenBtn);
-  screen_table.addWidget(rightTableScreenBtn);
-  table = new TableWidget(width*0.1f, height*0.1f, filters.result);
-  container = new ContainerWidget(width*0.1f, height*0.1f, width*0.8, height*0.8, 4000, 10000); // edited by William value changed from 100000 to 10000
+  }
+  ));
+  table = new TableWidget(50, 50, filters.result);
+  container = new ContainerWidget(50, 50, 1200, 700, (int)table.getWidth(), (int)table.getHeight());
   container.addWidget(table);
   container.selectScrollOptions(true, true);
   screen_table.addWidget(container);
 
-  // =============================== Barplot Screen ===============================
-  bar = new BarplotWidget(100, 100);
- //<>//
-  barDropSelector = new DroplistWidget(700, 200, flights.columnNames.toArray(new String[0]));
-  LabelWidget barSelectorLabel = new LabelWidget(700, 180, "Select column of interest.");
+
+  // barplot screen
+  bar = new BarplotWidget(100, 20);
+  bar.width = 600;
+  bar_container = new ContainerWidget(50, 50, 900, 700, 600, 1000);
+  bar_container.addWidget(bar);
+  screen_barplot.addWidget(bar_container);
+  barDropSelector = new DroplistWidget(1000, 200, flights.columnNames.toArray(new String[0]));
+  LabelWidget barSelectorLabel = new LabelWidget(1000, 180, "Select column of interest.");
   screen_barplot.addWidget(barDropSelector);
   screen_barplot.addWidget(barSelectorLabel);
   barDropSelector.onSelected = () -> {
@@ -180,19 +198,34 @@ void setup() {
     for (String label : bar.categoriesX) {
       bar.setCategoryValue(label, map.get(label).floatValue());
     }
-    barContainer.redraw();
-  };  
-  barContainer = new ContainerWidget(width*0.1f, height*0.1f, width*0.8, height*0.8,width,8000);
-  barContainer.addWidget(bar);
-  barContainer.selectScrollOptions(false,true);
-  barContainer.redraw();
-  screen_barplot.addWidget(barContainer);
-  leftBarScreenBtn = new ButtonWidget(displayWidth*0.05f, displayHeight*0.75f, "Previous Page",
+
+    //bar_container.redraw();
+    bar.updateScale();
+    bar_container.setContentWidth((int)bar.getWidth());
+    bar_container.setContentHeight((int)bar.getHeight());
+    
+    println("new bar container width = ", (int)bar.getWidth());
+    println("new bar container height = ", (int)bar.getHeight());
+  };
+
+  //ButtonWidget updateBarBtn = new ButtonWidget(500, 600, "Update",
+  //  () -> {
+  //  HashMap<String, Integer> map = StatisticFunctions.absoluteFrequency(filters.result.getStringColumn("ORIGIN"));
+  //  bar.categoriesX = map.keySet().toArray(new String[0]);
+  //  bar.pointsY = new float[bar.categoriesX.length];
+  //  for (String label : bar.categoriesX) {
+  //    bar.setCategoryValue(label, map.get(label).floatValue());
+  //  }
+  //}
+  //);
+  //updateBarBtn.onClick.run();
+  //screen_barplot.addWidget(updateBarBtn);
+  screen_barplot.addWidget(new ButtonWidget(50, 800, "Previous Page",
     () -> {
     currentScreen = screen_table;
-  });
-  rightBarScreenBtn = new ButtonWidget(displayWidth*0.85f, displayHeight*0.75f, "Next Page",
-
+  }
+  ));
+  screen_barplot.addWidget(new ButtonWidget(750, 800, "Next Page",
     () -> {
     currentScreen = screen_piechart;
   });
@@ -219,8 +252,12 @@ void setup() {
   }
 )); 
 
-  leftPieScreenBtn = new ButtonWidget(displayWidth*0.05f, displayHeight*0.75f, "Previous Page",
-    () -> {
+
+)); //<>// //<>//
+
+// PieChart goes back to Histogram
+screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page", 
+  () -> {
     currentScreen = screen_barplot;
   });
   rightPieScreenBtn = new ButtonWidget(displayWidth*0.85f, displayHeight*0.75f, "Next Page",
@@ -255,16 +292,22 @@ void setup() {
   leftHistScreenBtn = new ButtonWidget(displayWidth*0.05f, displayHeight*0.75f, "Previous Page",
     () -> {
     currentScreen = screen_piechart;
- });
-  screen_histogram.addWidget(leftHistScreenBtn);
-   //<>//
+
+  }
+  ));
+  screen_histogram.addWidget(new ButtonWidget(750, 600, "Next Page", 
+    () -> {
+    currentScreen = screen_Scatterplot;
+  } //<>// //<>//
+  ));
+ //<>// //<>//
 
   // =============================== Scatter plot Screen ===============================
   
     //btn = new ButtonWidget(350, 100, "Click me!", () -> {
   //  interest = input.getText();
   //  scatter.setPointsX(flights.data.getFloatColumn(interest));
-  //}
+  //} //<>// //<>//
   //);
   scatter = new ScatterplotWidget(50, 50, "X", "Y");
   scatterSelectorX = new DroplistWidget(650, 200, flights.columnNames.toArray(new String[0]));
@@ -319,7 +362,7 @@ void keyPressed() {
   currentScreen.onKeyPressed();
   
   if (keyCode == LEFT) {
-    container.contentX -= 20.0; //<>//
+    container.contentX -= 20.0; //<>// //<>//
   }
   if (keyCode == RIGHT) {
     container.contentX += 20.0;
@@ -341,23 +384,47 @@ void mousePressed() {
 }
 
 void mouseReleased() {
-  currentScreen.onMouseReleased(mouseX, mouseY);
+  currentScreen.onMouseReleased(mouseX, mouseY); //<>// //<>//
 }
 
 void mouseDragged() {
   currentScreen.onMouseDragged(mouseX, mouseY);
 }
 
-PGraphics[] bufferStack = new PGraphics[0];
-PGraphics tb; // top buffer
-
-void pushBuffer(PGraphics newBuffer) {
-  bufferStack = Arrays.copyOf(bufferStack, bufferStack.length + 1);
-  bufferStack[bufferStack.length - 1] = tb;
-  tb = newBuffer;
+class Clip {
+  float x;
+  float y;
+  float w;
+  float h;
+  
+  public Clip(float x, float y, float w, float h) {
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+  }
 }
 
-void popBuffer() {
-  tb = bufferStack[bufferStack.length - 1];
-  bufferStack = Arrays.copyOf(bufferStack, bufferStack.length - 1);
+Clip currentClip = null;
+Clip[] clipStack = new Clip[0];
+
+void pushClip(Clip newClip) {
+  clipStack = Arrays.copyOf(clipStack, clipStack.length + 1);
+  clipStack[clipStack.length - 1] = currentClip;
+  currentClip = newClip;
+  if (currentClip != null) {
+    clip(currentClip.x, currentClip.y, currentClip.w, currentClip.h);
+  } else {
+    noClip();
+  }
+}
+
+void popClip() {
+  currentClip = clipStack[clipStack.length - 1];
+  clipStack = Arrays.copyOf(clipStack, clipStack.length - 1);
+  if (currentClip != null) {
+    clip(currentClip.x, currentClip.y, currentClip.w, currentClip.h);
+  } else {
+    noClip();
+  }
 }
