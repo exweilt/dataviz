@@ -1,6 +1,7 @@
 /* 
-  You can change the screen creating objects
-  Then use currentScreen = obj
+  You can change the screen creating objects of this class
+  Then use currentScreen = objectName to print current focusing screen
+  Also you can add widget to the screen object´s arratlist to avoid printing them one by one 
 */
 
 
