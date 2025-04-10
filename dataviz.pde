@@ -1,4 +1,4 @@
-/* Resources */ //<>// //<>// //<>// //<>// //<>//
+/* Resources */ //<>// //<>// //<>// //<>// //<>// //<>//
 PFont mainFont;
 public static PShape checkmarkShape = null;
 public static PShape arrowdownShape = null;
@@ -60,15 +60,10 @@ private void loadResources() {
   binShape = loadShape("bin.svg");
   binShape.disableStyle();
 }
-<<<<<<< HEAD
 
-public void setup() {
-  size(900,1000);
-=======
   PieChartWidget pie;  // Announce the declaration of pie for filters.onApply part
 void setup() {
   size(1000, 900);
->>>>>>> damon-piechart-backup
   surface.setTitle("Plane flights data Visualizer");
   surface.setResizable(true);
   tb = getGraphics();
@@ -98,31 +93,8 @@ void setup() {
   Screen screen_Scatterplot = new Screen(color(245, 245, 245));
 
   // Home screen
-<<<<<<< HEAD
-=======
-  screen_query.addWidget(new ButtonWidget(50, 550, "Previous Page",
-    () -> {
-    currentScreen = screen_home;
-  }
-  ));
-  screen_query.addWidget(new ButtonWidget(750, 550, "Next Page",
-    () -> {
-    currentScreen = screen_table;
-  }
-  ));
-  
-  filters = new QueryingWidget(50, 50);
-  filters.onApply = () -> {
-    table.data = filters.result;
-    pie.setFilterFromUI();  // added by Damon for updating the data of the pie chart synchronously
-    container.redraw();
-  };
-  screen_query.addWidget(filters);
-
-
-  currentScreen = screen_query;
+  currentScreen = screen_home;
   screen_home.addWidget(new LabelWidget(250, 300, "This is Home Page", 40));
->>>>>>> damon-piechart-backup
   screen_home.addWidget(new LabelWidget(250, 400, "Welcome to the flights data visualizer!"));
   screen_home.addWidget(new LabelWidget(250, 450, "Click next page to continue."));
   
@@ -137,34 +109,19 @@ void setup() {
   // Filter Screen
   leftFilterScreenBtn = new ButtonWidget(displayWidth*0.05f, displayHeight*0.75f, "Previous Page",
     () -> {
-<<<<<<< HEAD
     currentScreen = screen_home;
   });
   rightFilterScreenBtn = new ButtonWidget(displayWidth*0.85f, displayHeight*0.75f, "Next Page",
-=======
-    currentScreen = screen_barplot;
-  }
-  ));
-  table = new TableWidget(50, 50, filters.result);
-  container = new ContainerWidget(50, 50, 800, 700, 4000, 10000);
-  container.addWidget(table);
-  screen_table.addWidget(container);
-  //  =================================================
-
-  // barplot screen
-  bar = new BarplotWidget(100, 0);
-  screen_barplot.addWidget(bar);
-  ButtonWidget updateBarBtn = new ButtonWidget(500, 600, "Update",
->>>>>>> damon-piechart-backup
     () -> {
     currentScreen = screen_table;
-  }
-  );
+  });
+  
   screen_query.addWidget(leftFilterScreenBtn);
   screen_query.addWidget(rightFilterScreenBtn);
   LabelWidget l = new LabelWidget(50, 50, "Filters and sorting here applies to all the graphs on the following pages.");
   l.fontSize = 24;
   screen_query.addWidget(l);
+  // QueryingWidget
   filters = new QueryingWidget(50, 150);
   filters.onApply = () -> {
     // Table update
@@ -179,14 +136,16 @@ void setup() {
       bar.setCategoryValue(label, map.get(label).floatValue());
     }
     barContainer.redraw();
+    
+     pie.setFilterFromUI();
   };
   screen_query.addWidget(filters);
 
 
-  currentScreen = screen_home;
-  screen_home.addWidget(new LabelWidget(250, 300, "Flights visualizer", 40));
-  screen_home.addWidget(new LabelWidget(250, 400, "Welcome to the flights data visualizer!"));
-  screen_home.addWidget(new LabelWidget(250, 450, "Click next page to continue."));
+  //currentScreen = screen_home;
+  //screen_home.addWidget(new LabelWidget(250, 300, "Flights visualizer", 40));
+  //screen_home.addWidget(new LabelWidget(250, 400, "Welcome to the flights data visualizer!"));
+  //screen_home.addWidget(new LabelWidget(250, 450, "Click next page to continue."));
   
   
   //  ================= Table Screen ====================
@@ -208,7 +167,7 @@ void setup() {
 
   // =============================== Barplot Screen ===============================
   bar = new BarplotWidget(100, 100);
-
+ //<>//
   barDropSelector = new DroplistWidget(700, 200, flights.columnNames.toArray(new String[0]));
   LabelWidget barSelectorLabel = new LabelWidget(700, 180, "Select column of interest.");
   screen_barplot.addWidget(barDropSelector);
@@ -240,50 +199,26 @@ void setup() {
   screen_barplot.addWidget(leftBarScreenBtn);
   screen_barplot.addWidget(rightBarScreenBtn);
   
-  currentScreen = screen_piechart;
+  
 
   // =============================== Pie Chart Screen ===============================
   // Add the PieChart screen by Damon
   // Edited by William
-<<<<<<< HEAD
-  TextFieldWidget input = new TextFieldWidget(550, 50, 200, 40, "Enter Origin Airport");
-  screen_piechart.addWidget(input);
-  LabelWidget pieChartLabel = new LabelWidget(300,50, "Piechart: Origin -> Dest");
-  screen_piechart.addWidget(pieChartLabel);
-  
-  PieChartWidget pie = new PieChartWidget(width*0.2, height*0.11, flights.data);
-  screen_piechart.addWidget(new ButtonWidget(250, 500, "Generate PieChart", 
-  () -> {
-    String code = input.getText();   // Load the code from input TextField
-    pie.setFilter(code);             // Call PieChart filter function
-    pieContainer.redraw();
-  }));
-  
-  pieContainer = new ContainerWidget(width*0.1f, height*0.1f, width*0.8, height*0.8,1000,1000);
-  pieContainer.addWidget(pie);
-  pieContainer.selectScrollOptions(false,false);
-  pieContainer.redraw();
-  screen_piechart.addWidget(pieContainer);
-=======
-  //TextFieldWidget input = new TextFieldWidget(550, 50, 200, 40, "Enter Origin Airport");
-  //LabelWidget pieChartLabel = new LabelWidget(300,50, "Piechart: Origin -> Dest");
-  //screen_piechart.addWidget(pieChartLabel);  no more need for these lines, edited by Damon
+
   pie = new PieChartWidget(100, 100, filters); // get QueryingWidget Filter
   screen_piechart.addWidget(pie);
-  //screen_piechart.addWidget(input);
+  //pieContainer = new ContainerWidget(width*0.1f, height*0.1f, width*0.8, height*0.8,1000,1000);
+  //pieContainer.addWidget(pie);
+  //pieContainer.selectScrollOptions(false,false);
+  //pieContainer.redraw();
+  //screen_piechart.addWidget(pieContainer);
+  
   screen_piechart.addWidget(new ButtonWidget(350, 500, "Generate PieChart", 
   () -> {
     pie.setFilterFromUI();   // Obtain the filter fields and values from the UI of PieChart itself
   }
+)); 
 
-)); //<>//
-
-// PieChart goes back to Histogram
-screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page", 
-  () -> {
->>>>>>> damon-piechart-backup
-
-  
   leftPieScreenBtn = new ButtonWidget(displayWidth*0.05f, displayHeight*0.75f, "Previous Page",
     () -> {
     currentScreen = screen_barplot;
@@ -293,7 +228,7 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
     currentScreen = screen_histogram;
   });
   screen_piechart.addWidget(leftPieScreenBtn);
-  screen_piechart.addWidget(rightPieScreenBtn);
+  screen_piechart.addWidget(rightPieScreenBtn); //<>//
 
   // =============================== Histogram Screen ===============================
   HistogramWidget hist = new HistogramWidget(width*0.1f, height*0.8f);
@@ -378,7 +313,7 @@ public void draw() {
   container.setPosition(width*0.01f,height*0.01f, width*0.9f, height*0.8f);
   barContainer.setPosition(width*0.01f,height*0.01f, width*0.9f, height*0.8f);
   histContainer.setPosition(width*0.01f,height*0.01f, width*0.9f, height*0.8f);
-  pieContainer.setPosition(width*0.4f,height*0.4f, width*0.8f, height*0.8f);
+  //pieContainer.setPosition(width*0.4f,height*0.4f, width*0.8f, height*0.8f);
 }
 void keyPressed() {
   currentScreen.onKeyPressed();
