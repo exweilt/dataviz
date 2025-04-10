@@ -5,19 +5,19 @@
   *  (c) Alexey added on 09/03/2025
   */
 public class TableWidget extends Widget {
-  private color bg = color(250, 250, 250, 255);
-  private float width = 350.0f;
-  private float height = 350.0f;
-  //private float cornerRadius = 30.0f;
-  private color fontColor = color(40);
-  //private float horizontalPadding = 50.0f;
-  private Table data;
-  private float fontSize = 17;
+  public color bg = color(255, 255, 255, 255);
+  public color fontColor = color(40);
+  public Table data;                            // the table to visualize.
+
   private float[] columnWidths;
   private float columnPadding = 5.0f;
-  //private float columnPaddingY = 2.0f;
+  private float fontSize = 17;
   private float columnBaseHeight = 40.0f;
-  
+
+  /**
+    * Construct Table widget object.
+    *
+    */
   public TableWidget(float x_in, float y_in, Table data) {
     this.x = x_in;
     this.y = y_in;
@@ -32,92 +32,90 @@ public class TableWidget extends Widget {
     textAlign(LEFT, CENTER); //<>//
     textSize(fontSize);
     
-    
-    float paddingX = 160.0f;
-    float paddingY = 40.0f;
     float indexingPadding = 20.0f;
     
-    
-    
-    ///* Draw column Titles */
-    //float totalPadding = indexingPadding + this.columnPadding * 3;
-    //for (int j = 0; j < data.getColumnCount(); j++) {
-    //  text(data.getColumnTitles()[j], this.x + totalPadding, this.y + columnPaddingY);
-    //  totalPadding += this.columnWidths[j] + columnPadding * 2;
-    //}
-    
+    // Find approximate boundaries of the table so we can skip drawing what is not needed.
     float minClipY = 0.0;
     float maxClipY = 100000;
     if (currentClip != null) {
       minClipY = currentClip.y;
       maxClipY = currentClip.y + currentClip.h;
     }
-    fill(255, 255, 255, 230);
+
+    // Draw background
+    fill(this.bg);
     noStroke();
     rect(currentClip.x, currentClip.y, currentClip.w, currentClip.h);
-    //background(255, 255, 255);
+
     fill(this.fontColor);
-    
+    // Iterate through each row...
     for (int i = 0; i <= data.getRowCount(); i++) {
-      float rowYPos = this.y + i*columnBaseHeight + columnBaseHeight/2;
+      float rowYPos = this.y + i*columnBaseHeight + columnBaseHeight/2; // Y pos of the row
+
       if (rowYPos <= minClipY) {
-        continue;
+        continue; // skip rows above the clipping zone
       } else if (rowYPos > maxClipY) {
-        break;
+        break;    // skip rows below the clipping zone
       }
+
       float totalPadding = columnPadding;  // reset
-     
-      //line(this.x, this.y, this.x + 1500, this.y);
-      
+           
       // Draw row index
       text(i+1, this.x + totalPadding - 20., rowYPos);
       totalPadding += indexingPadding + this.columnPadding * 2;
       
       int colnum = data.getColumnCount();
-      
+
+      // Iterate through each column of a row...
       for (int j = 0; j < colnum; j++) {
         if (i == 0) {
-          text(data.getColumnTitles()[j], this.x + totalPadding, rowYPos); //<>//
+          // Draw titles of columns as top row.
+          text(data.getColumnTitles()[j], this.x + totalPadding, rowYPos);
         } else {
+          // Draw values of columns.
           text(data.getString(i-1, j), this.x + totalPadding, rowYPos);
         }
-        totalPadding += this.columnWidths[j] + columnPadding * 2;
+
+        // Go next column by increasing the position of drawing.
+        totalPadding += this.columnWidths[j] + columnPadding * 2; //<>//
       }
-      totalPadding -= columnPadding;
-      //println("Drawing line ", i);
-      //this.width = totalPadding;
-      //this.height = rowYPos;
     }
     
-    
-    // Draw Vertical Lines
+    // ==================== Draw Vertical Lines ====================
     stroke(200);
-    float currentX = this.x + columnPadding*2 + indexingPadding;
-    float startY = max(this.y, minClipY);
+    float currentX = this.x + columnPadding*2 + indexingPadding; // x pos of current column
+    float startY = max(this.y, minClipY); // Optimization: to start from
+    // For each column draw a vertical line.
     for (int i = 0; i < data.getColumnCount(); i++) {
-        line(currentX, startY, currentX, maxClipY);
-        currentX += this.columnWidths[i] + columnPadding*2;
+      line(currentX, startY, currentX, maxClipY);
+      currentX += this.columnWidths[i] + columnPadding*2;
     }
     line(currentX, this.y, currentX, this.y + 3000);
+    // =============================================================
     
-    // Draw Horizontal Lines
-    //float currentY = this.y;
+    // =================== Draw Horizontal Lines ===================
     float w = getWidth();
-    float startX = this.x + indexingPadding + 2*columnPadding;
+    float startX = this.x + indexingPadding + 2*columnPadding; // Optimization
+    // For each VISIBLE row draw a horizontal line.
     for (int i = 0; i < data.getRowCount() + 1; i++) {
-        float yPos = this.y + i*(columnBaseHeight);
-        if (yPos <= minClipY) {
-          continue;
-        } else if (yPos > maxClipY) {
-          break;
-        }
-        line(startX, yPos, startX + w, yPos);
+      float yPos = this.y + i*(columnBaseHeight);
+      if (yPos <= minClipY) {
+        continue; // Skip rows above visible zone
+      } else if (yPos > maxClipY) {
+        break;    // Skip rows below visible zone
+      }
+      line(startX, yPos, startX + w, yPos);
     }
-    line(currentX, this.y, currentX, this.y + this.height);
+    // =============================================================
     
-    textAlign(LEFT, BOTTOM);
+    textAlign(LEFT, BOTTOM); // Revert styles
   }
   
+  /**
+    * Calculate width(float) of some column i taking into account
+    * the longest possible value and font size(so everything can fit inside such a column).
+    *
+    */
   public float determineTrueColumnWidth(int columnId) {
     textSize(this.fontSize);
     
@@ -132,6 +130,13 @@ public class TableWidget extends Widget {
     return maxWidth;
   }
   
+  /**
+    * Form array of individual widths for each column.
+    *
+    * This is needed to ensure that every possible value can fit inside columns.
+    * Please call this method after updating the data member.
+    *
+    */
   public void updateColumnWidths() {
     int columnCount = this.data.getColumnCount();
     float[] newWidths = new float[columnCount];
@@ -142,27 +147,27 @@ public class TableWidget extends Widget {
     
     this.columnWidths = newWidths;
   }
-
-  @Override
-  public boolean onMouseClicked(int mX, int mY) {
-    return false;
-  }
   
-  @Override
-  public void onMouseMoved(int mX, int mY) {
-
-  }
-  
+  /**
+    * Calculate total width of the table.
+    *
+    */
   public float getWidth() {
     float sum = 0.0f;
+
     for (float w : this.columnWidths) {
       sum += w;
     }
     
-    return sum + 270.0;
+    return sum + 270.0; // Plus some magic number(simply make a bit wider)
   }
-  
+
+  /**
+    * Calculate total height of the table.
+    *
+    */
   public float getHeight() {
+    // The magic number here is just to make the table A BIT TALLER for the container to display surroundings.
     return data.getRowCount() * this.columnBaseHeight + 70.0;
   }
 }

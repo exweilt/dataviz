@@ -35,9 +35,20 @@ public class Widget {
     */
   public void onMouseMoved(int mouseX_in, int mouseY_in) {}
   
+  /**
+    *  Called each frame mouse is dragged.
+    */
   public void onMouseDragged(int mX, int mY) {}
   
+  /**
+    *  Called when mouse button is released.
+    */
   public void onMouseReleased(int mX, int mY) {}
   
+  /**
+    *  Called when mouse button is pressed.
+    *  The difference between onClicked is that onPressed is called immediatly after button gets buried
+    *  while onClicked only when mouse was released in place.
+    */
   public void onKeyPressed() {}
 }
