@@ -53,7 +53,7 @@ void setup() {
   //tb = getGraphics();
 
   loadResources();
-  flights.loadData("flights2kCleaned.csv");
+  flights.loadData("flights1000k.csv");
 
 
   //currentScreen = new Screen(color(245, 245, 245));
@@ -86,7 +86,7 @@ void setup() {
     currentScreen = screen_table;
   }
   ));
-  LabelWidget l = new LabelWidget(150, 25, "Filters and sorting here applies to all the graphs on the following pages.", 16, 180);
+  LabelWidget l = new LabelWidget(200, 25, "Filters and sorting here applies to all the graphs on the following pages.", 16, 180);
   l.fontSize = 24;
   screen_query.addWidget(l);
   filters = new QueryingWidget(50, 50);
