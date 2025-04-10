@@ -14,9 +14,9 @@ public class Screen {
   Screen(color bgColor) {
     this.bgColor = bgColor;
   }
-  Screen(){
-    this.background = true;
-  }
+  //Screen(){
+  //  this.background = true;
+  //}
   
   Screen(PImage img) {
     this.bgImage = img;

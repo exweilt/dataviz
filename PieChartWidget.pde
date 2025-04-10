@@ -66,25 +66,25 @@ public class PieChartWidget extends Widget {
     float value = values.get(i);
     float angleSize = map(value, 0, total, 0, TWO_PI);
 
-    tb.fill(palette[i]);
-    tb.arc(x, y, 200, 200, angle, angle + angleSize);
+    fill(palette[i]);
+    arc(x, y, 200, 200, angle, angle + angleSize);
 
     angle += angleSize;
   }
 
     // Draw legends next to the pie chart
-    tb.fill(0);
-    tb.textSize(12);
+    fill(0);
+    textSize(12);
     for (int i = 0; i < labels.size(); i++) {
    // Draw the color cube for each legend(added by Damon on 03/04/2025)
-     tb.fill(palette[i]);
-     tb.rect(x + 150, y - 80 + i * 20, 12, 12);
+     fill(palette[i]);
+     rect(x + 150, y - 80 + i * 20, 12, 12);
 
   // Draw the corresponding label text
-     tb.fill(0);
+     fill(0);
       float percentage = values.get(i) / total * 100;
       String labelWithPercent = labels.get(i) + String.format(" (%.1f%%)", percentage);
-      tb.text(labelWithPercent, x + 170, y - 70 + i * 20);  
+      text(labelWithPercent, x + 170, y - 70 + i * 20);  
      
      // Displyay the title for the piechart graph in real time
       fill(0);

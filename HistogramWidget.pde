@@ -25,25 +25,25 @@ public class HistogramWidget extends Widget {
     float nextValue = 1.0;
 
     // Background rectangle
-    tb.fill(this.bg);
-    tb.noStroke();
-    tb.rect(this.x, this.y, this.width, this.height);
+    fill(this.bg);
+    noStroke();
+    rect(this.x, this.y, this.width, this.height);
 
     // sets the Column Width
     float COLUMN_WIDTH = 35.0f;
 
     float bottomY = this.y + this.height - 60;
-    tb.textSize(9);
+    textSize(9);
     float columnX = this.x + 40;
 
 
     for (int i = 0; i < seenValues.size(); i++) {
-      tb.fill(30);
-      tb.text(nextValue, columnX + 10, bottomY + 30.0);
+      fill(30);
+      text(nextValue, columnX + 10, bottomY + 30.0);
 
 
-      tb.stroke(150);
-      tb.line(columnX+17, bottomY+15, columnX+17, bottomY);
+      stroke(150);
+      line(columnX+17, bottomY+15, columnX+17, bottomY);
 
       // loops to find column values
       int tempI = i;
@@ -54,37 +54,37 @@ public class HistogramWidget extends Widget {
         }
       }
       if ((seenValues.get(i)-nextValue) != 0) {
-        tb.fill(lableColour);
+        fill(lableColour);
         i = tempI;
       } else {
-        tb.strokeWeight(1.5);
-        tb.fill(lableColour);
-        tb.rect(columnX, bottomY, COLUMN_WIDTH, -frequency.get(i));
-        tb.strokeWeight(1);
+        strokeWeight(1.5);
+        fill(lableColour);
+        rect(columnX, bottomY, COLUMN_WIDTH, -frequency.get(i));
+        strokeWeight(1);
         i = tempI;
       } //<>// //<>// //<>//
       columnX += COLUMN_WIDTH;
-      nextValue++;
+      nextValue++; //<>//
       //if (nextValue > seenValues.size()) break;
     }
 
-    tb.fill(30);
-    tb.textSize(14);
+    fill(30);
+    textSize(14);
     //text(this.category, width/2-45, bottomY + 50.0);
 
 
-    tb.fill(30);
+    fill(30);
     for (int tickY = 0; tickY <= 600; tickY += 50) {
       float yPos = bottomY - tickY * this.scaleY +5;
-      tb.textSize(9);
-      tb.text(tickY, this.x + 5., yPos);
-      tb.strokeWeight(1.0);
-      tb.stroke(10);
-      tb.line(this.x+28, yPos-5, this.x + 36.0, yPos-5);
+      textSize(9);
+      text(tickY, this.x + 5., yPos);
+      strokeWeight(1.0);
+      stroke(10);
+      line(this.x+28, yPos-5, this.x + 36.0, yPos-5);
     }
 
-    tb.textAlign(LEFT);
-    tb.strokeWeight(1.0);
+    textAlign(LEFT);
+    strokeWeight(1.0);
   }
 
   @Override
