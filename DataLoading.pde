@@ -16,6 +16,13 @@ class DataLoading {
     for (int i=0;i<data.getColumnCount();i++){
       columnNames.add(data.getColumnTitle(i));
     }
+
+    // Set up types
+    data.setColumnTypes(new int[]{
+      Table.STRING, Table.STRING, Table.INT, Table.STRING, Table.STRING, Table.STRING, Table.INT,
+      Table.STRING, Table.STRING, Table.STRING, Table.INT, Table.INT, Table.INT, Table.INT,
+      Table.INT, Table.INT, Table.INT, Table.INT
+    });
   }
   
   void printColumns(){
