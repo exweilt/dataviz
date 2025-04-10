@@ -7,7 +7,7 @@
 public class ScatterplotWidget extends Widget {
   private color bg = color(230, 230, 230, 255);
   private color markerColor = color(255, 200, 10, 255);
-  private float markerRadius = 4.0f;
+  private float markerRadius = 3.0f;
   private float width = 500.0f;
   private float height = 500.0f;
   private float[] pointsX = {2.0, 4.0, 4.5, 5.0, 9.0, 9.0, 23.5, 25.0};
@@ -40,9 +40,10 @@ public class ScatterplotWidget extends Widget {
   
   @Override
   public void draw() {
+    //println("seoifjoiefm, ", this.pointsX.length); //<>//
     fill(this.bg);
     noStroke();
-    rect(this.x, this.y, this.width, this.height);
+    rect(this.x, this.y, this.width, this.height); //<>//
     
     // Prepare to Draw axis
     stroke(10);
@@ -55,12 +56,15 @@ public class ScatterplotWidget extends Widget {
     //Draw X axis
     PVector from = plotToScreen(getMinX(), 0);
     PVector to = plotToScreen(getMaxX(), 0);
-    line(from.x, from.y, to.x, to.y);
+    line(from.x, from.y, to.x, to.y); //<>//
     triangle(to.x, to.y, to.x - 10.0, to.y + 5.0, to.x - 10.0, to.y - 5.0);
     // Ticks X
     strokeWeight(TICK_WEIGHT);
     float maxX = getMaxX();
-    for (int tick = (int(getMinX()) / stepX) * stepX; tick < maxX; tick += stepX) {
+    
+    int tickStepX = max(((int(getMaxX()) - int(getMinX())) / 16), 1);
+    //int startTickX = 
+    for (int tick = (int(getMinX()) / tickStepX) * tickStepX; tick < maxX; tick += tickStepX) {
       if (tick == 0)
         continue;
       PVector p = plotToScreen(tick, 0); //<>// //<>// //<>// //<>//
@@ -79,7 +83,8 @@ public class ScatterplotWidget extends Widget {
     triangle(to.x, to.y, to.x + 5.0, to.y + 10.0, to.x - 5.0, to.y + 10.0);
     // Ticks
     float maxY = getMaxY();
-    for (int tick = (int(getMinY()) / stepY) * stepY; tick < maxY; tick += stepY) {
+    int tickStepY = max(((int(getMaxY()) - int(getMinY())) / 16), 1);
+    for (int tick = (int(getMinY()) / tickStepY) * tickStepY; tick < maxY; tick += tickStepY) {
       if (tick == 0)
         continue;
       PVector p = plotToScreen(0, tick);

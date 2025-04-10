@@ -155,7 +155,29 @@ void setup() {
     //bar_container.redraw();
     
     pie.setFilterFromUI();
+    
+    
+    //scatterSelectorX.onSelected.run();
+    //scatterSelectorY.onSelected.run(); // run() Doesn't work here
+    
+    //scatter.setPointsX(filters.result.getFloatColumn(scatterSelectorX.getSelectedString()));
+    //scatter.text_x = scatterSelectorX.getSelectedString();
+    
+    //println("Hey!!!! ", scatterSelectorX.getSelectedString());
+    //if (scatter.getPointsX().length >= 1) {
+    //  scatter.setMinX(StatisticFunctions.min(scatter.getPointsX()));
+    //  scatter.setMaxX(StatisticFunctions.max(scatter.getPointsX()));
+    //}
+
+    //scatter.setPointsY(filters.result.getFloatColumn(scatterSelectorY.getSelectedString())); //<>//
+    //scatter.text_y = scatterSelectorY.getSelectedString();
+    
+    //if (scatter.getPointsY().length >= 1) {
+    //  scatter.setMinY(StatisticFunctions.min(scatter.getPointsY()));
+    //  scatter.setMaxY(StatisticFunctions.max(scatter.getPointsY()));
+    //}
   };
+  
   screen_query.addWidget(filters);
 
 
@@ -184,7 +206,7 @@ void setup() {
   container = new ContainerWidget(50, 50, 1200, 700, (int)table.getWidth(), (int)table.getHeight());
   container.addWidget(table);
   //container.selectScrollOptions(true, true);
-  screen_table.addWidget(container);
+  screen_table.addWidget(container); //<>//
 
 
   // barplot screen
@@ -206,7 +228,7 @@ void setup() {
       bar.setCategoryValue(label, map.get(label).floatValue());
     }
 
-    //bar_container.redraw(); //<>//
+    //bar_container.redraw();
     bar.updateScale();
     barContainer.setContentWidth((int)bar.getWidth()); //<>//
     barContainer.setContentHeight((int)bar.getHeight());
@@ -224,9 +246,9 @@ void setup() {
   //    bar.setCategoryValue(label, map.get(label).floatValue());
   //  }
   //}
-  //);
+  //); //<>//
   //updateBarBtn.onClick.run();
-  //screen_barplot.addWidget(updateBarBtn);
+  //screen_barplot.addWidget(updateBarBtn); //<>//
   screen_barplot.addWidget(new ButtonWidget(50, 800, "Previous Page",
     () -> {
     currentScreen = screen_table;
@@ -234,7 +256,7 @@ void setup() {
   ));
   screen_barplot.addWidget(new ButtonWidget(750, 800, "Next Page",
     () -> {
-    currentScreen = screen_piechart;
+    currentScreen = screen_piechart; //<>//
   }));
   //screen_barplot.addWidget(leftBarScreenBtn);
   //screen_barplot.addWidget(rightBarScreenBtn);
@@ -246,9 +268,9 @@ void setup() {
   // Edited by William
 
   pie = new PieChartWidget(100, 100, filters); // get QueryingWidget Filter
-  screen_piechart.addWidget(pie); //<>//
+  screen_piechart.addWidget(pie);
   //pieContainer = new ContainerWidget(width*0.1f, height*0.1f, width*0.8, height*0.8,1000,1000);
-  //pieContainer.addWidget(pie); //<>// //<>//
+  //pieContainer.addWidget(pie); //<>//
   //pieContainer.selectScrollOptions(false,false);
   //pieContainer.redraw(); //<>//
   //screen_piechart.addWidget(pieContainer);
@@ -256,7 +278,7 @@ void setup() {
   screen_piechart.addWidget(new ButtonWidget(350, 500, "Generate PieChart", 
   () -> {
     pie.setFilterFromUI();   // Obtain the filter fields and values from the UI of PieChart itself
-  } //<>//
+  }
 )); 
  //<>//
 
@@ -274,7 +296,7 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
   }));
   
   //rightPieScreenBtn = new ButtonWidget(displayWidth*0.85f, displayHeight*0.75f, "Next Page",
-  //  () -> {
+  //  () -> { //<>//
   //  currentScreen = screen_histogram;
   //});
   //screen_piechart.addWidget(leftPieScreenBtn);
@@ -318,7 +340,7 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
     currentScreen = screen_Scatterplot;
   } //<>// //<>//
   ));
- //<>// //<>// //<>//
+ //<>// //<>//
 
   // =============================== Scatter plot Screen =============================== //<>//
   
@@ -328,18 +350,30 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
   //} //<>// //<>//
   //);
   scatter = new ScatterplotWidget(50, 50, "X", "Y");
-  scatterSelectorX = new DroplistWidget(650, 200, flights.columnNames.toArray(new String[0]));
+  scatterSelectorX = new DroplistWidget(650, 150, flights.columnNames.toArray(new String[0]));
   scatterSelectorX.onSelected = () -> {
-    scatter.setPointsX(filters.result.getFloatColumn(scatterSelectorX.getSelectedString()));
+    scatter.setPointsX(filters.result.getFloatColumn(scatterSelectorX.getSelectedString())); //<>//
+    scatter.text_x = scatterSelectorX.getSelectedString();
+    
+    if (scatter.getPointsX().length >= 1) {
+      scatter.setMinX(StatisticFunctions.min(scatter.getPointsX()));
+      scatter.setMaxX(StatisticFunctions.max(scatter.getPointsX()));
+    }
   };
   screen_Scatterplot.addWidget(scatterSelectorX);
-  scatterSelectorY = new DroplistWidget(650, 500, flights.columnNames.toArray(new String[0]));
+  scatterSelectorY = new DroplistWidget(1000, 150, flights.columnNames.toArray(new String[0]));
   scatterSelectorY.onSelected = () -> {
     scatter.setPointsY(filters.result.getFloatColumn(scatterSelectorY.getSelectedString()));
+    scatter.text_y = scatterSelectorY.getSelectedString();
+    
+    if (scatter.getPointsY().length >= 1) {
+      scatter.setMinY(StatisticFunctions.min(scatter.getPointsY()));
+      scatter.setMaxY(StatisticFunctions.max(scatter.getPointsY()));
+    }
   };
   screen_Scatterplot.addWidget(scatterSelectorY);
-  screen_Scatterplot.addWidget(new LabelWidget(650, 180, "Select X data"));
-  screen_Scatterplot.addWidget(new LabelWidget(650, 480, "Select Y data"));
+  screen_Scatterplot.addWidget(new LabelWidget(650, 120, "Select X data"));
+  screen_Scatterplot.addWidget(new LabelWidget(1000, 120, "Select Y data"));
   //scatter.setPointsX(flights.data.getFloatColumn("ORIGIN_WAC"));
   scatter.setPointsY(flights.data.getFloatColumn("DISTANCE"));
 
@@ -353,6 +387,24 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
   }
   ));
   screen_Scatterplot.addWidget(scatter);
+  
+  // Sorry for this
+  //scatter.setPointsX(filters.result.getFloatColumn(scatterSelectorX.getSelectedString()));
+  //scatter.text_x = scatterSelectorX.getSelectedString();
+  
+  ////println("Hey!!!! ", scatterSelectorX.getSelectedString());
+  //if (scatter.getPointsX().length >= 1) {
+  //  scatter.setMinX(StatisticFunctions.min(scatter.getPointsX()));
+  //  scatter.setMaxX(StatisticFunctions.max(scatter.getPointsX()));
+  //}
+
+  //scatter.setPointsY(filters.result.getFloatColumn(scatterSelectorY.getSelectedString()));
+  //scatter.text_y = scatterSelectorY.getSelectedString();
+  
+  //if (scatter.getPointsY().length >= 1) {
+  //  scatter.setMinY(StatisticFunctions.min(scatter.getPointsY()));
+  //  scatter.setMaxY(StatisticFunctions.max(scatter.getPointsY()));
+  //}
   
   filters.apply();
 }
