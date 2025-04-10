@@ -27,76 +27,37 @@ public class ContainerWidget extends Widget {
     this.height = h;
     this.contentWidth = contentWidth;
     this.contentHeight = contentHeight;
-
-    //this.buffer = createGraphics(this.contentWidth, this.contentHeight);
     this.widgets = new Widget[0];
     
+    // horizontal scrollbar
     hscroll = new ScrollbarWidget(this.x, this.y + this.height, w, 25., false);
     hscroll.progressMax = this.contentWidth - w;
-    //hscroll.value = 0;
+    
+    // vertical scrollbar
     vscroll = new ScrollbarWidget(this.x + width, this.y, 25., h, true);
     vscroll.progressMax = this.contentHeight - h;
-    //vscroll.value = 0;
-    
-    //for (int i = 0; i < this.widgets.length; i++) {
-    //  this.widgets[i].x = this.x - contentX + 20.;
-    //  this.widgets[i].y = this.y - contentY + 20.;
-    //}
     
     onMouseDragged(0, 0);
     
     redraw();
-    //ScrollbarWidget vscroll;
+    
   }
   
   public void draw() {
-    //if (millis() % 20 == 0) {
-    //  redraw();
-    //}
-    
-
-    //clip(this.x, this.y, this.width, this.height);
+   
     pushClip(new Clip(this.x, this.y, this.width, this.height));
     for (int i = 0; i < this.widgets.length; i++) {
       this.widgets[i].x = this.x - contentX + 40.;
       this.widgets[i].y = this.y - contentY + 40.;
       this.widgets[i].draw();
     }
-    //noClip();
     popClip();
-   //image(this.buffer, this.x, this.y, this.width, this.height, this.contentX, this.contentY, this.contentX + (int)this.width, this.contentY + (int)this.height);
-    
     hscroll.draw();
     vscroll.draw();
-
   }
     
-  public void redraw() {
-    //this.buffer.beginDraw();
-    //this.buffer.clear();
-    //pushBuffer(this.buffer);
-    
-    //for (int i = 0; i < this.widgets.length; i++) {
-    //  this.widgets[i].draw();
-    //}
-    
-    //popBuffer();
-    //this.buffer.endDraw();
-  }
+ 
   
-  //void drawHorizontalScrollbar() {
-  //  float scrollHeight = 30.0f;
-  //  fill(235);
-  //  noStroke();
-  //  rect(this.x, this.y + this.height, this.width, scrollHeight);
-    
-  //  fill(150);
-  //  float scrollPos = this.x + this.contentX/this.contentWidth;
-  //  float scrollWidth = this.width * (this.width)/this.contentWidth;
-  //  rect(scrollPos, this.y + this.height, scrollWidth, scrollHeight );
-    
-  //  stroke(1);
-  //}
   
   void addWidget(Widget w) {
     this.widgets = Arrays.copyOf(this.widgets, this.widgets.length + 1);
@@ -134,7 +95,7 @@ public class ContainerWidget extends Widget {
     this.contentX = (int)hscroll.value;
     this.contentY = (int)vscroll.value;
     
-    println("contentX = ", contentX);
+   
     
     for (int i = 0; i < this.widgets.length; i++) {
       this.widgets[i].x = this.x - contentX + 40.;

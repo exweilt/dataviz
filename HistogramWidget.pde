@@ -36,7 +36,7 @@ public class HistogramWidget extends Widget {
     textSize(9);
     float columnX = this.x + 40;
 
-
+    // loops to set values to be displayed
     for (int i = 0; i < seenValues.size(); i++) {
       fill(30);
       text(nextValue, columnX + 10, bottomY + 30.0);

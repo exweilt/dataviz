@@ -13,6 +13,7 @@ class DataLoading {
 
   void loadData(String filename) {
     data = loadTable(filename, "header");
+    //loops to retrieve column data from file
     for (int i=0;i<data.getColumnCount();i++){
       columnNames.add(data.getColumnTitle(i));
     }
@@ -29,11 +30,14 @@ class DataLoading {
     ArrayList<LocalDate> DatesArray = new ArrayList<>();
     boolean Starting = false;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+   // loops to get flight dates
     for (int i=0;i<data.getStringColumn("FL_DATE").length;i++){
       println(data.getString(i, "FL_DATE"));
+      // checks to see if flight date = start date
       if (data.getString(i, "FL_DATE").equals(startDate)){
         Starting = true;
        }
+       //loops to add flight dates to array
        if (Starting == true){
          LocalDate date = LocalDate.parse(data.getString(i, "FL_DATE"), formatter);
          DatesArray.add(date);
@@ -45,27 +49,3 @@ class DataLoading {
     return DatesArray;
   }
 }
-// Returns an ArrayList of a specified Column with a specified type
-//ArrayList<String> valuesOfColumnString(String column) {
-//  ArrayList<String> columnValues = new ArrayList<>();
-//  for (int i=0; i<columnNames.size(); i++) {
-//    if (column.equals(columnNames.get(i))) {
-//      columnValues = new ArrayList<>(Arrays.asList(Data.getStringColumn(column)));
-//      print(columnValues);
-//      break;
-//    }
-//  }
-//  return columnValues;
-//}
-
-// Returns a value of a specified row and column
-//int valueAtRowColumnInt(int row,String column) {
-//  int value =0;
-//  for (int i=0; i<columnNames.size(); i++) {
-//    if (column.equals(columnNames.get(i))) {
-//      value = Data.getInt(row, column);
-//      break;
-//    }
-//  }
-//  return value;
-//}
