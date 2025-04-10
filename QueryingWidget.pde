@@ -4,7 +4,7 @@ public class QueryingWidget extends Widget {
 
   ButtonWidget addBtn;
   ButtonWidget applyBtn;
-  ArrayList<String[]> filters; // Only 0 and 1 indicies, key : value
+  //ArrayList<String[]> filters; // Only 0 and 1 indicies, key : value
 
   ArrayList<DroplistWidget> droplists;
   ArrayList<TextFieldWidget> inputs;
@@ -20,7 +20,7 @@ public class QueryingWidget extends Widget {
     this.x = x_in;
     this.y = y_in;
 
-    this.filters = new ArrayList<String[]>();
+    //this.filters = new ArrayList<String[]>();
 
     droplists = new ArrayList<DroplistWidget>();
     inputs = new ArrayList<TextFieldWidget>();
@@ -50,13 +50,16 @@ public class QueryingWidget extends Widget {
     textSize(this.fontSize);
     text("Filters", this.x, this.y);
 
-    if (filters.size() == 0) {
+    if (droplists.size() == 0) {
       fill(140);
       text("No filters applied.", this.x, this.y + 50);
-    }
+    } 
+    //else {
+    //  this.droplists.get(0).y = 600;
+    //}
     
     DroplistWidget activeDroplist = null;
-    for (int i = 0; i < filters.size(); i++) {
+    for (int i = 0; i < droplists.size(); i++) {
       if (droplists.get(i).isListDropped) {
         activeDroplist = droplists.get(i);
       } else {
@@ -82,18 +85,18 @@ public class QueryingWidget extends Widget {
   }
 
   void reposition() {
-    droplists = new ArrayList<DroplistWidget>();
-    inputs = new ArrayList<TextFieldWidget>();
-    deleteButtons = new ArrayList<ButtonWidget>();
+    //droplists = new ArrayList<DroplistWidget>();
+    //inputs = new ArrayList<TextFieldWidget>();
+    //deleteButtons = new ArrayList<ButtonWidget>();
 
     float currentY = this.y + 70.0;
-    for (int i = 0; i < this.filters.size(); i++) {
+    for (int i = 0; i < this.droplists.size(); i++) {
       final int finalIdx = i;
       
-      //// Generate new
+      //// Generate new //<>//
       //if (i >= droplists.size()) {
       //  DroplistWidget newDrop = new DroplistWidget(this.x, currentY, flights.columnNames.toArray(new String[0]));
-      //  droplists.add(newDrop); //<>// //<>// //<>//
+      //  droplists.add(newDrop); //<>// //<>//
         
       //  TextFieldWidget newInput = new TextFieldWidget(this.x + newDrop.width + 15.0, currentY, 120., 40., "");
       //  newInput.h = newDrop.mainButton.height;
@@ -101,27 +104,31 @@ public class QueryingWidget extends Widget {
         
       //  ButtonWidget newDelete = new ButtonWidget(newInput.x + newInput.w + 15.0, currentY, "", () -> {
       //    deleteFilter(finalIdx);
-      //  });
+      //  }); //<>//
       //  newDelete.fixedWidth = true;
       //  newDelete.width = newDelete.height;
-      //  newDelete.setOptionalIcon(binShape); //<>// //<>// //<>//
+      //  newDelete.setOptionalIcon(binShape); //<>// //<>//
       //  deleteButtons.add(newDelete);
       //}
       
-      DroplistWidget newDrop = new DroplistWidget(this.x, currentY, flights.columnNames.toArray(new String[0]));
-      droplists.add(newDrop);
+      //DroplistWidget newDrop = new DroplistWidget(this.x, currentY, flights.columnNames.toArray(new String[0]));
+      //droplists.add(newDrop);
+      droplists.get(i).y = currentY;
+      droplists.get(i).updateButtons();
       
-      TextFieldWidget newInput = new TextFieldWidget(this.x + newDrop.width + 15.0, currentY, 120., 40., "");
-      newInput.h = newDrop.mainButton.height;
-      inputs.add(newInput);   
+      //TextFieldWidget newInput = new TextFieldWidget(this.x + newDrop.width + 15.0, currentY, 120., 40., "");
+      //newInput.h = newDrop.mainButton.height;
+      //inputs.add(newInput);
+      inputs.get(i).y = currentY;
       
-      ButtonWidget newDelete = new ButtonWidget(newInput.x + newInput.w + 15.0, currentY, "", () -> {
-        deleteFilter(finalIdx);
-      });
-      newDelete.fixedWidth = true;
-      newDelete.width = newDelete.height;
-      newDelete.setOptionalIcon(binShape);
-      deleteButtons.add(newDelete);
+      //ButtonWidget newDelete = new ButtonWidget(newInput.x + newInput.w + 15.0, currentY, "", () -> {
+      //  deleteFilter(finalIdx);
+      //});
+      //newDelete.fixedWidth = true;
+      //newDelete.width = newDelete.height;
+      //newDelete.setOptionalIcon(binShape);
+      //deleteButtons.add(newDelete);
+      deleteButtons.get(i).y = currentY;
 
       currentY += 50.0;
     }
@@ -132,30 +139,30 @@ public class QueryingWidget extends Widget {
     //}
 
     currentY += 40;
-    this.addBtn.y = currentY;
+    this.addBtn.y = currentY; //<>//
 
     this.applyBtn.y = currentY;
   }
   
   void apply() {
     result = flights.data.copy();
-    result.clearRows(); //<>// //<>//
+    result.clearRows(); //<>//
     
     for (TableRow row : flights.data.rows()) {
       boolean wasMet = true;
-      for (int i = 0; i < filters.size(); i++) {
+      for (int i = 0; i < droplists.size(); i++) {
         if (!row.getString(droplists.get(i).getSelectedString()).toLowerCase().contains(inputs.get(i).text.toLowerCase()))  {
           wasMet = false;
           break;
         }
-      }
+      } //<>//
       if (wasMet) {
         result.addRow(row);
       }
     }
     
-    println(result.getRowCount());
-    this.result = result; //<>// //<>//
+    //println(result.getRowCount());
+    //this.result = result; //<>//
     
     if (this.onApply != null) {
       this.onApply.run();
@@ -164,16 +171,43 @@ public class QueryingWidget extends Widget {
   }
 
   void addFilter() {
-    this.filters.add(new String[]{"", ""});
+    //this.filters.add(new String[]{"", ""});
+      DroplistWidget newDrop = new DroplistWidget(this.x, 0, flights.columnNames.toArray(new String[0]));
+      droplists.add(newDrop);
+      
+      TextFieldWidget newInput = new TextFieldWidget(this.x + newDrop.width + 15.0, 0, 120., 40., "");
+      newInput.h = newDrop.mainButton.height;
+      inputs.add(newInput);   
+      
+      //int lastIdx = droplists.size() - 1;
+      ButtonWidget newDelete = new ButtonWidget(newInput.x + newInput.w + 15.0, 0, "", () -> {
+        deleteFilter(newDrop);
+      });
+      newDelete.fixedWidth = true;
+      newDelete.width = newDelete.height;
+      newDelete.setOptionalIcon(binShape);
+      deleteButtons.add(newDelete);
+      
     this.reposition();
   }
 
   void deleteFilter(int idx) {
-    this.filters.remove(idx);
+    //this.filters.remove(idx);
     droplists.remove(idx);
     inputs.remove(idx);
     deleteButtons.remove(idx);
     this.reposition();
+  }
+  
+  void deleteFilter(DroplistWidget drop) {
+    //this.filters.remove(idx);
+    int idx = droplists.indexOf(drop);
+    if (idx >= 0) {
+      droplists.remove(idx);
+      inputs.remove(idx);
+      deleteButtons.remove(idx);
+      this.reposition();
+    }
   }
 
   @Override

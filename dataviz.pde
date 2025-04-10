@@ -53,7 +53,7 @@ void setup() {
   //tb = getGraphics();
 
   loadResources();
-  flights.loadData("flights1000k.csv");
+  flights.loadData("flights10k.csv");
 
 
   //currentScreen = new Screen(color(245, 245, 245));
@@ -68,12 +68,12 @@ void setup() {
   // Display all different screens
 
   Screen screen_home = new Screen(bg);
-  Screen screen_query = new Screen(color(245, 245, 245));
-  Screen screen_table = new Screen(color(245, 245, 245));
-  Screen screen_barplot = new Screen(color(245, 245, 245));
-  Screen screen_histogram = new Screen(color(245, 245, 245));
-  Screen screen_piechart = new Screen(color(245, 245, 245));  // added by Damon
-  Screen screen_Scatterplot = new Screen(color(245, 245, 245));
+  Screen screen_query = new Screen(color(255));
+  Screen screen_table = new Screen(color(255));
+  Screen screen_barplot = new Screen(color(255));
+  Screen screen_histogram = new Screen(color(255));
+  Screen screen_piechart = new Screen(color(255));  // added by Damon
+  Screen screen_Scatterplot = new Screen(color(255));
 
   // Home screen
   screen_query.addWidget(new ButtonWidget(50, 550, "Previous Page",

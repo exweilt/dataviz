@@ -26,7 +26,7 @@ public class BarplotWidget extends Widget {
   
   @Override
   public void draw() {
-    fill(this.bg); //<>//
+    fill(this.bg); //<>// //<>//
     noStroke();
     //textAlign(RIGHT);
     background(255);
@@ -34,32 +34,33 @@ public class BarplotWidget extends Widget {
     
     
     //this.scaleY = getWidth() 
-    
-    //float bottomY = this.y + this.height - 60;
-    textSize(12);
-    for (int i = 0; i < this.categoriesX.length; i++) {
-      //float columnX = this.x + i * (COLUMN_WIDTH + COLUMN_PADDING) + 40.;
-      float yPos = this.y + i * (COLUMN_WIDTH + COLUMN_PADDING) + 40.;
+    if (this.categoriesX.length >= 1) {
+      //float bottomY = this.y + this.height - 60;
+      textSize(12);
+      for (int i = 0; i < this.categoriesX.length; i++) {
+        //float columnX = this.x + i * (COLUMN_WIDTH + COLUMN_PADDING) + 40.;
+        float yPos = this.y + i * (COLUMN_WIDTH + COLUMN_PADDING) + 40.;
+        
+        fill(30);
+        text(this.categoriesX[i], this.x - 5, yPos + 15);
+        
+        fill (colors[i % this.colors.length]);
+        rect(this.x + 150, yPos, this.pointsY[i] * this.scaleY, COLUMN_WIDTH);
+      }
+      
+      float maxVal = StatisticFunctions.max(this.pointsY);
+      int step = ((int)(maxVal/10) <= 0) ? 1 : ((int)(maxVal/10));
+      float h = getHeight();
       
       fill(30);
-      text(this.categoriesX[i], this.x - 5, yPos + 15);
-      
-      fill (colors[i % this.colors.length]);
-      rect(this.x + 150, yPos, this.pointsY[i] * this.scaleY, COLUMN_WIDTH);
-    }
-    
-    float maxVal = StatisticFunctions.max(this.pointsY);
-    int step = ((int)(maxVal/10) <= 0) ? 1 : ((int)(maxVal/10));
-    float h = getHeight();
-    
-    fill(30);
-    for (int tickX = 0; tickX <= (int)maxVal; tickX += step) {
-      float xPos = this.x + tickX * this.scaleY + 150;
-      text(tickX, xPos, this.y + 5.);
-      strokeWeight(1.0);
-      stroke(100, 100, 100, 100);
-      //circle (this.x, yPos, 10);
-      line(xPos, this.y, xPos, this.y + h);
+      for (int tickX = 0; tickX <= (int)maxVal; tickX += step) {
+        float xPos = this.x + tickX * this.scaleY + 150;
+        text(tickX, xPos, this.y + 5.);
+        strokeWeight(1.0);
+        stroke(100, 100, 100, 100);
+        //circle (this.x, yPos, 10);
+        line(xPos, this.y, xPos, this.y + h);
+      }
     }
     
     //textAlign(LEFT);
@@ -78,7 +79,9 @@ public class BarplotWidget extends Widget {
   
   void updateScale() {
     //float w = currentClip.w;
-    this.scaleY = (width / StatisticFunctions.max(this.pointsY)) * 0.7;
+    if (this.categoriesX.length >= 1) {
+      this.scaleY = (width / StatisticFunctions.max(this.pointsY)) * 0.7;
+    }
   }
   
   //public PVector plotToScreen(float pointX, float pointY) {
@@ -113,7 +116,11 @@ public class BarplotWidget extends Widget {
   }
   
   public float getWidth() {
-    float w = StatisticFunctions.max(this.pointsY) * scaleY;
+    float w = 0;
+    
+    if (this.categoriesX.length >= 1) {
+      w = StatisticFunctions.max(this.pointsY) * scaleY;
+    }
     
     return w + 200.;
   }
