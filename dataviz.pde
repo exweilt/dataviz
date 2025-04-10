@@ -247,7 +247,7 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
   histContainer = new ContainerWidget(50, 50, 600, 600,10000,1000);
   histContainer.addWidget(hist);
   //histContainer.selectScrollOptions(true,false);
-  histContainer.redraw();
+  //histContainer.redraw();
   screen_histogram.addWidget(hist);
   
   String[] histOptions = {"DEST_WAC", "ORIGIN_WAC", "DEP_TIME", "ARR_TIME"};
@@ -258,7 +258,7 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
     () -> {
     hist.setCategory(histDropList.getSelectedString());
     hist.setValues(flights.data.getFloatColumn(histDropList.getSelectedString()));
-    histContainer.redraw(); //<>//
+    //histContainer.redraw(); //<>//
     }
   ); //<>//
   updateHistBtn.onClick.run(); //<>//
