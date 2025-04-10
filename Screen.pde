@@ -3,37 +3,95 @@
   Then use currentScreen = obj
 */
 
-ScreenManager defaultScreen;
-ScreenManager currentScreen;
 
-public class ScreenManager {
+
+public class Screen {
   ArrayList<Widget> widgets = new ArrayList<Widget>();
   color bgColor;
+  PImage img;
+  boolean background = false;
   
-  ScreenManager(color bgColor) {
+  Screen(color bgColor) {
     this.bgColor = bgColor;
+  }
+  Screen(){
+    this.background = true;
   }
   
   public void addWidget(Widget w) {
     widgets.add(w);
   }
-
   public void drawScreen() {
-    background(bgColor);
+    if(background == true){
+      image(bg, 0, 0, width, height);
+    }
+    else{
+      background(bgColor);
+    }
+    
     for (Widget w : widgets) {
       w.draw();
     }
   }
   
-  public void onMouseClicked(int mX, int mY) {
-    for (Widget w : widgets) {
+ public void onMouseClicked(int mX, int mY) {
+  boolean widgetActivated = false;
+
+  // First iterate through all TextFieldWidgets to ensure they prioritize click events
+  for (Widget w : widgets) {
+    if (w instanceof TextFieldWidget) {
       w.onMouseClicked(mX, mY);
+      if (((TextFieldWidget) w).isActive) {
+        focusedTextField = (TextFieldWidget) w;  // only focus on the currently selected TextField
+        widgetActivated = true;
+      }
     }
   }
 
+  // If no TextFieldWidget is activated, continue to iterate through other widgets
+  if (!widgetActivated) {
+    focusedTextField = null;  // cancel the selected state for the textField
+    for (Widget w : widgets) {
+      if (!(w instanceof TextFieldWidget)) {
+        w.onMouseClicked(mX, mY);
+      }
+    }
+  }
+}
+
+
   public void onMouseMoved(int mX, int mY) {
+    cursor(ARROW);
+    
     for (Widget w : widgets) {
       w.onMouseMoved(mX, mY);
+    }
+  }
+  
+  public void onKeyPressed() {
+   for (Widget w : widgets) {
+     w.onKeyPressed();
+    }
+  }
+
+
+ public void onMouseReleased(int mX, int mY) {
+   for (Widget w : widgets) {
+     w.onMouseReleased(mX, mY);
+    }
+  }
+  
+
+ public void onMousePressed(int mX, int mY) {
+   for (Widget w : widgets) {
+     w.onMousePressed(mX, mY);
+    }
+  }
+  
+
+ public void onMouseDragged(int mX, int mY) {
+   for (Widget w : widgets) {
+     w.onMouseDragged(mX, mY);
     }
   }
 }

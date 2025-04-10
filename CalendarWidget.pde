@@ -23,7 +23,7 @@ public class CalendarWidget extends Widget {
   private ButtonWidget rightBtn;
   
   private color weekdayColor = color(100);
-  final private String[] weekdays = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sun", "Sat"};
+  final private String[] weekdays = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
 
   public CalendarWidget(float x_in, float y_in) {
     this.x = x_in;
@@ -74,9 +74,11 @@ public class CalendarWidget extends Widget {
   }
 
   @Override
-  public void onMouseClicked(int mX, int mY) {
-    this.leftBtn.onMouseClicked(mX, mY);
-    this.rightBtn.onMouseClicked(mX, mY);
+  public boolean onMouseClicked(int mX, int mY) {
+    if (this.leftBtn.onMouseClicked(mX, mY))
+      return true;
+      
+    return this.rightBtn.onMouseClicked(mX, mY);
   }
   
   @Override

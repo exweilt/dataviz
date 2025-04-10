@@ -58,10 +58,12 @@ public class CheckboxWidget extends Widget {
   }
 
   @Override
-  public void onMouseClicked(int mX, int mY) {
+  public boolean onMouseClicked(int mX, int mY) {
     if (mX > this.x && mX < (this.x + this.size) && mY > this.y && mY < (this.y + this.size)) {
       this.setChecked(!this.getChecked());
+      return true;
     }
+    return false;
   }
   
   @Override
