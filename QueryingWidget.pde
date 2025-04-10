@@ -30,13 +30,13 @@ public class QueryingWidget extends Widget {
       this.addFilter();
     });
 
-    this.applyBtn = new ButtonWidget(this.x + 100, this.y, "Apply", () -> {
+    this.applyBtn = new ButtonWidget(this.x + 490, this.y, "Apply selection", () -> {
       this.apply();
     });
     
     sortCheckbox = new CheckboxWidget(this.x + 770, this.y - 5);
     sortColumn = new DroplistWidget(this.x + 700, this.y + 50, flights.columnNames.toArray(new String[0]));
-    sortType = new DroplistWidget(this.x + 980, this.y + 50, new String[] {"Anscending", "Descending"});
+    sortType = new DroplistWidget(this.x + 980, this.y + 50, new String[] {"Ascending", "Descending"});
     
     reposition();
     this.apply();
@@ -158,6 +158,15 @@ public class QueryingWidget extends Widget {
       } //<>//
       if (wasMet) {
         result.addRow(row);
+      }
+    }
+    
+    // Optional sorting
+    if (this.sortCheckbox.isChecked) {
+      if (sortType.getSelectedString() == "Ascending") {
+        result.sort(sortColumn.getSelectedString());
+      } else {
+        result.sortReverse(sortColumn.getSelectedString());
       }
     }
     
