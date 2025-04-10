@@ -1,4 +1,4 @@
-/* Resources */ //<>// //<>// //<>// //<>// //<>//
+/* Resources */ //<>// //<>// //<>// //<>// //<>// //<>//
 PFont mainFont;
 public static PShape checkmarkShape = null;
 public static PShape arrowdownShape = null;
@@ -47,7 +47,7 @@ private void loadResources() {
 }
 
 void setup() {
-  size(1000, 900);
+  size(1300, 900);
   surface.setTitle("Plane flights data Visualizer");
   //surface.setResizable(true);
   //tb = getGraphics();
@@ -81,15 +81,15 @@ void setup() {
     currentScreen = screen_home;
   }
   ));
-  screen_query.addWidget(new ButtonWidget(750, 550, "Next Page",
+  screen_query.addWidget(new ButtonWidget(1100, 550, "Next Page",
     () -> {
     currentScreen = screen_table;
   }
   ));
-  LabelWidget l = new LabelWidget(50, 50, "Filters and sorting here applies to all the graphs on the following pages.", 18);
+  LabelWidget l = new LabelWidget(150, 25, "Filters and sorting here applies to all the graphs on the following pages.", 16, 180);
   l.fontSize = 24;
   screen_query.addWidget(l);
-  filters = new QueryingWidget(50, 150);
+  filters = new QueryingWidget(50, 50);
   filters.onApply = () -> {
     // Table update
     table.data = filters.result;
@@ -115,28 +115,28 @@ void setup() {
 
 
   currentScreen = screen_home;
-  screen_home.addWidget(new RectangleWidget(200, 270, 540, 270, color(0, 0, 0, 70)));
-  screen_home.addWidget(new LabelWidget(280, 350, "Flights visualizer", 50, 255));
-  screen_home.addWidget(new LabelWidget(300, 450, "Welcome to the flights data visualizer!", 18, 255));
-  screen_home.addWidget(new LabelWidget(300, 500, "Click next page to continue.", 18, 255));
+  screen_home.addWidget(new RectangleWidget(400, 270, 540, 270, color(0, 0, 0, 70)));
+  screen_home.addWidget(new LabelWidget(480, 350, "Flights visualizer", 50, 255));
+  screen_home.addWidget(new LabelWidget(500, 450, "Welcome to the flights data visualizer!", 18, 255));
+  screen_home.addWidget(new LabelWidget(500, 500, "Click next page to continue.", 18, 255));
   
-  screen_home.addWidget(new ButtonWidget(750, 550, "Next Page", () -> {
+  screen_home.addWidget(new ButtonWidget(900, 650, "Next Page", () -> {
     currentScreen = screen_query;
   }));
 
   //  ================= Table Page ====================
-  screen_table.addWidget(new ButtonWidget(50, 850, "Previous Page",
+  screen_table.addWidget(new ButtonWidget(50, 800, "Previous Page",
     () -> {
     currentScreen = screen_query;
   }
   ));
-  screen_table.addWidget(new ButtonWidget(750, 850, "Next Page",
+  screen_table.addWidget(new ButtonWidget(1100, 800, "Next Page",
     () -> {
     currentScreen = screen_barplot;
   }
   ));
   table = new TableWidget(50, 50, filters.result);
-  container = new ContainerWidget(50, 50, 800, 700, (int)table.getWidth(), (int)table.getHeight());
+  container = new ContainerWidget(50, 50, 1200, 700, (int)table.getWidth(), (int)table.getHeight());
   container.addWidget(table);
   screen_table.addWidget(container);
   //  =================================================
@@ -144,11 +144,11 @@ void setup() {
   // barplot screen
   bar = new BarplotWidget(100, 20);
   bar.width = 600;
-  bar_container = new ContainerWidget(50, 50, 600, 700, 600, 1000);
+  bar_container = new ContainerWidget(50, 50, 900, 700, 600, 1000);
   bar_container.addWidget(bar);
   screen_barplot.addWidget(bar_container);
-  barDropSelector = new DroplistWidget(700, 200, flights.columnNames.toArray(new String[0]));
-  LabelWidget barSelectorLabel = new LabelWidget(700, 180, "Select column of interest.");
+  barDropSelector = new DroplistWidget(1000, 200, flights.columnNames.toArray(new String[0]));
+  LabelWidget barSelectorLabel = new LabelWidget(1000, 180, "Select column of interest.");
   screen_barplot.addWidget(barDropSelector);
   screen_barplot.addWidget(barSelectorLabel);
   barDropSelector.onSelected = () -> {
@@ -206,7 +206,7 @@ void setup() {
     pie.setFilter(code);             // Call PieChart filter function
   }
 
-)); //<>//
+)); //<>// //<>//
 
 // PieChart goes back to Histogram
 screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page", 
@@ -246,9 +246,9 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
   screen_histogram.addWidget(new ButtonWidget(750, 600, "Next Page", 
     () -> {
     currentScreen = screen_Scatterplot;
-  } //<>//
+  } //<>// //<>//
   ));
- //<>//
+ //<>// //<>//
   
 
   // =============================== Scatter plot Screen ===============================
@@ -256,7 +256,7 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
     //btn = new ButtonWidget(350, 100, "Click me!", () -> {
   //  interest = input.getText();
   //  scatter.setPointsX(flights.data.getFloatColumn(interest));
-  //} //<>//
+  //} //<>// //<>//
   //);
   scatter = new ScatterplotWidget(50, 50, "X", "Y");
   scatterSelectorX = new DroplistWidget(650, 200, flights.columnNames.toArray(new String[0]));
@@ -296,7 +296,7 @@ void keyPressed() {
   currentScreen.onKeyPressed();
   
   if (keyCode == LEFT) {
-    container.contentX -= 20.0; //<>//
+    container.contentX -= 20.0; //<>// //<>//
   }
   if (keyCode == RIGHT) {
     container.contentX += 20.0;
@@ -318,7 +318,7 @@ void mousePressed() {
 }
 
 void mouseReleased() {
-  currentScreen.onMouseReleased(mouseX, mouseY); //<>//
+  currentScreen.onMouseReleased(mouseX, mouseY); //<>// //<>//
 }
 
 void mouseDragged() {

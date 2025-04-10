@@ -34,9 +34,9 @@ public class QueryingWidget extends Widget {
       this.apply();
     });
     
-    sortCheckbox = new CheckboxWidget(this.x + 570, this.y - 5);
-    sortColumn = new DroplistWidget(this.x + 500, this.y + 50, flights.columnNames.toArray(new String[0]));
-    sortType = new DroplistWidget(this.x + 780, this.y + 50, new String[] {"Anscending", "Descending"});
+    sortCheckbox = new CheckboxWidget(this.x + 770, this.y - 5);
+    sortColumn = new DroplistWidget(this.x + 700, this.y + 50, flights.columnNames.toArray(new String[0]));
+    sortType = new DroplistWidget(this.x + 980, this.y + 50, new String[] {"Anscending", "Descending"});
     
     reposition();
     this.apply();
@@ -75,7 +75,7 @@ public class QueryingWidget extends Widget {
     textAlign(LEFT, TOP);
     fill(fontColor);
     textSize(this.fontSize);
-    text("Sort", this.x + 500, this.y);
+    text("Sort", this.x + 700, this.y);
     this.sortCheckbox.draw();
     this.sortColumn.draw();
     this.sortType.draw();
@@ -93,7 +93,7 @@ public class QueryingWidget extends Widget {
       //// Generate new
       //if (i >= droplists.size()) {
       //  DroplistWidget newDrop = new DroplistWidget(this.x, currentY, flights.columnNames.toArray(new String[0]));
-      //  droplists.add(newDrop); //<>// //<>//
+      //  droplists.add(newDrop); //<>// //<>// //<>//
         
       //  TextFieldWidget newInput = new TextFieldWidget(this.x + newDrop.width + 15.0, currentY, 120., 40., "");
       //  newInput.h = newDrop.mainButton.height;
@@ -104,7 +104,7 @@ public class QueryingWidget extends Widget {
       //  });
       //  newDelete.fixedWidth = true;
       //  newDelete.width = newDelete.height;
-      //  newDelete.setOptionalIcon(binShape); //<>// //<>//
+      //  newDelete.setOptionalIcon(binShape); //<>// //<>// //<>//
       //  deleteButtons.add(newDelete);
       //}
       
@@ -139,7 +139,7 @@ public class QueryingWidget extends Widget {
   
   void apply() {
     result = flights.data.copy();
-    result.clearRows(); //<>//
+    result.clearRows(); //<>// //<>//
     
     for (TableRow row : flights.data.rows()) {
       boolean wasMet = true;
@@ -155,7 +155,7 @@ public class QueryingWidget extends Widget {
     }
     
     println(result.getRowCount());
-    this.result = result; //<>//
+    this.result = result; //<>// //<>//
     
     if (this.onApply != null) {
       this.onApply.run();
