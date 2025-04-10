@@ -35,6 +35,7 @@ public class ButtonWidget extends Widget {
   public float blRadius = 9.0f;
   private PShape optionalRightIcon = null; 
 
+
   public ButtonWidget(float x_in, float y_in, String text, Runnable onClickCallback) {
     this.x = x_in;
     this.y = y_in;
@@ -47,7 +48,7 @@ public class ButtonWidget extends Widget {
     this.y = y_in;
   }
   
-  @Override
+  @Override // Detects mouse movemnt over button and calls on mouseClicked
   public void draw() {
     onMouseMoved(mouseX, mouseY); // Fixes visual bug
     
