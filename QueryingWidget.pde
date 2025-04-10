@@ -178,6 +178,13 @@ public class QueryingWidget extends Widget {
     }
     //bar.categoriesX = StatisticFunctions.absoluteFrequency(result.getStringColumn("ORIGIN")).keySet().toArray(new String[0]);
   }
+  
+ public String[] getAvailableFields() {
+   if (flights != null && flights.data != null) {
+    return flights.data.getColumnTitles();
+     }
+    return new String[0];
+   }   // added by Damon for Piechart logic
 
   void addFilter() {
     //this.filters.add(new String[]{"", ""});

@@ -19,6 +19,7 @@ public class ContainerWidget extends Widget {
   ScrollbarWidget hscroll;
   ScrollbarWidget vscroll;
 
+
   public ContainerWidget(float x, float y, float w, float h, int contentWidth, int contentHeight) {
     this.x = x;
     this.y = y;
@@ -53,6 +54,7 @@ public class ContainerWidget extends Widget {
     //  redraw();
     //}
     
+
     //clip(this.x, this.y, this.width, this.height);
     pushClip(new Clip(this.x, this.y, this.width, this.height));
     for (int i = 0; i < this.widgets.length; i++) {
@@ -66,6 +68,7 @@ public class ContainerWidget extends Widget {
     
     hscroll.draw();
     vscroll.draw();
+
   }
     
   public void redraw() {

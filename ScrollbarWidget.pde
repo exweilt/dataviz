@@ -22,6 +22,13 @@ public class ScrollbarWidget extends Widget {
     this.height = h;
     this.isVertical = isVertical;    
   }
+  
+  public void setPosition(float x,float y,float w,float h){
+    this.x = x;
+    this.y = y;
+    this.width = w;
+    this.height = h;
+  }
 
   @Override
   public void draw() {

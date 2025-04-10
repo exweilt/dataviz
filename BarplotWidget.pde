@@ -6,8 +6,8 @@
   */
 public class BarplotWidget extends Widget {
   private color bg = color(230, 230, 230, 255);
-  private float width = 600.0f;
-  private float height = 500.0f;
+  float width;
+  float height;
   private String[] categoriesX = {"Apple", "Banana", "Orange"};
   private float[] pointsY = {400., 70., 210.};
   //public float scaleX = 8.0f; // n pixels per 1 x unit of graph
@@ -26,13 +26,16 @@ public class BarplotWidget extends Widget {
   
   @Override
   public void draw() {
+
     fill(this.bg); //<>// //<>//
     noStroke();
     //textAlign(RIGHT);
     background(255);
     //rect(this.x, this.y, this.width, this.height);
+
     
     
+
     //this.scaleY = getWidth() 
     if (this.categoriesX.length >= 1) {
       //float bottomY = this.y + this.height - 60;
@@ -51,6 +54,7 @@ public class BarplotWidget extends Widget {
       float maxVal = StatisticFunctions.max(this.pointsY);
       int step = ((int)(maxVal/10) <= 0) ? 1 : ((int)(maxVal/10));
       float h = getHeight();
+
       
       fill(30);
       for (int tickX = 0; tickX <= (int)maxVal; tickX += step) {
