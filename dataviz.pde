@@ -1,4 +1,4 @@
-/* Resources */ //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+/* Resources */ //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 PFont mainFont;
 public static PShape checkmarkShape = null;
 public static PShape arrowdownShape = null;
@@ -34,6 +34,8 @@ QueryingWidget filters;
 //ButtonWidget rightPieScreenBtn = new ButtonWidget(100, 200);
 //ButtonWidget leftHistScreenBtn = new ButtonWidget(100, 100);
 //ButtonWidget rightHistScreenBtn = new ButtonWidget(100, 200);
+
+boolean buttonWasPressedDuringFrame = false; 
 
 PImage bg;
 int y;
@@ -204,7 +206,7 @@ void setup() {
       bar.setCategoryValue(label, map.get(label).floatValue());
     }
 
-    //bar_container.redraw();
+    //bar_container.redraw(); //<>//
     bar.updateScale();
     barContainer.setContentWidth((int)bar.getWidth()); //<>//
     barContainer.setContentHeight((int)bar.getHeight());
@@ -244,9 +246,9 @@ void setup() {
   // Edited by William
 
   pie = new PieChartWidget(100, 100, filters); // get QueryingWidget Filter
-  screen_piechart.addWidget(pie);
+  screen_piechart.addWidget(pie); //<>//
   //pieContainer = new ContainerWidget(width*0.1f, height*0.1f, width*0.8, height*0.8,1000,1000);
-  //pieContainer.addWidget(pie); //<>//
+  //pieContainer.addWidget(pie); //<>// //<>//
   //pieContainer.selectScrollOptions(false,false);
   //pieContainer.redraw(); //<>//
   //screen_piechart.addWidget(pieContainer);
@@ -254,7 +256,7 @@ void setup() {
   screen_piechart.addWidget(new ButtonWidget(350, 500, "Generate PieChart", 
   () -> {
     pie.setFilterFromUI();   // Obtain the filter fields and values from the UI of PieChart itself
-  }
+  } //<>//
 )); 
  //<>//
 
@@ -294,7 +296,7 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
     () -> {
     hist.setCategory(histDropList.getSelectedString());
     hist.setValues(flights.data.getFloatColumn(histDropList.getSelectedString()));
-    histContainer.redraw();
+    histContainer.redraw(); //<>//
     }
   ); //<>//
   updateHistBtn.onClick.run(); //<>//
@@ -316,7 +318,7 @@ screen_piechart.addWidget(new ButtonWidget(50, 550, "Previous Page",
     currentScreen = screen_Scatterplot;
   } //<>// //<>//
   ));
- //<>// //<>//
+ //<>// //<>// //<>//
 
   // =============================== Scatter plot Screen =============================== //<>//
   

@@ -85,8 +85,12 @@ public class ButtonWidget extends Widget {
 
   @Override
   public boolean onMouseClicked(int mX, int mY) {
+    if (buttonWasPressedDuringFrame)
+      return false;
+      
     if (mX > this.x && mX < (this.x + this.width) && mY > this.y && mY < (this.y + this.height)) {
       if (onClick != null) {
+        buttonWasPressedDuringFrame = true; // set global variable
         onClick.run();
       }
       return true;

@@ -40,9 +40,11 @@ public class Screen {
   
  public void onMouseClicked(int mX, int mY) {
   boolean widgetActivated = false;
+  buttonWasPressedDuringFrame = false; // Reset the global variable
 
   // First iterate through all TextFieldWidgets to ensure they prioritize click events
-  for (Widget w : widgets) {
+  for (int i = widgets.size() - 1; i >= 0; i--) {
+    Widget w = widgets.get(i);
     if (w instanceof TextFieldWidget) {
       w.onMouseClicked(mX, mY);
       if (((TextFieldWidget) w).isActive) {
@@ -55,7 +57,8 @@ public class Screen {
   // If no TextFieldWidget is activated, continue to iterate through other widgets
   if (!widgetActivated) {
     focusedTextField = null;  // cancel the selected state for the textField
-    for (Widget w : widgets) {
+    for (int i = widgets.size() - 1; i >= 0; i--) {
+      Widget w = widgets.get(i);
       if (!(w instanceof TextFieldWidget)) {
         w.onMouseClicked(mX, mY);
       }
