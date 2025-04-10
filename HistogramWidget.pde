@@ -15,6 +15,7 @@ public class HistogramWidget extends Widget {
   public ArrayList<Integer> frequency = new ArrayList<>();
   public int xLimit=23;
 
+  //sets the histogram height and width
   public HistogramWidget(float x_in, float y_in) {
     this.x = x_in;
     this.y = y_in;
@@ -72,7 +73,7 @@ public class HistogramWidget extends Widget {
     textSize(14);
     //text(this.category, width/2-45, bottomY + 50.0);
 
-
+     // Sets the ticks displaying frequency and column values
     fill(30);
     for (int tickY = 0; tickY <= 600; tickY += 50) {
       float yPos = bottomY - tickY * this.scaleY +5;
@@ -103,12 +104,14 @@ public class HistogramWidget extends Widget {
   public String getCategory() {
     return this.category;
   }
-
+  
+  // Deprecated function
   public void setXLimit(int x) {
     xLimit = x;
   }
 
-
+  // Sets the values that are repeated and the amount of times they appear in seperate arrays
+  //
   public void setValues(float[] values) {
     this.values = values;
     // Resets Variables on Set
@@ -142,9 +145,8 @@ public class HistogramWidget extends Widget {
       frequency.add(freq);
       seenValues.add(current);
     }
-
+    // Removes duplicates and connverts into arrayList
     seenValues = seenValues.stream().distinct().collect(Collectors.toCollection(ArrayList::new));
-    frequency = frequency.stream().collect(Collectors.toCollection(ArrayList::new));
   }
 
   //public void setValues(String[] values) {

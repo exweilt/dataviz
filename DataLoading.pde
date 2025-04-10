@@ -9,8 +9,7 @@ class DataLoading {
   private Table data;
   public ArrayList<String> columnNames = new ArrayList<>();
 
-  public DataLoading(){}
-
+  // Loads the file into data and adds the column titles to columnNames Array
   void loadData(String filename) {
     data = loadTable(filename, "header");
     //loops to retrieve column data from file
